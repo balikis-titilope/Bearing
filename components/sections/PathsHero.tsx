@@ -1,4 +1,7 @@
 import React from 'react';
+import { Search, Filter } from 'lucide-react';
+import { Button } from '../ui/Button';
+import { careerPaths } from '@/data/careerPaths';
 import styles from './PathsHero.module.css';
 
 export const PathsHero: React.FC = () => {
@@ -18,6 +21,36 @@ export const PathsHero: React.FC = () => {
                     <p className={`${styles.description} reveal`} data-delay="2">
                         Choose your journey. Each path is carefully crafted with real-world skills and projects to take you from where you are to where you want to be.
                     </p>
+                    
+                    <div className={styles.searchSection}>
+                        <div className={styles.search}>
+                            <Search size={20} className={styles.searchIcon} />
+                            <input 
+                                type="text" 
+                                placeholder="Search career paths..." 
+                                className={styles.searchInput}
+                            />
+                        </div>
+                        <Button variant="outline" className={styles.filterBtn}>
+                            <Filter size={16} />
+                            Filter
+                        </Button>
+                    </div>
+
+                    <div className={styles.stats}>
+                        <div className={styles.stat}>
+                            <strong>{careerPaths.length}</strong>
+                            <span>Available Paths</span>
+                        </div>
+                        <div className={styles.stat}>
+                            <strong>{careerPaths.reduce((acc, path) => acc + path.skills.length, 0)}</strong>
+                            <span>Skills to Learn</span>
+                        </div>
+                        <div className={styles.stat}>
+                            <strong>{careerPaths.reduce((acc, path) => acc + path.responsibilities.length, 0)}</strong>
+                            <span>Real-World Tasks</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>

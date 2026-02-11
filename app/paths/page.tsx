@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/Button';
 import styles from './page.module.css';
 import { careerPaths } from '@/data/careerPaths';
 import * as Icons from 'lucide-react';
-import { ChevronRight, Search, Filter } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 
@@ -21,35 +21,6 @@ export default function CareerPathsPage() {
             <PathsHero />
             <main className={styles.page}>
                 <div className="container">
-                    <div className={styles.filters}>
-                        <div className={styles.search}>
-                            <Search size={20} className={styles.searchIcon} />
-                            <input 
-                                type="text" 
-                                placeholder="Search career paths..." 
-                                className={styles.searchInput}
-                            />
-                        </div>
-                        <Button variant="outline" className={styles.filterBtn}>
-                            <Filter size={16} />
-                            Filter
-                        </Button>
-                    </div>
-
-                    <div className={styles.stats}>
-                        <div className={styles.stat}>
-                            <strong>{careerPaths.length}</strong>
-                            <span>Available Paths</span>
-                        </div>
-                        <div className={styles.stat}>
-                            <strong>{careerPaths.reduce((acc, path) => acc + path.skills.length, 0)}</strong>
-                            <span>Skills to Learn</span>
-                        </div>
-                        <div className={styles.stat}>
-                            <strong>{careerPaths.reduce((acc, path) => acc + path.responsibilities.length, 0)}</strong>
-                            <span>Real-World Tasks</span>
-                        </div>
-                    </div>
 
                     <div className={styles.grid}>
                         {careerPaths.map((path) => {

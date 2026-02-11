@@ -1,0 +1,117 @@
+.footer {
+    background-color: #0F172A;
+    /* Restoring original color */
+    color: white;
+    padding: 6rem 0 3rem;
+    margin-top: 0;
+}
+
+.grid {
+    display: flex;
+    justify-content: space-between;
+    gap: 4rem;
+    margin-bottom: 4rem;
+}
+
+.brand {
+    flex: 1;
+}
+
+.linksContainer {
+    display: flex;
+    gap: 6rem;
+    /* Wide gap between link columns */
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.logoIcon {
+    color: var(--accent);
+}
+
+.brand h3 {
+    color: white;
+    margin-bottom: 0;
+    font-size: 2rem;
+    font-weight: 800;
+}
+
+.brand p {
+    color: rgba(255, 255, 255, 0.8);
+    max-width: 300px;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.brandAction {
+    margin-top: 2rem;
+}
+
+.footerBtn {
+    border-radius: 999px;
+    padding: 0.75rem 2rem;
+    font-weight: 600;
+}
+
+.links h4 {
+    color: white;
+    margin-bottom: 2rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.links ul {
+    list-style: none;
+    padding: 0;
+}
+
+.links li {
+    color: white;
+    margin-bottom: 1.25rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+}
+
+.links li a {
+    color: white;
+    text-decoration: none;
+    border-bottom: 2px solid white;
+    padding-bottom: 2px;
+}
+
+.links li:hover {
+    opacity: 0.8;
+}
+
+.socialLink {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.socialLink a {
+    border-bottom: 2px solid white;
+    padding-bottom: 2px;
+}
+
+.bottom {
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.875rem;
+}
+
+@media (max-width: 768px) {
+    .grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+}

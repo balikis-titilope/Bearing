@@ -1,0 +1,85 @@
+.highlight {
+    background-color: var(--primary);
+    background-image: radial-gradient(circle at 70% 30%, var(--primary-light) 0%, var(--primary) 70%);
+    background-attachment: fixed;
+    /* Creates the "stay" effect as content scrolls over it */
+    color: white;
+    padding: 12rem 0;
+    text-align: center;
+    /* Reverted back to center */
+    position: relative;
+    overflow: hidden;
+}
+
+.container {
+    max-width: 1100px !important;
+    /* Increased from 900px */
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* Reverted back to center */
+    gap: 2.5rem;
+}
+
+.title {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    line-height: 1.1;
+    font-weight: 800;
+    color: white;
+    margin: 0;
+}
+
+.accentText {
+    opacity: 0.9;
+    background: linear-gradient(to right, #fff, var(--primary-light));
+    background-clip: text;
+    /* Fixed compatibility lint */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.description {
+    font-size: 1.25rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.9);
+    max-width: 850px;
+    /* Increased from 700px to feel more "width of the screen" */
+    margin: 0;
+}
+
+.action {
+    margin-top: 1rem;
+}
+
+.link {
+    display: inline-block;
+    background-color: white;
+    color: var(--primary);
+    font-weight: 700;
+    font-size: 1.1rem;
+    padding: 1rem 2.5rem;
+    border-radius: 9999px;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    background-color: #f8fafc;
+}
+
+@media (max-width: 768px) {
+    .highlight {
+        padding: 6rem 0;
+    }
+
+    .title {
+        font-size: 2.5rem;
+    }
+}

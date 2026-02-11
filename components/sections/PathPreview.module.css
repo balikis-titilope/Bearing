@@ -1,0 +1,115 @@
+.section {
+    padding: 8rem 0;
+    background: radial-gradient(circle at 10% 20%, var(--primary-soft) 0%, var(--background) 90%);
+    position: relative;
+    overflow: hidden;
+}
+
+.ambientOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    z-index: 1;
+    overflow: hidden;
+    animation: subtle-float 20s ease-in-out infinite;
+}
+
+.glow {
+    position: absolute;
+    filter: blur(120px);
+    border-radius: 50%;
+    opacity: 0.15;
+    animation: ambient-breath 12s ease-in-out infinite;
+}
+
+.glow1 {
+    width: 600px;
+    height: 600px;
+    background: var(--primary-light);
+    top: -200px;
+    left: -100px;
+    opacity: 0.08;
+}
+
+.glow2 {
+    width: 500px;
+    height: 500px;
+    background: var(--primary);
+    bottom: -150px;
+    right: -100px;
+    opacity: 0.06;
+    animation-delay: -3s;
+}
+
+.container {
+    position: relative;
+    z-index: 10;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.header h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.header p {
+    color: var(--text-muted);
+    font-size: 1.125rem;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.pathCard {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.2s ease;
+}
+
+.pathCard:hover {
+    transform: translateY(-2px);
+}
+
+.iconWrapper {
+    width: 48px;
+    height: 48px;
+    background-color: var(--accent-light);
+    color: var(--accent);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pathCard h3 {
+    font-size: 1.5rem;
+}
+
+.pathCard p {
+    color: var(--text-muted);
+    flex-grow: 1;
+}
+
+.footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--accent);
+    font-weight: 600;
+    font-size: 0.875rem;
+    margin-top: 1rem;
+}

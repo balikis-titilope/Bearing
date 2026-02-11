@@ -1,0 +1,109 @@
+.section {
+    height: calc(100vh - 80px);
+    min-height: 700px;
+    display: flex;
+    align-items: flex-start;
+    /* Changed from center to push content up slightly */
+    padding-top: 4rem;
+    /* Specific top padding instead of perfect vertical center */
+    justify-content: center;
+    background: var(--surface);
+    position: relative;
+}
+
+.content {
+    max-width: 1400px;
+    /* Further increased to minimize side margins */
+    margin: 0 auto;
+    text-align: center;
+}
+
+.sectionTitle {
+    font-size: clamp(1.8rem, 3.5vw, 2.2rem);
+    /* Reduced size as requested */
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: var(--text);
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+}
+
+.sectionDescription {
+    font-size: 1.2rem;
+    color: var(--text-muted);
+    margin-bottom: 3rem;
+    /* Reduced to save vertical space */
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.5;
+}
+
+.steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 0;
+    width: 100%;
+}
+
+.step {
+    text-align: center;
+}
+
+.iconWrapper {
+    width: 130px;
+    /* Reduced to save vertical space */
+    height: 130px;
+    background: var(--primary-soft);
+    border-radius: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+}
+
+.icon {
+    color: var(--primary);
+    /* Reverted to original color */
+    width: 90px !important;
+    height: 90px !important;
+    stroke-width: 1.5px;
+}
+
+.step h3 {
+    font-size: 1.25rem;
+    /* Reduced from 1.75rem */
+    font-weight: 600;
+    /* Reduced from 800 */
+    margin-bottom: 1rem;
+    color: var(--text);
+}
+
+.step p {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    max-width: 320px;
+    margin: 0 auto;
+}
+
+.cta {
+    display: none;
+    /* Hide for now to match snippet */
+}
+
+@media (max-width: 768px) {
+    .section {
+        padding: 4rem 0;
+    }
+
+    .content h2 {
+        font-size: 2rem;
+    }
+
+    .steps {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+}

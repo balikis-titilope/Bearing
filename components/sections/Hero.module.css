@@ -1,0 +1,221 @@
+.hero {
+    /* Accounting for the 80px navbar to ensure perfect 100vh fit for the first fold */
+    height: calc(100vh - 80px);
+    min-height: 600px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    padding: 0;
+    background: radial-gradient(circle at 10% 20%, var(--primary-soft) 0%, var(--background) 90%);
+}
+
+.ambientOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    z-index: 1;
+    overflow: hidden;
+    /* Extra subtle movement for the whole overlay */
+    animation: subtle-float 20s ease-in-out infinite;
+}
+
+.glow {
+    position: absolute;
+    filter: blur(120px);
+    border-radius: 50%;
+    opacity: 0.15;
+    animation: ambient-breath 12s ease-in-out infinite;
+}
+
+.glow1 {
+    width: 800px;
+    height: 800px;
+    background: var(--primary-light);
+    top: -300px;
+    right: -200px;
+    opacity: 0.1;
+}
+
+.glow2 {
+    width: 600px;
+    height: 600px;
+    background: var(--primary);
+    bottom: -200px;
+    left: -150px;
+    opacity: 0.08;
+    animation-delay: -4s;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 4rem;
+    align-items: center;
+    position: relative;
+    z-index: 10;
+}
+
+.content {
+    text-align: left;
+}
+
+.badge {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background-color: rgba(15, 23, 42, 0.05);
+    color: var(--primary);
+    border-radius: 999px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+}
+
+.hero h1 {
+    font-size: clamp(2.8rem, 5vw, 4.2rem);
+    /* Slightly smaller heading for 100vh fit */
+    line-height: 1.1;
+    color: var(--text);
+    margin-bottom: 1.5rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+}
+
+.description {
+    font-size: 1.1rem;
+    /* Slightly smaller to save vertical space */
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 2.5rem;
+    /* Reduced margin */
+    max-width: 520px;
+}
+
+.actions {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.ctaButton {
+    background-color: var(--primary);
+    color: white;
+    box-shadow: 0 4px 14px rgba(14, 165, 233, 0.3);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ctaButton:hover {
+    transform: translateY(-2px);
+    background-color: var(--primary-dark);
+    box-shadow: 0 10px 20px rgba(14, 165, 233, 0.4);
+}
+
+.outlineButton {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.outlineButton:hover {
+    transform: translateY(-2px);
+    background-color: white;
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.imageSection {
+    position: relative;
+    padding: 2rem;
+}
+
+.imageContainer {
+    position: relative;
+    width: 90%;
+    margin: 0 auto;
+    animation: subtle-float 10s ease-in-out infinite;
+}
+
+.imageWrapper {
+    position: relative;
+    border-radius: 48px;
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    background: var(--primary);
+    /* Image background is now primary */
+    aspect-ratio: 1.0;
+    max-height: calc(100vh - 200px);
+    /* Dynamically cap image height relative to viewport */
+}
+
+.heroImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    mix-blend-mode: normal;
+}
+
+.grainOverlay {
+    position: absolute;
+    inset: -50%;
+    width: 200%;
+    height: 200%;
+    background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+    opacity: 0.15;
+    pointer-events: none;
+    mix-blend-mode: overlay;
+    animation: noise-pulse 0.5s steps(2) infinite;
+}
+
+.directionalFlow {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    mask-image: linear-gradient(to top, transparent, black, transparent);
+}
+
+.line {
+    position: absolute;
+    width: 1px;
+    height: 300px;
+    background: linear-gradient(to bottom, transparent, var(--primary-light), transparent);
+    animation: path-flow 12s linear infinite;
+    opacity: 0;
+}
+
+/* Unused card styles removed */
+
+/* Removing stats and backgroundDecor from Hero module - keeping it clean as in Pathly */
+
+@media (max-width: 1024px) {
+    .hero {
+        padding: 6rem 0;
+        text-align: center;
+    }
+
+    .container {
+        grid-template-columns: 1fr;
+        gap: 4rem;
+    }
+
+    .content {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .description {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .actions {
+        justify-content: center;
+    }
+
+    .imageSection {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+}

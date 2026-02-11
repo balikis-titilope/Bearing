@@ -1,0 +1,57 @@
+.toggle {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: var(--shadow-sm);
+    position: relative;
+    overflow: hidden;
+}
+
+.toggle:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.icon {
+    width: 20px;
+    height: 20px;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+}
+
+.sun {
+    position: absolute;
+}
+
+.moon {
+    position: absolute;
+}
+
+/* Transitions based on theme */
+[data-theme='light'] .sun {
+    transform: scale(1) rotate(0);
+    opacity: 1;
+}
+
+[data-theme='light'] .moon {
+    transform: scale(0) rotate(90deg);
+    opacity: 0;
+}
+
+[data-theme='dark'] .sun {
+    transform: scale(0) rotate(-90deg);
+    opacity: 0;
+}
+
+[data-theme='dark'] .moon {
+    transform: scale(1) rotate(0);
+    opacity: 1;
+}

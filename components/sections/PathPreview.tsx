@@ -7,8 +7,11 @@ import styles from './PathPreview.module.css';
 import { careerPaths } from '@/data/careerPaths';
 import * as Icons from 'lucide-react';
 import { ChevronRight } from 'lucide-react';
+import { useSession } from 'next-auth/react';
 
 export const PathPreview: React.FC = () => {
+    const { data: session } = useSession();
+    
     return (
         <section className={styles.section} id="paths">
             {/* Ambient Background Foundation - Parallax Enabled */}
@@ -29,7 +32,7 @@ export const PathPreview: React.FC = () => {
 
                         return (
                             <Link
-                                href={`/paths/${path.slug}`}
+                                href={session ? `/paths/${path.slug}` : "/register"}
                                 key={path.id}
                             >
                                 <Card className={styles.pathCard}>

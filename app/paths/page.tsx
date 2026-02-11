@@ -1,3 +1,5 @@
+'use client';
+
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { Card } from '@/components/ui/Card';
@@ -7,8 +9,10 @@ import { careerPaths } from '@/data/careerPaths';
 import * as Icons from 'lucide-react';
 import { ChevronRight, Search, Filter } from 'lucide-react';
 import Link from 'next/link';
+import { useSession } from 'next-auth/react';
 
 export default function CareerPathsPage() {
+    const { data: session } = useSession();
   return (
     <>
       <Navbar />
@@ -53,7 +57,7 @@ export default function CareerPathsPage() {
               const IconComponent = (Icons as any)[path.icon] || Icons.HelpCircle;
               
               return (
-                <Link href={`/paths/${path.slug}`} key={path.id}>
+                <Link href={session ? `/paths/${path.slug}` : "/register"} key={path.id}>
                   <Card className={styles.pathCard}>
                     <div className={styles.iconWrapper}>
                       <IconComponent size={24} className={styles.icon} />

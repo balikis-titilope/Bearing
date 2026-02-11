@@ -31,10 +31,10 @@ export const PathsHero: React.FC = () => {
                                 className={styles.searchInput}
                             />
                         </div>
-                        <Button variant="outline" className={styles.filterBtn}>
+                        <button className={styles.filterBtn}>
                             <Filter size={16} />
                             Filter
-                        </Button>
+                        </button>
                     </div>
 
                     <div className={styles.stats}>

@@ -27,8 +27,7 @@ export const PathsNavbar: React.FC = () => {
 
                 <div className={styles.links}>
                     {/* Simplified navigation for paths page */}
-                    <Link href="/" className={styles.link}>Home</Link>
-                    {session && <Link href="/paths" className={styles.link}>Career Paths</Link>}
+                    {session && <Link href="/paths" className={styles.link} style={{ color: 'var(--primary)' }}>Career Paths</Link>}
                 </div>
 
                 <div className={styles.actions}>

@@ -62,7 +62,13 @@ export default function CareerPathsPage() {
                     <div className={styles.cta}>
                         <h2>Not sure which path to choose?</h2>
                         <p>Take our quick assessment to get personalized recommendations based on your interests and goals.</p>
-                        <Button variant="primary" size="lg">Take Assessment</Button>
+                        {session ? (
+                            <Button variant="primary" size="lg">Take Assessment</Button>
+                        ) : (
+                            <Link href="/register">
+                                <Button variant="primary" size="lg">Take Assessment</Button>
+                            </Link>
+                        )}
                     </div>
                 </div>
             </main>

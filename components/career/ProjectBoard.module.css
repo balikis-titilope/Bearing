@@ -1,0 +1,123 @@
+.projectBoard {
+    margin-bottom: 4rem;
+}
+
+.sectionHeader {
+    margin-bottom: 2rem;
+}
+
+.sectionHeader h2 {
+    font-size: 1.75rem;
+    color: #fff;
+    margin: 0;
+}
+
+.sectionHeader p {
+    color: rgba(255, 255, 255, 0.5);
+    margin: 0.5rem 0 0;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 1.5rem;
+}
+
+.card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(var(--primary-rgb), 0.3);
+}
+
+.cardHeader {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.statusIcon {
+    flex-shrink: 0;
+}
+
+.completed {
+    color: #10b981;
+}
+
+.locked {
+    color: rgba(255, 255, 255, 0.2);
+}
+
+.inProgress {
+    color: var(--primary);
+}
+
+.cardHeader h3 {
+    margin: 0;
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #fff;
+}
+
+.description {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.6);
+    line-height: 1.5;
+    margin: 0;
+    flex: 1;
+}
+
+.footer {
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+
+.validation {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.rule {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.actionBtn {
+    background: rgba(var(--primary-rgb), 0.1);
+    border: 1px solid rgba(var(--primary-rgb), 0.3);
+    border-radius: 8px;
+    padding: 0.5rem 0.75rem;
+    color: var(--primary);
+    font-size: 0.8rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.actionBtn:hover {
+    background: var(--primary);
+    color: #000;
+}

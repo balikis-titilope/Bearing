@@ -4,10 +4,25 @@ import { AuthError } from "next-auth";
 import { signIn } from "@/auth";
 import { LoginSchema } from "@/lib/schemas";
 import { getUserByEmail } from "@/lib/user";
-import { generateVerificationToken } from "@/lib/tokens";
-import { sendVerificationEmail } from "@/lib/mail";
+import { rateLimit } from "@/lib/rate-limit";
 
-export const login = async (values: any) => {
+interface LoginValues {
+    email: string;
+    password: string;
+}
+
+interface LoginResult {
+    success?: string;
+    error?: string;
+}
+
+export const login = async (values: LoginValues): Promise<LoginResult> => {
+    // Rate limiting based on email
+    const rateLimitResult = rateLimit(values.email, 5, 15 * 60 * 1000); // 5 attempts per 15 minutes
+    if (!rateLimitResult.success) {
+        return { error: "Too many login attempts. Please try again later." };
+    }
+
     const validatedFields = LoginSchema.safeParse(values);
 
     if (!validatedFields.success) {
@@ -20,19 +35,6 @@ export const login = async (values: any) => {
 
     if (!existingUser || !existingUser.email || !existingUser.password) {
         return { error: "Email does not exist!" };
-    }
-
-    if (!existingUser.emailVerified) {
-        const verificationToken = await generateVerificationToken(
-            existingUser.email,
-        );
-
-        await sendVerificationEmail(
-            verificationToken.email,
-            verificationToken.token,
-        );
-
-        return { success: "Confirmation email sent!" };
     }
 
     try {
@@ -53,4 +55,6 @@ export const login = async (values: any) => {
 
         throw error;
     }
+
+    return { success: "Successfully logged in!" };
 };

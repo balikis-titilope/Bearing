@@ -1,6 +1,6 @@
 .section {
     padding: 8rem 0;
-    background: radial-gradient(circle at 10% 20%, var(--primary-soft) 0%, var(--background) 90%);
+    background: var(--background);
     position: relative;
     overflow: hidden;
 }
@@ -29,18 +29,18 @@
     width: 600px;
     height: 600px;
     background: var(--primary-light);
-    top: -200px;
-    left: -100px;
-    opacity: 0.08;
+    top: -400px;
+    left: -300px;
+    opacity: 0.02;
 }
 
 .glow2 {
     width: 500px;
     height: 500px;
     background: var(--primary);
-    bottom: -150px;
-    right: -100px;
-    opacity: 0.06;
+    bottom: -300px;
+    right: -200px;
+    opacity: 0.02;
     animation-delay: -3s;
 }
 
@@ -57,6 +57,7 @@
 .header h2 {
     font-size: 2.5rem;
     margin-bottom: 1rem;
+    color: var(--primary);
 }
 
 .header p {
@@ -97,11 +98,16 @@
 
 .pathCard h3 {
     font-size: 1.5rem;
+    color: var(--primary);
 }
 
 .pathCard p {
     color: var(--text-muted);
     flex-grow: 1;
+}
+
+.pathCardWrapper {
+    display: block;
 }
 
 .footer {

@@ -23,7 +23,7 @@
     /* Reduced size as requested */
     font-weight: 600;
     margin-bottom: 1.5rem;
-    color: var(--text);
+    color: var(--primary);
     letter-spacing: -0.02em;
     white-space: nowrap;
 }
@@ -77,7 +77,7 @@
     font-weight: 600;
     /* Reduced from 800 */
     margin-bottom: 1rem;
-    color: var(--text);
+    color: var(--primary);
 }
 
 .step p {

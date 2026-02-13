@@ -7,6 +7,12 @@ import bcrypt from "bcryptjs";
 import { LoginSchema } from "@/lib/schemas";
 import { getUserByEmail } from "@/lib/user";
 
+// Ensure AUTH_SECRET is available
+const authSecret = process.env.AUTH_SECRET;
+if (!authSecret) {
+    console.warn("WARNING: AUTH_SECRET is not set. Please set it in your environment variables.");
+}
+
 export const {
     handlers: { GET, POST },
     auth,
@@ -15,6 +21,7 @@ export const {
 } = NextAuth({
     adapter: PrismaAdapter(db),
     session: { strategy: "jwt" },
+    secret: authSecret,
     callbacks: {
         async session({ token, session }) {
             if (token.sub && session.user) {
@@ -31,23 +38,28 @@ export const {
         ...authConfig.providers,
         Credentials({
             async authorize(credentials) {
-                const validatedFields = LoginSchema.safeParse(credentials);
+                try {
+                    const validatedFields = LoginSchema.safeParse(credentials);
 
-                if (validatedFields.success) {
-                    const { email, password } = validatedFields.data;
+                    if (validatedFields.success) {
+                        const { email, password } = validatedFields.data;
 
-                    const user = await getUserByEmail(email);
-                    if (!user || !user.password) return null;
+                        const user = await getUserByEmail(email);
+                        if (!user || !user.password) return null;
 
-                    const passwordsMatch = await bcrypt.compare(
-                        password,
-                        user.password,
-                    );
+                        const passwordsMatch = await bcrypt.compare(
+                            password,
+                            user.password,
+                        );
 
-                    if (passwordsMatch) return user;
+                        if (passwordsMatch) return user;
+                    }
+
+                    return null;
+                } catch (error) {
+                    console.error("Auth error:", error);
+                    return null;
                 }
-
-                return null;
             },
         }),
     ],

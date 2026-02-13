@@ -3,6 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { Button } from '../ui/Button';
+import { ScrollReveal } from '../ui/ScrollReveal';
 import styles from './HowItWorks.module.css';
 import { Compass, Map, Target } from 'lucide-react';
 
@@ -10,18 +11,22 @@ export const HowItWorks: React.FC = () => {
     return (
         <section className={styles.section} id="how-it-works">
             <div className="container">
-                <div className={`${styles.content} reveal-on-scroll`}>
-                    <h2 className={styles.sectionTitle}>How Bearing Helps You Navigate</h2>
-                    <p className={styles.sectionDescription}>
-                        We turn career confusion into clarity with a simple, guided process
-                        that gets you from lost to hired. Our platform scours the absolute best resources
-                        online and organizes them into a logical roadmap tailored to your specific goals.
-                        Stop guessing and start making progress on the path that actually leads
-                        to your dream tech job.
-                    </p>
+                <div className={styles.content}>
+                    <ScrollReveal direction="up" delay={0}>
+                        <h2 className={styles.sectionTitle}>How Bearing Helps You Navigate</h2>
+                    </ScrollReveal>
+                    <ScrollReveal direction="up" delay={200}>
+                        <p className={styles.sectionDescription}>
+                            We turn career confusion into clarity with a simple, guided process
+                            that gets you from lost to hired. Our platform scours the absolute best resources
+                            online and organizes them into a logical roadmap tailored to your specific goals.
+                            Stop guessing and start making progress on the path that actually leads
+                            to your dream tech job.
+                        </p>
+                    </ScrollReveal>
 
                     <div className={styles.steps}>
-                        <div className={styles.step}>
+                        <ScrollReveal direction="up" delay={400} className={styles.step}>
                             <div className={styles.iconWrapper}>
                                 <Compass className={styles.icon} />
                             </div>
@@ -30,9 +35,9 @@ export const HowItWorks: React.FC = () => {
                                 Discover paths that match your interests, skills, and career goals
                                 through our AI-powered assessment.
                             </p>
-                        </div>
+                        </ScrollReveal>
 
-                        <div className={styles.step}>
+                        <ScrollReveal direction="up" delay={600} className={styles.step}>
                             <div className={styles.iconWrapper}>
                                 <Map className={styles.icon} />
                             </div>
@@ -41,9 +46,9 @@ export const HowItWorks: React.FC = () => {
                                 Get a step-by-step roadmap with specific skills to learn,
                                 projects to build, and milestones to achieve.
                             </p>
-                        </div>
+                        </ScrollReveal>
 
-                        <div className={styles.step}>
+                        <ScrollReveal direction="up" delay={800} className={styles.step}>
                             <div className={styles.iconWrapper}>
                                 <Target className={styles.icon} />
                             </div>
@@ -52,16 +57,18 @@ export const HowItWorks: React.FC = () => {
                                 Build a portfolio that stands out and gain the confidence
                                 to apply for and win the jobs you want.
                             </p>
-                        </div>
+                        </ScrollReveal>
                     </div>
 
-                    <div className={styles.cta}>
-                        <Link href="/register">
-                            <Button variant="primary" size="lg">
-                                Get My Bearing
-                            </Button>
-                        </Link>
-                    </div>
+                    <ScrollReveal direction="up" delay={1000}>
+                        <div className={styles.cta}>
+                            <Link href="/register">
+                                <Button variant="primary" size="lg">
+                                    Get My Bearing
+                                </Button>
+                            </Link>
+                        </div>
+                    </ScrollReveal>
                 </div>
             </div>
         </section>

@@ -1,0 +1,82 @@
+.reveal {
+    opacity: 0;
+    transition: opacity var(--duration, 800ms) ease-out,
+                transform var(--duration, 800ms) ease-out;
+    transition-delay: var(--delay, 0ms);
+}
+
+.reveal.visible {
+    opacity: 1;
+}
+
+/* Direction-based animations */
+.up {
+    transform: translateY(60px);
+}
+
+.up.visible {
+    transform: translateY(0);
+}
+
+.down {
+    transform: translateY(-60px);
+}
+
+.down.visible {
+    transform: translateY(0);
+}
+
+.left {
+    transform: translateX(60px);
+}
+
+.left.visible {
+    transform: translateX(0);
+}
+
+.right {
+    transform: translateX(-60px);
+}
+
+.right.visible {
+    transform: translateX(0);
+}
+
+.fade {
+    transform: scale(0.9);
+}
+
+.fade.visible {
+    transform: scale(1);
+}
+
+/* Staggered animation for multiple elements */
+.reveal.stagger-1 { --delay: 100ms; }
+.reveal.stagger-2 { --delay: 200ms; }
+.reveal.stagger-3 { --delay: 300ms; }
+.reveal.stagger-4 { --delay: 400ms; }
+.reveal.stagger-5 { --delay: 500ms; }
+.reveal.stagger-6 { --delay: 600ms; }
+
+/* Faster animation for mobile */
+@media (max-width: 768px) {
+    .reveal {
+        --duration: 600ms;
+    }
+    
+    .up {
+        transform: translateY(40px);
+    }
+    
+    .down {
+        transform: translateY(-40px);
+    }
+    
+    .left {
+        transform: translateX(40px);
+    }
+    
+    .right {
+        transform: translateX(-40px);
+    }
+}

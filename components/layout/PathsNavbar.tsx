@@ -26,8 +26,36 @@ export const PathsNavbar: React.FC = () => {
                 </Link>
 
                 <div className={styles.links}>
-                    {/* Simplified navigation for paths page */}
-                    {session && <Link href="/paths" className={styles.link} style={{ color: 'var(--primary)' }}>Career Paths</Link>}
+                    {session ? (
+                        /* App Links for Logged In Users */
+                        <>
+                            <Link href="/dashboard" className={styles.link}>Dashboard</Link>
+                            <Link href="/projects" className={styles.link}>Projects</Link>
+                            <Link href="/paths" className={styles.link} style={{ color: 'var(--primary)' }}>All Paths</Link>
+                        </>
+                    ) : (
+                        /* Landing Page Scroll Links for Visitors */
+                        <>
+                            <a
+                                href="#how-it-works"
+                                className={styles.link}
+                            >
+                                How It Works
+                            </a>
+                            <a
+                                href="#paths"
+                                className={styles.link}
+                            >
+                                Career Paths
+                            </a>
+                            <a
+                                href="#highlight"
+                                className={styles.link}
+                            >
+                                Features
+                            </a>
+                        </>
+                    )}
                 </div>
 
                 <div className={styles.actions}>

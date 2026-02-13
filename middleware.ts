@@ -8,25 +8,25 @@ export default auth((req) => {
     const isLoggedIn = !!req.auth;
 
     const isApiAuthRoute = nextUrl.pathname.startsWith("/api/auth");
-    const isPublicRoute = ["/", "/privacy", "/terms"].includes(nextUrl.pathname);
+    const isPublicRoute = ["/", "/privacy", "/terms", "/paths", "/assessment"].includes(nextUrl.pathname);
     const isAuthRoute = ["/login", "/register", "/auth/error", "/auth/reset", "/auth/new-password"].includes(nextUrl.pathname);
 
     if (isApiAuthRoute) {
         return;
     }
 
-    if (isAuthRoute) {
-        if (isLoggedIn) {
-            return Response.redirect(new URL("/", nextUrl));
-        }
-        return;
+    // Protect auth routes - redirect logged in users away from login/register
+    if (isAuthRoute && isLoggedIn) {
+        return Response.redirect(new URL("/", nextUrl));
     }
 
+    // Protect all routes except public ones - redirect unauthenticated users to login
     if (!isLoggedIn && !isPublicRoute) {
-        // For now, let's keep everything else public until we have a dashboard
-        // But this is where we'd redirect to login
-        // return Response.redirect(new URL("/login", nextUrl));
-        return;
+        // Don't redirect if already on auth pages to prevent loops
+        if (isAuthRoute) {
+            return;
+        }
+        return Response.redirect(new URL("/login", nextUrl));
     }
 
     return;

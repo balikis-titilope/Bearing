@@ -1,8 +1,9 @@
 .nav {
     height: 80px;
+    width: 100%;
     display: flex;
     align-items: center;
-    position: sticky;
+    position: fixed;
     top: 0;
     z-index: 100;
     background-color: var(--glass);
@@ -15,6 +16,8 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;
+    max-width: 100%;
+    padding: 0 2rem;
 }
 
 .logo {
@@ -102,7 +105,30 @@
 
 .registerBtn {
     color: white;
-    background: var(--primary);
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    padding: 0.5rem 1.5rem;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.registerBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(14, 165, 233, 0.3);
+}
+
+.assessmentBtn {
+    background: var(--accent);
+    color: white;
+    padding: 0.5rem 1.5rem;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.assessmentBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
 }
 
 .registerBtn:hover {

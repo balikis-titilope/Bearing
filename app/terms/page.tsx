@@ -14,7 +14,7 @@ export default function TermsOfService() {
             <main className={styles.page}>
                 <div className={`container ${styles.container}`}>
                     <div className={styles.header}>
-                        <h1>Terms of Service</h1>
+                        <h1 style={{ color: 'var(--primary)' }}>Terms of Service</h1>
                         <p className={styles.lastUpdated}>Last updated: February 11, 2026</p>
                     </div>
 

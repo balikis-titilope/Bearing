@@ -23,8 +23,8 @@ model CareerPath {
   updatedAt       DateTime    @updatedAt
 
   responsibilities Responsibility[]
-  progression      Progression[]
-  skills          CareerPathSkill[]
+  levels          Level[]
+  projects        Project[]
 
   @@map("career_paths")
 }
@@ -36,48 +36,99 @@ model Responsibility {
   order         Int
 
   careerPath    CareerPath @relation(fields: [careerPathId], references: [id], onDelete: Cascade)
+  learningSteps LearningStep[]
 
   @@unique([careerPathId, order])
   @@map("responsibilities")
 }
 
-model Progression {
-  id            String    @id @default(cuid())
-  title         String
-  careerPathId  String
-  order         Int
+model Level {
+  id              String   @id @default(cuid())
+  title           String   // Junior, Mid, Senior
+  description     String
+  whatChanges     String   // High-level summary of role change
+  requirements    String   // JSON or text of needed skills/projects
+  order           Int
+  careerPathId    String
+  careerPath      CareerPath @relation(fields: [careerPathId], references: [id], onDelete: Cascade)
 
-  careerPath    CareerPath @relation(fields: [careerPathId], references: [id], onDelete: Cascade)
-
-  @@unique([careerPathId, order])
-  @@map("progressions")
+  @@map("levels")
 }
 
-model Skill {
-  id            String                @id @default(cuid())
-  name          String
-  description   String
-  category      String
-  importance    String
-  createdAt     DateTime              @default(now())
-  updatedAt     DateTime              @updatedAt
+model LearningStep {
+  id               String   @id @default(cuid())
+  title            String   // e.g., "Master Layout Basics"
+  order            Int
+  responsibilityId String
+  responsibility   Responsibility @relation(fields: [responsibilityId], references: [id], onDelete: Cascade)
+  subtopics        LearningSubtopic[]
 
-  careerPaths   CareerPathSkill[]
-
-  @@map("skills")
+  @@map("learning_steps")
 }
 
-model CareerPathSkill {
-  id            String    @id @default(cuid())
-  careerPathId  String
-  skillId       String
-  createdAt     DateTime  @default(now())
+model LearningSubtopic {
+  id             String   @id @default(cuid())
+  title          String   // e.g., "Learn Flexbox"
+  stepId         String
+  step           LearningStep @relation(fields: [stepId], references: [id], onDelete: Cascade)
+  userProgress    UserProgress[]
 
-  careerPath    CareerPath @relation(fields: [careerPathId], references: [id], onDelete: Cascade)
-  skill         Skill      @relation(fields: [skillId], references: [id], onDelete: Cascade)
+  @@map("learning_subtopics")
+}
 
-  @@unique([careerPathId, skillId])
-  @@map("career_path_skills")
+model Project {
+  id             String   @id @default(cuid())
+  title          String
+  description    String
+  validationRule String   // e.g., "Upload GitHub link"
+  order           Int
+  careerPathId   String
+  careerPath     CareerPath @relation(fields: [careerPathId], references: [id], onDelete: Cascade)
+  userProjects   UserProject[]
+
+  @@map("projects")
+}
+
+model UserProgress {
+  id              String   @id @default(cuid())
+  userId          String
+  subtopicId      String
+  completed       Boolean  @default(false)
+  submissionLink  String?  // Mandatory for output-based validation
+  deploymentLink  String?  // Mandatory for output-based validation
+  updatedAt       DateTime @updatedAt
+
+  user        User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  subtopic    LearningSubtopic @relation(fields: [subtopicId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, subtopicId])
+  @@map("user_progress")
+}
+
+model UserProject {
+  id          String   @id @default(cuid())
+  userId      String
+  projectId   String
+  githubUrl   String?
+  status      String   @default("IN_PROGRESS") // IN_PROGRESS, SUBMITTED, UNDER_REVIEW, COMPLETED
+  updatedAt   DateTime @updatedAt
+
+  user        User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  project     Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, projectId])
+  @@map("user_projects")
+}
+
+model ActivityLog {
+  id        String   @id @default(cuid())
+  userId    String
+  date      DateTime @default(now())
+  action    String   // e.g., "SUBTOPIC_COMPLETED", "PROJECT_SUBMITTED"
+  
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("activity_logs")
 }
 
 model User {
@@ -87,8 +138,18 @@ model User {
   emailVerified DateTime? @map("email_verified")
   password      String?
   image         String?
+  
+  // Growth OS Fields
+  activePathId  String?   // One active path policy
+  weeklyHours   Int?      @default(10)
+  streakCount   Int       @default(0)
+  lastActivityAt DateTime?
+  
   accounts      Account[]
   sessions      Session[]
+  progress      UserProgress[]
+  userProjects  UserProject[]
+  activityLogs  ActivityLog[]
  
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")

@@ -1,0 +1,325 @@
+.page {
+    min-height: 100vh;
+    background-color: var(--background);
+    padding: 2rem 0;
+}
+
+.authRequired {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 50vh;
+    text-align: center;
+    padding: 2rem;
+}
+
+.authRequired h2 {
+    font-size: 2rem;
+    color: var(--primary);
+    margin-bottom: 1rem;
+}
+
+.authRequired p {
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+}
+
+.progressSection {
+    background: linear-gradient(135deg, var(--primary-soft), var(--surface));
+    padding: 2rem;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    margin-bottom: 3rem;
+}
+
+.progressHeader {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.progressIcon {
+    width: 3rem;
+    height: 3rem;
+    color: var(--primary);
+}
+
+.progressTitle {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text);
+    margin: 0;
+}
+
+.progressSubtitle {
+    color: var(--text-muted);
+    margin: 0;
+    font-size: 1rem;
+}
+
+.progressBar {
+    width: 100%;
+    height: 8px;
+    background: var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progressFill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+
+.progressText {
+    font-weight: 600;
+    color: var(--text);
+    margin-left: 1rem;
+}
+
+.questionCard {
+    background: var(--surface);
+    border-radius: var(--radius-lg);
+    padding: 2.5rem;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-lg);
+    margin-bottom: 2rem;
+}
+
+.questionHeader {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.questionNumber {
+    background: var(--primary);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-full);
+    font-weight: 600;
+    font-size: 0.875rem;
+}
+
+.questionContent {
+    flex: 1;
+}
+
+.questionText {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 1rem;
+    line-height: 1.4;
+}
+
+.questionHint {
+    color: var(--text-muted);
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+}
+
+.optionsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+.optionButton {
+    padding: 1.25rem 1.5rem;
+    border: 2px solid var(--border);
+    border-radius: var(--radius-md);
+    background: var(--surface);
+    color: var(--text);
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+}
+
+.optionButton:hover {
+    border-color: var(--primary);
+    background: var(--primary-soft);
+}
+
+.optionButton.selected {
+    border-color: var(--primary);
+    background: var(--primary);
+    color: white;
+}
+
+.multiSelect {
+    justify-content: flex-start;
+}
+
+.optionText {
+    font-size: 1rem;
+    line-height: 1.4;
+}
+
+.checkIcon {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.75rem;
+    color: white;
+}
+
+.navigationButtons {
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+}
+
+.navButton {
+    padding: 0.875rem 2rem;
+    font-weight: 600;
+}
+
+.completeButton {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white;
+}
+
+.resultsCard {
+    background: var(--surface);
+    border-radius: var(--radius-lg);
+    padding: 2.5rem;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-lg);
+}
+
+.resultsHeader {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.resultsIcon {
+    width: 3rem;
+    height: 3rem;
+    color: var(--primary);
+}
+
+.resultsTitle {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text);
+    margin: 0;
+}
+
+.resultsSubtitle {
+    color: var(--text-muted);
+    margin: 0;
+    font-size: 1rem;
+}
+
+.resultsContent {
+    margin-bottom: 2rem;
+}
+
+.resultsHeading {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 1.5rem;
+}
+
+.resultsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.resultItem {
+    background: var(--primary-soft);
+    padding: 2rem;
+    border-radius: var(--radius-md);
+    border-left: 4px solid var(--primary);
+}
+
+.resultItem h4 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+}
+
+.resultItem p {
+    color: var(--text-muted);
+    line-height: 1.5;
+}
+
+.matchPercentage {
+    background: var(--primary);
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    font-size: 0.875rem;
+    margin-top: 1rem;
+    display: inline-block;
+}
+
+.resultsActions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.exploreButton {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white;
+}
+
+.dashboardButton {
+    padding: 0.875rem 2rem;
+}
+
+@media (max-width: 768px) {
+    .page {
+        padding: 1rem 0;
+    }
+
+    .progressSection {
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .questionCard {
+        padding: 2rem;
+    }
+
+    .optionsGrid {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+
+    .optionButton {
+        padding: 1rem;
+        font-size: 0.875rem;
+    }
+
+    .navigationButtons {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .resultsGrid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .resultsActions {
+        flex-direction: column;
+    }
+}

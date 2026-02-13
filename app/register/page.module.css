@@ -259,6 +259,42 @@
     box-shadow: 0 0 0 3px var(--primary-soft);
 }
 
+.passwordInput {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.passwordInput .input {
+    width: 100%;
+    padding-right: 3rem;
+}
+
+.passwordToggle {
+    position: absolute;
+    right: 0.75rem;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 0.25rem;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.passwordToggle:hover {
+    color: var(--text);
+    background-color: var(--background);
+}
+
+.passwordToggle:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
 .submitBtn {
     width: 100%;
     padding: 1rem;
@@ -310,6 +346,35 @@
     border-radius: 50%;
     border-top-color: #fff;
     animation: spin 0.8s linear infinite;
+}
+
+.terms {
+    color: var(--text-muted);
+    font-size: 0.875rem;
+}
+
+.terms a {
+    color: var(--primary);
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.terms a:hover {
+    color: var(--primary-dark);
+    text-decoration: underline;
+}
+
+.signupLink {
+    color: var(--primary);
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.signupLink:hover {
+    color: var(--primary-dark);
+    transform: translateY(-1px);
 }
 
 @keyframes spin {

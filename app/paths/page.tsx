@@ -11,19 +11,71 @@ import * as Icons from 'lucide-react';
 import { ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
+import { useState, useMemo } from 'react';
 
 export default function CareerPathsPage() {
     const { data: session } = useSession();
+    const [searchQuery, setSearchQuery] = useState('');
+    const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+    const [selectedImportance, setSelectedImportance] = useState<string[]>([]);
+    const [showFilters, setShowFilters] = useState(false);
+
+    const filteredPaths = useMemo(() => {
+        return careerPaths.filter((path) => {
+            // Search logic
+            const matchesSearch = searchQuery === '' || 
+                path.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                path.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                path.skills.some((skill) => 
+                    skill.name.toLowerCase().includes(searchQuery.toLowerCase())
+                );
+
+            // Category filter logic
+            const matchesCategories = selectedCategories.length === 0 ||
+                path.skills.some((skill) => selectedCategories.includes(skill.category));
+
+            // Importance filter logic
+            const matchesImportance = selectedImportance.length === 0 ||
+                path.skills.some((skill) => selectedImportance.includes(skill.importance));
+
+            return matchesSearch && matchesCategories && matchesImportance;
+        });
+    }, [searchQuery, selectedCategories, selectedImportance]);
+
+    const clearFilters = () => {
+        setSelectedCategories([]);
+        setSelectedImportance([]);
+        setSearchQuery('');
+    };
+
+    const hasActiveFilters = Boolean(searchQuery || selectedCategories.length > 0 || selectedImportance.length > 0);
     
     return (
         <>
             <PathsNavbar />
-            <PathsHero />
-            <main className={styles.page}>
+            <PathsHero 
+                searchQuery={searchQuery}
+                setSearchQuery={setSearchQuery}
+                selectedCategories={selectedCategories}
+                setSelectedCategories={setSelectedCategories}
+                selectedImportance={selectedImportance}
+                setSelectedImportance={setSelectedImportance}
+                showFilters={showFilters}
+                setShowFilters={setShowFilters}
+                clearFilters={clearFilters}
+                hasActiveFilters={hasActiveFilters}
+            />
+            <main className={styles.page} id="main-content">
                 <div className="container">
+                    {hasActiveFilters && (
+                        <div className={styles.resultsInfo}>
+                            <p>Showing {filteredPaths.length} of {careerPaths.length} career paths</p>
+                        </div>
+                    )}
 
                     <div className={styles.grid}>
-                        {careerPaths.map((path) => {
+                        {filteredPaths.map((path) => {
+                            // eslint-disable-next-line @typescript-eslint/no-explicit-any
                             const IconComponent = (Icons as any)[path.icon] || Icons.HelpCircle;
                             
                             return (
@@ -63,7 +115,9 @@ export default function CareerPathsPage() {
                         <h2>Not sure which path to choose?</h2>
                         <p>Take our quick assessment to get personalized recommendations based on your interests and goals.</p>
                         {session ? (
-                            <Button variant="primary" size="lg">Take Assessment</Button>
+                            <Link href="/assessment">
+                                <Button variant="primary" size="lg">Take Assessment</Button>
+                            </Link>
                         ) : (
                             <Link href="/register">
                                 <Button variant="primary" size="lg">Take Assessment</Button>

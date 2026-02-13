@@ -3,10 +3,16 @@ import "./globals.css";
 import { MotionProvider } from "@/components/providers/MotionProvider";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { AuthProvider } from "@/components/providers/AuthProvider";
+import { ErrorBoundary } from "@/components/ui/ErrorBoundary";
 
 export const metadata: Metadata = {
   title: "Bearing | Your Career Companion",
   description: "Navigate your career path with clarity. Discover skills, identify gaps, and build projects that matter.",
+  icons: {
+    icon: '/favicon.svg',
+    shortcut: '/favicon.svg',
+    apple: '/favicon.svg',
+  },
 };
 
 export default function RootLayout({
@@ -17,25 +23,21 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <script dangerouslySetInnerHTML={{
-          __html: `
-            (function() {
-              const savedTheme = localStorage.getItem('theme');
-              const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-              const theme = savedTheme || systemTheme;
-              document.documentElement.setAttribute('data-theme', theme);
-            })();
-          `
-        }} />
+        <script src="/scripts/theme-init.js" defer />
       </head>
       <body>
-        <AuthProvider>
-          <ThemeProvider>
-            <MotionProvider>
-              {children}
-            </MotionProvider>
-          </ThemeProvider>
-        </AuthProvider>
+        <a href="#main-content" className="skip-to-content">
+          Skip to main content
+        </a>
+        <ErrorBoundary>
+          <AuthProvider>
+            <ThemeProvider>
+              <MotionProvider>
+                {children}
+              </MotionProvider>
+            </ThemeProvider>
+          </AuthProvider>
+        </ErrorBoundary>
       </body>
     </html>
   );

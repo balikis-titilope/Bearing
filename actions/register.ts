@@ -4,10 +4,26 @@ import bcrypt from "bcryptjs";
 import { RegisterSchema } from "@/lib/schemas";
 import { db } from "@/lib/db";
 import { getUserByEmail } from "@/lib/user";
-import { generateVerificationToken } from "@/lib/tokens";
-import { sendVerificationEmail } from "@/lib/mail";
+import { rateLimit } from "@/lib/rate-limit";
 
-export const register = async (values: any) => {
+interface RegisterValues {
+    email: string;
+    password: string;
+    name?: string;
+}
+
+interface RegisterResult {
+    success?: string;
+    error?: string;
+}
+
+export const register = async (values: RegisterValues): Promise<RegisterResult> => {
+    // Rate limiting based on email and IP
+    const rateLimitResult = rateLimit(values.email, 3, 60 * 60 * 1000); // 3 attempts per hour
+    if (!rateLimitResult.success) {
+        return { error: "Too many registration attempts. Please try again later." };
+    }
+
     const validatedFields = RegisterSchema.safeParse(values);
 
     if (!validatedFields.success) {
@@ -15,7 +31,7 @@ export const register = async (values: any) => {
     }
 
     const { email, password, name } = validatedFields.data;
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await bcrypt.hash(password, 12);
 
     const existingUser = await getUserByEmail(email);
 
@@ -28,14 +44,9 @@ export const register = async (values: any) => {
             name,
             email,
             password: hashedPassword,
+            emailVerified: new Date(),
         },
     });
 
-    const verificationToken = await generateVerificationToken(email);
-    await sendVerificationEmail(
-        verificationToken.email,
-        verificationToken.token,
-    );
-
-    return { success: "Confirmation email sent!" };
+    return { success: "Account created successfully!" };
 };

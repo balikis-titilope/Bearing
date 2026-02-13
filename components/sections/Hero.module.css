@@ -1,6 +1,8 @@
 .hero {
     /* Accounting for the 80px navbar to ensure perfect 100vh fit for the first fold */
-    height: calc(100vh - 80px);
+    /* Accounting for the 80px navbar to ensure perfect 100vh fit for the first fold */
+    height: 100vh;
+    padding-top: 80px;
     min-height: 600px;
     display: flex;
     align-items: center;
@@ -78,7 +80,7 @@
     font-size: clamp(2.8rem, 5vw, 4.2rem);
     /* Slightly smaller heading for 100vh fit */
     line-height: 1.1;
-    color: var(--text);
+    color: var(--primary);
     margin-bottom: 1.5rem;
     font-weight: 800;
     letter-spacing: -0.03em;
@@ -117,11 +119,67 @@
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.outlineButton:hover {
-    transform: translateY(-2px);
+/* Light mode: keep original style */
+[data-theme="light"] .outlineButton {
     background-color: white;
-    border-color: var(--primary);
     color: var(--primary);
+}
+
+[data-theme="light"] .outlineButton:hover {
+    transform: scale(1.02);
+    background-color: #f8fafc;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* Dark mode: use new outline style */
+[data-theme="dark"] .outlineButton {
+    background-color: transparent;
+    color: white;
+    border: 1px solid white;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+[data-theme="dark"] .outlineButton::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(270deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: right 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: -1;
+}
+
+[data-theme="dark"] .outlineButton:hover {
+    transform: scale(1.02);
+    border-color: white;
+    color: white;
+    animation: heroOutlineGlow 2s ease-in-out infinite;
+}
+
+[data-theme="dark"] .outlineButton:hover::before {
+    right: 100%;
+}
+
+@keyframes heroOutlineGlow {
+
+    0%,
+    100% {
+        box-shadow:
+            0 0 15px rgba(255, 255, 255, 0.3),
+            0 0 30px rgba(255, 255, 255, 0.2),
+            0 0 45px rgba(255, 255, 255, 0.1);
+    }
+
+    50% {
+        box-shadow:
+            0 0 25px rgba(255, 255, 255, 0.4),
+            0 0 40px rgba(255, 255, 255, 0.3),
+            0 0 55px rgba(255, 255, 255, 0.2);
+    }
 }
 
 .imageSection {
@@ -134,18 +192,32 @@
     width: 90%;
     margin: 0 auto;
     animation: subtle-float 10s ease-in-out infinite;
+    border-radius: 48px;
+    cursor: pointer;
+}
+
+.imageContainer:hover .imageWrapper {
+    transform: scale(1.05) translateY(-5px);
+    box-shadow:
+        0 16px 64px rgba(59, 130, 246, 0.35),
+        0 8px 32px rgba(59, 130, 246, 0.25),
+        0 4px 16px rgba(59, 130, 246, 0.2);
 }
 
 .imageWrapper {
     position: relative;
     border-radius: 48px;
     overflow: hidden;
-    box-shadow: var(--shadow-lg);
+    box-shadow:
+        0 8px 32px rgba(59, 130, 246, 0.2),
+        0 4px 16px rgba(59, 130, 246, 0.15),
+        0 2px 8px rgba(59, 130, 246, 0.1);
     background: var(--primary);
     /* Image background is now primary */
     aspect-ratio: 1.0;
     max-height: calc(100vh - 200px);
     /* Dynamically cap image height relative to viewport */
+    animation: imageGlow 4s ease-in-out infinite;
 }
 
 .heroImage {
@@ -153,6 +225,46 @@
     height: 100%;
     object-fit: cover;
     mix-blend-mode: normal;
+}
+
+.imageHoverContainer {
+    position: relative;
+    border-radius: 48px;
+    overflow: hidden;
+    box-shadow:
+        0 8px 32px rgba(59, 130, 246, 0.2),
+        0 4px 16px rgba(59, 130, 246, 0.15),
+        0 2px 8px rgba(59, 130, 246, 0.1);
+    background: var(--primary);
+    /* Image background is now primary */
+    aspect-ratio: 1.0;
+    max-height: calc(100vh - 200px);
+    /* Dynamically cap image height relative to viewport */
+    animation: imageGlow 4s ease-in-out infinite;
+    transform: scale(1);
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    cursor: pointer;
+}
+
+.imageHoverContainer:hover {
+    transform: scale(1.08) translateY(-8px);
+    box-shadow:
+        0 20px 60px rgba(59, 130, 246, 0.4),
+        0 12px 30px rgba(59, 130, 246, 0.3),
+        0 6px 15px rgba(59, 130, 246, 0.2);
+}
+
+.heroImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    mix-blend-mode: normal;
+    transform: scale(1);
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.imageHoverContainer:hover .heroImage {
+    transform: scale(1.02);
 }
 
 .grainOverlay {
@@ -184,6 +296,24 @@
 }
 
 /* Unused card styles removed */
+
+@keyframes imageGlow {
+
+    0%,
+    100% {
+        box-shadow:
+            0 8px 32px rgba(59, 130, 246, 0.2),
+            0 4px 16px rgba(59, 130, 246, 0.15),
+            0 2px 8px rgba(59, 130, 246, 0.1);
+    }
+
+    50% {
+        box-shadow:
+            0 12px 48px rgba(59, 130, 246, 0.3),
+            0 6px 24px rgba(59, 130, 246, 0.2),
+            0 3px 12px rgba(59, 130, 246, 0.15);
+    }
+}
 
 /* Removing stats and backgroundDecor from Hero module - keeping it clean as in Pathly */
 

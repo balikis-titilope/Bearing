@@ -23,43 +23,33 @@ export const Navbar: React.FC = () => {
         if (element) {
             // Always scroll, even if we're already at this section
             element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            // Update URL hash without triggering navigation
-            if (window.location.hash !== `#${sectionId}`) {
-                window.history.pushState(null, '', `#${sectionId}`);
-            }
         }
     }, []);
 
-    // Handle hash on initial page load
+    // Force scroll to top on page load, ignoring hash
     useEffect(() => {
-        const hash = window.location.hash;
-        if (hash) {
-            const sectionId = hash.substring(1); // Remove the '#'
-            // Small delay to ensure the page is fully loaded
-            setTimeout(() => {
-                const element = document.getElementById(sectionId);
-                if (element) {
-                    element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-            }, 100);
+        // Clear the hash from the URL without triggering a scroll or page reload
+        if (window.location.hash) {
+            window.history.replaceState(null, '', window.location.pathname);
         }
+        window.scrollTo(0, 0);
     }, []);
 
     return (
-        <nav className={styles.nav}>
+        <nav className={styles.nav} role="navigation" aria-label="Main navigation">
             <div className={`${styles.container} container`}>
-                <Link href="/" className={styles.logo}>
+                <Link href="/" className={styles.logo} aria-label="Bearing - Home">
                     <Compass className={styles.icon} />
                     <span>Bearing</span>
                 </Link>
 
-                <div className={styles.links}>
+                <div className={styles.links} role="menubar">
                     {session ? (
                         /* App Links for Logged In Users */
                         <>
-                            <Link href="/dashboard" className={styles.link}>Dashboard</Link>
-                            <Link href="/projects" className={styles.link}>Projects</Link>
-                            <Link href="/paths" className={styles.link}>All Paths</Link>
+                            <Link href="/dashboard" className={styles.link} role="menuitem">Dashboard</Link>
+                            <Link href="/projects" className={styles.link} role="menuitem">Projects</Link>
+                            <Link href="/paths" className={styles.link} role="menuitem">All Paths</Link>
                         </>
                     ) : (
                         /* Landing Page Scroll Links for Visitors */
@@ -68,6 +58,7 @@ export const Navbar: React.FC = () => {
                                 href="#how-it-works"
                                 className={styles.link}
                                 onClick={(e) => handleScrollToSection(e, 'how-it-works')}
+                                role="menuitem"
                             >
                                 How It Works
                             </a>
@@ -75,6 +66,7 @@ export const Navbar: React.FC = () => {
                                 href="#paths"
                                 className={styles.link}
                                 onClick={(e) => handleScrollToSection(e, 'paths')}
+                                role="menuitem"
                             >
                                 Career Paths
                             </a>
@@ -82,6 +74,7 @@ export const Navbar: React.FC = () => {
                                 href="#highlight"
                                 className={styles.link}
                                 onClick={(e) => handleScrollToSection(e, 'highlight')}
+                                role="menuitem"
                             >
                                 Features
                             </a>
@@ -118,4 +111,3 @@ export const Navbar: React.FC = () => {
         </nav>
     );
 };
-

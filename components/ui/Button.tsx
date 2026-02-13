@@ -12,12 +12,18 @@ export const Button: React.FC<ButtonProps> = ({
     size = 'md',
     children,
     className,
+    disabled,
     ...props
 }) => {
     const buttonClass = `${styles.button} ${styles[variant]} ${styles[size]} ${className || ''}`;
 
     return (
-        <button className={buttonClass} {...props}>
+        <button 
+            className={buttonClass} 
+            disabled={disabled}
+            aria-disabled={disabled}
+            {...props}
+        >
             {children}
         </button>
     );

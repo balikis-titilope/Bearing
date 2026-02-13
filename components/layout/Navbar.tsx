@@ -2,19 +2,19 @@
 
 import React, { useCallback, useEffect } from 'react';
 import Link from 'next/link';
-import { useSession } from 'next-auth/react';
+import { useSession, signOut } from 'next-auth/react';
 import { Button } from '../ui/Button';
 import styles from './Navbar.module.css';
 import { Compass, User, LogOut } from 'lucide-react';
 import { ThemeToggle } from '../ui/ThemeToggle';
-import { logout } from '@/actions/logout';
+// import { logout } from '@/actions/logout'; // Using client-side signOut instead
 import { ScrollProgress } from '../ui/ScrollProgress';
 
 export const Navbar: React.FC = () => {
     const { data: session } = useSession();
 
     const onLogout = () => {
-        logout();
+        signOut({ callbackUrl: '/' });
     };
 
     const handleScrollToSection = useCallback((e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
@@ -97,6 +97,9 @@ export const Navbar: React.FC = () => {
                         </div>
                     ) : (
                         <>
+                            <Link href="/contact" className={styles.link}>
+                                Contact
+                            </Link>
                             <Link href="/login" className={`${styles.link} ${styles.loginBtn}`}>
                                 Log in
                             </Link>

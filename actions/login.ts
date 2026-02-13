@@ -5,6 +5,7 @@ import { signIn } from "@/auth";
 import { LoginSchema } from "@/lib/schemas";
 import { getUserByEmail } from "@/lib/user";
 import { rateLimit } from "@/lib/rate-limit";
+import { revalidatePath } from "next/cache";
 
 interface LoginValues {
     email: string;
@@ -41,8 +42,9 @@ export const login = async (values: LoginValues): Promise<LoginResult> => {
         await signIn("credentials", {
             email,
             password,
-            redirectTo: "/",
+            redirectTo: "/dashboard",
         });
+        revalidatePath("/");
     } catch (error) {
         if (error instanceof AuthError) {
             switch (error.type) {

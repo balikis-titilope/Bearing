@@ -31,48 +31,42 @@ export async function getCareerReadiness(userId: string, careerPathId: string): 
     const levels = await db.level.findMany({
         where: { careerPathId },
         orderBy: { order: "asc" },
+        include: {
+            skills: true,
+        }
     });
 
-    // 2. Fetch user progress for this specific career path
-    const userProgress = userId !== "guest" ? await db.userProgress.findMany({
-        where: {
-            userId,
-            subtopic: {
-                step: {
-                    responsibility: {
-                        careerPathId
-                    }
-                }
+    const levelIds = levels.map(l => l.id);
+
+    // 2. Fetch enrollment and progress
+    const enrollment = userId !== "guest" ? await db.enrollment.findUnique({
+        where: { userId_careerPathId: { userId, careerPathId } },
+        include: {
+            skillProgress: true,
+            projectProgress: {
+                include: { project: true }
             }
-        },
-    }) : [];
+        }
+    }) : null;
 
-    // 3. Fetch user projects
-    const userProjects = userId !== "guest" ? await db.userProject.findMany({
-        where: { userId, project: { careerPathId } },
-        include: { project: true },
-    }) : [];
-
-    // 4. Calculate scores per level
-    const totalSubtopics = await db.learningSubtopic.count({
-        where: { step: { responsibility: { careerPathId } } },
-    });
-    const completedSubtopics = userProgress.filter((p) => p.completed).length;
+    // 3. Totals
+    const totalSkills = levels.reduce((acc, l) => acc + l.skills.length, 0);
+    const completedSkills = enrollment?.skillProgress.filter(p => p.status === "COMPLETED").length || 0;
 
     const totalProjects = await db.project.count({
-        where: { careerPathId },
+        where: { levelId: { in: levelIds } },
     });
-    const completedProjects = userProjects.filter((p) => p.status === "COMPLETED").length;
+    const completedProjects = enrollment?.projectProgress.filter(p => p.status === "PASSED").length || 0;
 
-    const skillScore = totalSubtopics > 0 ? (completedSubtopics / totalSubtopics) * 50 : 0;
+    const skillScore = totalSkills > 0 ? (completedSkills / totalSkills) * 50 : 0;
     const projectScore = totalProjects > 0 ? (completedProjects / totalProjects) * 50 : 0;
 
     return {
         overallReadiness: Math.round(skillScore + projectScore),
         skillProgress: {
-            completed: completedSubtopics,
-            total: totalSubtopics,
-            percentage: Math.round(totalSubtopics > 0 ? (completedSubtopics / totalSubtopics) * 100 : 0),
+            completed: completedSkills,
+            total: totalSkills,
+            percentage: Math.round(totalSkills > 0 ? (completedSkills / totalSkills) * 100 : 0),
         },
         projectProgress: {
             completed: completedProjects,
@@ -83,11 +77,11 @@ export async function getCareerReadiness(userId: string, careerPathId: string): 
             id: level.id,
             title: level.title,
             description: level.description,
-            whatChanges: level.whatChanges,
-            requirements: level.requirements,
+            whatChanges: level.description,
+            requirements: "",
             order: level.order,
             careerPathId: level.careerPathId,
-            isUnlocked: true, // Placeholder for logic
+            isUnlocked: true,
         })),
     };
 }

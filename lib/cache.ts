@@ -19,7 +19,7 @@ export async function getCachedData<T>(
 
     // Fetch fresh data
     const freshData = await fetchFn();
-    
+
     // Cache the new data
     cache.set(key, {
         data: freshData,
@@ -53,7 +53,7 @@ export async function getCachedCareerPaths() {
                 _count: {
                     select: {
                         levels: true,
-                        projects: true
+                        Responsibility: true
                     }
                 }
             }
@@ -69,12 +69,14 @@ export async function getCachedCareerPath(slug: string) {
             where: { slug },
             include: {
                 levels: {
-                    orderBy: { order: 'asc' }
+                    orderBy: { order: 'asc' },
+                    include: {
+                        skills: {
+                            orderBy: { order: 'asc' }
+                        }
+                    }
                 },
-                projects: {
-                    orderBy: { order: 'asc' }
-                },
-                responsibilities: {
+                Responsibility: {
                     orderBy: { order: 'asc' },
                     include: {
                         learningSteps: {

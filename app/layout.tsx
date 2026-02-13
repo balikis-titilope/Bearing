@@ -15,11 +15,15 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+import { auth } from "@/auth";
+
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await auth();
+
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
@@ -30,7 +34,7 @@ export default function RootLayout({
           Skip to main content
         </a>
         <ErrorBoundary>
-          <AuthProvider>
+          <AuthProvider session={session}>
             <ThemeProvider>
               <MotionProvider>
                 {children}

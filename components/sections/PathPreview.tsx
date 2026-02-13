@@ -12,7 +12,7 @@ import { useSession } from 'next-auth/react';
 
 export const PathPreview: React.FC = () => {
     const { data: session } = useSession();
-    
+
     return (
         <section className={styles.section} id="paths">
             {/* Ambient Background Foundation - Parallax Enabled */}
@@ -29,13 +29,20 @@ export const PathPreview: React.FC = () => {
                     </div>
                 </ScrollReveal>
 
-                <ScrollReveal direction="up" delay={200}>
-                    <div className={styles.grid}>
-                        {careerPaths.map((path, index) => {
-                            const IconComponent = Icons[path.icon as keyof typeof Icons] as React.ComponentType<any>;
-                            return (
-                                <Link 
-                                    key={path.slug}
+                <div className={styles.grid}>
+                    {careerPaths.map((path, index) => {
+                        const IconComponent = Icons[path.icon as keyof typeof Icons] as React.ComponentType<any>;
+                        // Stagger delay based on index (e.g., 0ms, 100ms, 200ms...)
+                        const staggerDelay = index * 100;
+
+                        return (
+                            <ScrollReveal
+                                key={path.slug}
+                                direction="up"
+                                delay={staggerDelay}
+                                className={styles.pathCardWrapper}
+                            >
+                                <Link
                                     href={`/paths/${path.slug}`}
                                     className={styles.pathCard}
                                 >
@@ -51,10 +58,10 @@ export const PathPreview: React.FC = () => {
                                         </div>
                                     </Card>
                                 </Link>
-                            );
-                        })}
-                    </div>
-                </ScrollReveal>
+                            </ScrollReveal>
+                        );
+                    })}
+                </div>
             </div>
         </section>
     );

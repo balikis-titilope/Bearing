@@ -2,6 +2,7 @@
     background-color: #0F172A;
     color: white;
     padding: 6rem 0 3rem;
+    font-family: var(--font-body);
 }
 
 .grid {
@@ -26,6 +27,7 @@
     align-items: center;
     gap: 1rem;
     margin-bottom: 1rem;
+    line-height: 1.6;
 }
 
 .logoIcon {
@@ -34,7 +36,8 @@
 
 .brand h3 {
     color: white;
-    margin-bottom: 0;
+    margin: 0;
+    /* Ensure no default margins disrupt alignment */
     font-size: 2rem;
     font-weight: 800;
 }
@@ -61,6 +64,7 @@
     margin-bottom: 2rem;
     font-size: 1.5rem;
     font-weight: 700;
+    font-family: var(--font-heading);
 }
 
 .links ul {

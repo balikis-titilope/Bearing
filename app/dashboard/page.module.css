@@ -2,6 +2,7 @@
     min-height: 100vh;
     background-color: var(--background);
     padding: 2rem 0;
+    padding-top: 90px;
 }
 
 .authRequired {

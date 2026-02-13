@@ -3,7 +3,7 @@
 import React, { useState, useTransition } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Compass, CheckCircle2, AlertCircle, CheckCircle } from 'lucide-react';
+import { Compass, CheckCircle2, AlertCircle } from 'lucide-react';
 import styles from '../register/page.module.css';
 import { login } from '@/actions/login';
 
@@ -12,12 +12,10 @@ interface LoginValues {
     password: string;
 }
 
-
 export default function LoginPage() {
     const router = useRouter();
     const [isPending, startTransition] = useTransition();
     const [error, setError] = useState<string | undefined>("");
-
 
     const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -25,7 +23,7 @@ export default function LoginPage() {
 
         const formData = new FormData(e.currentTarget);
         const values = Object.fromEntries(formData.entries());
-        
+
         const loginValues: LoginValues = {
             email: values.email as string,
             password: values.password as string,
@@ -36,6 +34,8 @@ export default function LoginPage() {
                 if (data?.error) {
                     setError(data.error);
                 } else {
+                    // Force a refresh to ensure RootLayout updates the session
+                    router.refresh();
                     router.push("/");
                 }
             });
@@ -90,12 +90,9 @@ export default function LoginPage() {
                 <div className={styles.formWrapper}>
                     <div className={styles.headerInfo}>
                         <div className={styles.switcher}>
-                            <button
-                                className={`${styles.switchBtn} ${styles.activeSwitch}`}
-                                disabled={isPending}
-                            >
+                            <div className={`${styles.switchBtn} ${styles.activeSwitch}`}>
                                 Login
-                            </button>
+                            </div>
                             <Link href="/register" className={`${styles.switchBtn} ${styles.inactiveSwitch}`}>
                                 Create Account
                             </Link>
@@ -122,11 +119,9 @@ export default function LoginPage() {
                         {error && (
                             <div className={styles.errorMsg}>
                                 <AlertCircle size={16} />
-                                <span>{error}</span>
+                                <span dangerouslySetInnerHTML={{ __html: error }} />
                             </div>
                         )}
-
-
 
                         <button type="submit" className={styles.submitBtn} disabled={isPending}>
                             {isPending ? <span className={styles.spinner}></span> : 'Log In'}

@@ -1,4 +1,8 @@
 .highlight {
+    /* Ensure this slides OVER the sticky hero */
+    position: relative;
+    z-index: 10;
+
     background-color: var(--primary);
     background-image: radial-gradient(circle at 70% 30%, var(--primary-light) 0%, var(--primary) 70%);
     background-attachment: fixed;
@@ -9,7 +13,6 @@
     align-items: center;
     text-align: center;
     /* Reverted back to center */
-    position: relative;
     overflow: hidden;
 }
 
@@ -97,14 +100,17 @@
 }
 
 @keyframes linkGlow {
-    0%, 100% {
-        box-shadow: 
+
+    0%,
+    100% {
+        box-shadow:
             0 0 15px rgba(255, 255, 255, 0.3),
             0 0 30px rgba(255, 255, 255, 0.2),
             0 0 45px rgba(255, 255, 255, 0.1);
     }
+
     50% {
-        box-shadow: 
+        box-shadow:
             0 0 25px rgba(255, 255, 255, 0.4),
             0 0 40px rgba(255, 255, 255, 0.3),
             0 0 55px rgba(255, 255, 255, 0.2);

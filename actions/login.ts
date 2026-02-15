@@ -38,6 +38,10 @@ export const login = async (values: LoginValues): Promise<LoginResult> => {
         return { error: "Email does not exist!" };
     }
 
+    if (!existingUser.emailVerified) {
+        return { error: "Please verify your email before logging in. Check your inbox for the verification link." };
+    }
+
     try {
         await signIn("credentials", {
             email,

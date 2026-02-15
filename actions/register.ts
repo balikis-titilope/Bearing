@@ -5,6 +5,8 @@ import { RegisterSchema } from "@/lib/schemas";
 import { db } from "@/lib/db";
 import { getUserByEmail } from "@/lib/user";
 import { rateLimit } from "@/lib/rate-limit";
+import { generateVerificationToken } from "@/lib/tokens";
+import { sendVerificationEmail } from "@/lib/mail";
 
 interface RegisterValues {
     email: string;
@@ -44,9 +46,12 @@ export const register = async (values: RegisterValues): Promise<RegisterResult> 
             name,
             email,
             password: hashedPassword,
-            emailVerified: new Date(),
+            emailVerified: null,
         },
     });
 
-    return { success: "Account created successfully!" };
+    const verificationToken = await generateVerificationToken(email);
+    await sendVerificationEmail(email, verificationToken.token);
+
+    return { success: "Verification email sent! Please check your inbox to activate your account." };
 };

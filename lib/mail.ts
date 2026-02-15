@@ -7,14 +7,6 @@ const domain = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
 export const sendVerificationEmail = async (email: string, token: string) => {
     const confirmLink = `${domain}/auth/new-verification?token=${token}`;
 
-    if (process.env.NODE_ENV !== "production") {
-        console.log("--- VERIFICATION EMAIL ---");
-        console.log(`To: ${email}`);
-        console.log(`Link: ${confirmLink}`);
-        console.log("--------------------------");
-        return;
-    }
-
     await resend.emails.send({
         from: "onboarding@resend.dev",
         to: email,
@@ -25,14 +17,6 @@ export const sendVerificationEmail = async (email: string, token: string) => {
 
 export const sendPasswordResetEmail = async (email: string, token: string) => {
     const resetLink = `${domain}/auth/new-password?token=${token}`;
-
-    if (process.env.NODE_ENV !== "production") {
-        console.log("--- PASSWORD RESET EMAIL ---");
-        console.log(`To: ${email}`);
-        console.log(`Link: ${resetLink}`);
-        console.log("----------------------------");
-        return;
-    }
 
     await resend.emails.send({
         from: "onboarding@resend.dev",

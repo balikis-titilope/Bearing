@@ -9,12 +9,25 @@ export default auth((req) => {
 
     const isApiAuthRoute = nextUrl.pathname.startsWith("/api/auth");
     const isPublicRoute =
-        ["/", "/privacy", "/terms", "/assessment"].includes(nextUrl.pathname) ||
-        nextUrl.pathname.startsWith("/paths");
+        ["/", "/privacy", "/terms", "/assessment", "/paths"].includes(nextUrl.pathname);
     const isAuthRoute = ["/login", "/register", "/auth/error", "/auth/reset", "/auth/new-password"].includes(nextUrl.pathname);
+
+    const isAdminRoute = nextUrl.pathname.startsWith("/admin");
 
     if (isApiAuthRoute) {
         return;
+    }
+
+    // Protect admin routes
+    if (isAdminRoute) {
+        if (!isLoggedIn) {
+            return Response.redirect(new URL("/login", nextUrl));
+        }
+
+        const userRole = req.auth?.user?.role;
+        if (userRole !== "ADMIN" && userRole !== "SUPER_ADMIN") {
+            return Response.redirect(new URL("/", nextUrl));
+        }
     }
 
     // Protect auth routes - redirect logged in users away from login/register

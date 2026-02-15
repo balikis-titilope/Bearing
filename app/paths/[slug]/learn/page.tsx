@@ -96,6 +96,8 @@ export default async function LearnPage({ params }: PageProps) {
                       index={index}
                       status={progress?.status || 'NOT_STARTED'}
                       levelOrder={currentLevel.order}
+                      enrollmentId={enrollment.id}
+                      slug={slug}
                     />
                   );
                 })}

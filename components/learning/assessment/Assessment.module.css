@@ -1,0 +1,255 @@
+.introCard,
+.resultCard {
+    background: rgba(30, 41, 59, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 3rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.iconWrapper {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #FFD700 0%, #FDB931 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 20px rgba(255, 215, 0, 0.3);
+    margin-bottom: 1rem;
+}
+
+.starIcon {
+    color: #1a1a1a;
+    fill: #1a1a1a;
+}
+
+.introCard h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #fff;
+    margin: 0;
+}
+
+.introCard p {
+    color: #94a3b8;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    max-width: 400px;
+}
+
+.bestScore {
+    background: rgba(255, 215, 0, 0.1);
+    border: 1px solid rgba(255, 215, 0, 0.2);
+    padding: 0.75rem 1.5rem;
+    border-radius: 99px;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    color: #FFD700;
+}
+
+.rules {
+    display: flex;
+    gap: 1.5rem;
+    margin: 1rem 0;
+}
+
+.ruleItem {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #64748b;
+    font-size: 0.9rem;
+}
+
+.startBtn {
+    min-width: 200px;
+    gap: 0.5rem;
+}
+
+/* Runner Styles */
+.runnerContainer {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.progressHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    color: #94a3b8;
+    font-size: 0.9rem;
+}
+
+.progressBar {
+    height: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 2rem;
+}
+
+.progressFill {
+    height: 100%;
+    background: #FFD700;
+    transition: width 0.3s ease;
+}
+
+.questionCard {
+    background: #1e293b;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 2rem;
+}
+
+.questionText {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 2rem;
+    line-height: 1.5;
+}
+
+.optionsGrid {
+    display: grid;
+    gap: 1rem;
+}
+
+.optionBtn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    color: #e2e8f0;
+    text-align: left;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.optionBtn:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.optionSelected {
+    border-color: #FFD700;
+    background: rgba(255, 215, 0, 0.05);
+    color: #FFD700;
+}
+
+.optionCorrect {
+    border-color: #22c55e;
+    background: rgba(34, 197, 94, 0.1);
+    color: #4ade80;
+}
+
+.optionWrong {
+    border-color: #ef4444;
+    background: rgba(239, 68, 68, 0.1);
+    color: #f87171;
+}
+
+.feedback {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.feedback.correct {
+    border-color: rgba(34, 197, 94, 0.3);
+    background: rgba(34, 197, 94, 0.05);
+}
+
+.feedback.wrong {
+    border-color: rgba(239, 68, 68, 0.3);
+    background: rgba(239, 68, 68, 0.05);
+}
+
+.feedbackTitle {
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.feedback.correct .feedbackTitle {
+    color: #4ade80;
+}
+
+.feedback.wrong .feedbackTitle {
+    color: #f87171;
+}
+
+.feedback p {
+    color: #cbd5e1;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.nextBtnWrapper {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* Result Styles */
+.scoreCircle {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 4px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 1rem 0;
+}
+
+.scoreCircle.passed {
+    border-color: #22c55e;
+    color: #22c55e;
+}
+
+.scoreCircle.failed {
+    border-color: #ef4444;
+    color: #ef4444;
+}
+
+.scoreVal {
+    font-size: 2.5rem;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.scoreLabel {
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    opacity: 0.8;
+}
+
+.resultCard h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #fff;
+    margin: 0;
+}
+
+.actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}

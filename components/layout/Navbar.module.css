@@ -52,6 +52,15 @@
     color: var(--accent);
 }
 
+.adminLink {
+    color: var(--primary) !important;
+    font-weight: 700 !important;
+}
+
+.adminLink:hover {
+    color: var(--primary-hover) !important;
+}
+
 .actions {
     display: flex;
     align-items: center;

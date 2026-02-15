@@ -14,19 +14,21 @@ export const ThemeToggle: React.FC = () => {
         setMounted(true);
     }, []);
 
-    if (!mounted) {
-        return <div className={styles.toggle} />;
-    }
-
     return (
         <button
             className={styles.toggle}
             onClick={toggleTheme}
             aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
             data-theme={theme}
+            style={!mounted ? { visibility: 'hidden' } : undefined}
         >
-            <Sun className={`${styles.icon} ${styles.sun}`} />
-            <Moon className={`${styles.icon} ${styles.moon}`} />
+            {mounted && (
+                <>
+                    <Sun className={`${styles.icon} ${styles.sun}`} />
+                    <Moon className={`${styles.icon} ${styles.moon}`} />
+                </>
+            )}
         </button>
     );
+
 };

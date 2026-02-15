@@ -333,5 +333,26 @@ export const careerPaths: CareerPath[] = [
             { id: 'analytics', name: 'Product Analytics', category: 'core', importance: 'high', description: 'Amplitude/Mixpanel.' },
             { id: 'ux-basics', name: 'UX Principles', category: 'supporting', importance: 'medium', description: 'User flow design.' }
         ]
+    },
+    {
+        id: 'software-tester',
+        slug: 'software-tester',
+        title: 'Software Tester',
+        description: 'Ensure software quality through rigorous testing, automation, and quality assurance processes.',
+        icon: 'Search',
+        responsibilities: [
+            'Developing test plans and test cases',
+            'Executing manual and automated tests',
+            'Identifying, documenting, and tracking bugs',
+            'Collaborating with developers to improve quality'
+        ],
+        progression: ['Junior QA Tester', 'QA Engineer', 'Senior QA / Automation Lead', 'QA Architect / Head of Quality'],
+        skills: [
+            { id: 'manual-testing', name: 'Manual Testing', category: 'core', importance: 'high', description: 'Test plan execution and bug reporting.' },
+            { id: 'automation', name: 'Automation', category: 'core', importance: 'high', description: 'Selenium, Playwright, or Cypress.' },
+            { id: 'api-testing', name: 'API Testing', category: 'core', importance: 'medium', description: 'Testing REST/GraphQL APIs with Postman.' },
+            { id: 'perf-testing', name: 'Performance', category: 'supporting', importance: 'medium', description: 'Load and stress testing.' },
+            { id: 'bug-tracking', name: 'Bug Tracking', category: 'supporting', importance: 'high', description: 'Jira or similar tool mastery.' }
+        ]
     }
 ];

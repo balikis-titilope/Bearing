@@ -1,7 +1,9 @@
 'use client';
 
-import { CheckCircle, PlayCircle, ArrowRight } from 'lucide-react';
+import { useState } from 'react';
+import { CheckCircle, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
+import { useRouter } from 'next/navigation';
 import styles from './SkillCard.module.css';
 
 interface SkillCardProps {
@@ -9,9 +11,14 @@ interface SkillCardProps {
   index: number;
   status: string;
   levelOrder: number;
+  enrollmentId: string;
+  slug: string;
 }
 
-export function SkillCard({ skill, index, status, levelOrder }: SkillCardProps) {
+export function SkillCard({ skill, index, status, levelOrder, enrollmentId, slug }: SkillCardProps) {
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  
   const statusConfig: Record<string, { label: string; color: string; bgColor: string }> = {
     NOT_STARTED: { label: 'Start', color: 'var(--primary)', bgColor: 'rgba(14, 165, 233, 0.1)' },
     IN_PROGRESS: { label: 'Continue', color: 'var(--accent)', bgColor: 'rgba(59, 130, 246, 0.1)' },
@@ -19,6 +26,27 @@ export function SkillCard({ skill, index, status, levelOrder }: SkillCardProps) 
   };
 
   const config = statusConfig[status] || statusConfig.NOT_STARTED;
+
+  const handleClick = async () => {
+    setLoading(true);
+    
+    if (status === 'NOT_STARTED') {
+      try {
+        await fetch('/api/skill-progress', {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ 
+            skillId: skill.id, 
+            status: 'IN_PROGRESS' 
+          }),
+        });
+      } catch (error) {
+        console.error('Failed to update progress:', error);
+      }
+    }
+    
+    router.push(`/paths/${slug}/learn/${skill.id}`);
+  };
 
   return (
     <div className={styles.card}>
@@ -44,6 +72,8 @@ export function SkillCard({ skill, index, status, levelOrder }: SkillCardProps) 
           variant={status === 'COMPLETED' ? 'outline' : 'primary'}
           size="sm"
           className={styles.actionButton}
+          onClick={handleClick}
+          disabled={loading}
         >
           {status === 'COMPLETED' ? (
             <>

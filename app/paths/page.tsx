@@ -48,7 +48,7 @@ export default function CareerPathsPage() {
         setSearchQuery('');
     };
 
-    const hasActiveFilters = Boolean(searchQuery || selectedCategories.length > 0 || selectedImportance.length > 0);
+    const hasActiveFilters = Boolean(selectedCategories.length > 0 || selectedImportance.length > 0);
     
     return (
         <>

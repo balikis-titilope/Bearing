@@ -1,7 +1,7 @@
 'use client';
 
 import React, { Suspense, useCallback, useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import { BeatLoader } from "react-spinners";
 import { AlertCircle, CheckCircle } from "lucide-react";
 
@@ -10,6 +10,7 @@ import { AuthCard } from "@/components/auth/AuthCard";
 import styles from "@/app/register/page.module.css";
 
 const NewVerificationForm = () => {
+    const router = useRouter();
     const [error, setError] = useState<string | undefined>();
     const [success, setSuccess] = useState<string | undefined>();
 
@@ -28,11 +29,14 @@ const NewVerificationForm = () => {
             .then((data) => {
                 setSuccess(data.success);
                 setError(data.error);
+                if (data.redirectUrl) {
+                    router.push(data.redirectUrl);
+                }
             })
             .catch(() => {
                 setError("Something went wrong!");
             });
-    }, [token, success, error]);
+    }, [token, success, error, router]);
 
     useEffect(() => {
         onSubmit();

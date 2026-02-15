@@ -9,6 +9,7 @@ import { Card } from '@/components/ui/Card';
 import { ScrollReveal } from '@/components/ui/ScrollReveal';
 import { Button } from '@/components/ui/Button';
 import { Plus, Folder } from 'lucide-react';
+import { AuthCard } from "@/components/auth/AuthCard";
 import styles from './page.module.css';
 
 function ProjectsContent() {
@@ -75,7 +76,7 @@ function ProjectsContent() {
             <p className={styles.subtitle}>
               Track your learning progress and build your portfolio.
             </p>
-            
+
             <div className={styles.actions}>
               <Button variant="primary" size="sm" className={styles.newProjectBtn}>
                 <Plus size={18} />
@@ -126,11 +127,11 @@ function ProjectsContent() {
                         </Button>
                       </div>
                     </div>
-                    
+
                     <div className={styles.projectInfo}>
                       <h3 className={styles.projectTitle}>{project.title}</h3>
                       <p className={styles.projectDescription}>{project.description}</p>
-                      
+
                       <div className={styles.projectTags}>
                         {project.tags.map((tag, tagIndex) => (
                           <span key={tagIndex} className={styles.tag}>
@@ -143,7 +144,7 @@ function ProjectsContent() {
 
                   <div className={styles.projectFooter}>
                     <div className={styles.projectStatus}>
-                      <div 
+                      <div
                         className={styles.statusIndicator}
                         style={{ backgroundColor: getStatusColor(project.status) }}
                       />
@@ -151,10 +152,10 @@ function ProjectsContent() {
                         {getStatusLabel(project.status)}
                       </span>
                     </div>
-                    
+
                     <div className={styles.progressInfo}>
                       <div className={styles.progressBar}>
-                        <div 
+                        <div
                           className={styles.progressFill}
                           style={{ width: `${project.progress}%` }}
                         />
@@ -189,14 +190,16 @@ function ProjectsContent() {
 export default function Projects() {
   return (
     <ProtectedRoute fallback={
-      <div className={styles.authRequired}>
-        <Folder size={48} />
-        <h2>Authentication Required</h2>
-        <p>Please log in to access your projects.</p>
-        <Button onClick={() => window.location.href = '/login'}>
-          Go to Login
-        </Button>
-      </div>
+      <AuthCard
+        title="Authentication Required"
+        description="Please log in to access your projects."
+        backHref="/login"
+        backLabel="Go to Login"
+      >
+        <div className={styles.authRequired}>
+          <Folder size={48} className={styles.authIcon} />
+        </div>
+      </AuthCard>
     }>
       <Navbar />
       <main className={styles.page}>

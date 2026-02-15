@@ -6,7 +6,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -59,6 +59,7 @@ model Skill {
 
   resources Resource[]
   projects  Project[]
+  questions AssessmentQuestion[]
   progress  SkillProgress[]
 
   @@unique([levelId, order])
@@ -97,6 +98,11 @@ model Project {
   // Grading
   rubric       String? // JSON string of grading rubric
   passingScore Int     @default(70) // Percentage needed to pass
+
+  // Guide & Support
+  guide       String? // JSON string of step-by-step instructions
+  hints       String? // JSON string of hints
+  stuckLinks  String? // JSON string of helpful links for stuck users
 
   order             Int
   levelId           String?
@@ -144,6 +150,8 @@ model SkillProgress {
   enrollmentId String
   skillId      String
   status       String // NOT_STARTED, IN_PROGRESS, COMPLETED
+  currentScore Int?   @default(0)
+  bestScore    Int?   @default(0)
 
   completedAt DateTime?
 
@@ -209,6 +217,9 @@ model AssessmentQuestion {
   explanation   String? // Why this is the answer
 
   order Int
+
+  skillId      String?
+  skill        Skill?     @relation(fields: [skillId], references: [id])
 
   userAnswers UserAssessmentAnswer[]
 
@@ -319,6 +330,12 @@ model ActivityLog {
 // USER MODEL
 // ============================================
 
+enum UserRole {
+  USER
+  ADMIN
+  SUPER_ADMIN
+}
+
 model User {
   id            String    @id @default(cuid())
   name          String?
@@ -326,6 +343,7 @@ model User {
   emailVerified DateTime? @map("email_verified")
   password      String?
   image         String?
+  role          UserRole  @default(USER)
 
   // Growth OS Fields
   activePathId   String? // One active path

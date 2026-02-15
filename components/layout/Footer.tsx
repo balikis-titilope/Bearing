@@ -1,10 +1,15 @@
+"use client";
+
 import React from 'react';
 import Link from 'next/link';
+import { useSession, signOut } from 'next-auth/react';
 import { Button } from '../ui/Button';
 import { Linkedin, Compass } from 'lucide-react';
 import styles from './Footer.module.css';
 
 export const Footer: React.FC = () => {
+    const { data: session } = useSession();
+
     return (
         <footer className={styles.footer}>
             <div className="container">
@@ -16,11 +21,17 @@ export const Footer: React.FC = () => {
                         </div>
                         <p className={styles.tagline}>Your compass for a successful career in tech.</p>
                         <div className={styles.brandAction}>
-                            <Link href="/register">
-                                <Button variant="primary" className={styles.footerBtn}>
-                                    Create a free account
+                            {session ? (
+                                <Button variant="primary" className={styles.footerBtn} onClick={() => signOut({ callbackUrl: '/' })}>
+                                    Sign Out
                                 </Button>
-                            </Link>
+                            ) : (
+                                <Link href="/register">
+                                    <Button variant="primary" className={styles.footerBtn}>
+                                        Create a free account
+                                    </Button>
+                                </Link>
+                            )}
                         </div>
                     </div>
 
@@ -48,7 +59,7 @@ export const Footer: React.FC = () => {
                     </div>
                 </div>
                 <div className={styles.bottom}>
-                    <p>&copy; {new Date().getFullYear()} Bearing. All rights reserved.</p>
+                    <p suppressHydrationWarning>&copy; {new Date().getFullYear()} Bearing. All rights reserved.</p>
                 </div>
             </div>
         </footer>

@@ -5,6 +5,7 @@ import { Footer } from '@/components/layout/Footer';
 import { auth } from "@/auth";
 import { EnrollButton } from "@/components/learning/EnrollButton";
 import { getCareerPath, getAllCareerPathSlugs } from "@/lib/data/career-paths";
+import { db } from "@/lib/db";
 import styles from './[slug].module.css';
 
 interface PageProps {
@@ -44,6 +45,19 @@ export default async function CareerPathPage({ params }: PageProps) {
     notFound();
   }
 
+  let isEnrolled = false;
+  if (userId) {
+    const enrollment = await db.enrollment.findUnique({
+      where: {
+        userId_careerPathId: {
+          userId,
+          careerPathId: path.id,
+        },
+      },
+    });
+    isEnrolled = !!enrollment;
+  }
+
   const totalSkills = path.levels.reduce((acc, level) => acc + level.skills.length, 0);
 
   return (
@@ -74,7 +88,9 @@ export default async function CareerPathPage({ params }: PageProps) {
 
               <EnrollButton
                 careerPathId={path.id}
+                slug={slug}
                 userId={userId}
+                isEnrolled={isEnrolled}
               />
             </div>
           </div>

@@ -7,11 +7,12 @@ import { Button } from '../ui/Button';
 import styles from './Navbar.module.css';
 import { Compass, User, LogOut } from 'lucide-react';
 import { ThemeToggle } from '../ui/ThemeToggle';
-// import { logout } from '@/actions/logout'; // Using client-side signOut instead
 import { ScrollProgress } from '../ui/ScrollProgress';
+import { useHasMounted } from '@/hooks/useHasMounted';
 
 export const Navbar: React.FC = () => {
     const { data: session } = useSession();
+    const hasMounted = useHasMounted();
 
     const onLogout = () => {
         signOut({ callbackUrl: '/' });
@@ -44,10 +45,13 @@ export const Navbar: React.FC = () => {
                 </Link>
 
                 <div className={styles.links} role="menubar">
-                    {session ? (
+                    {hasMounted && (session ? (
                         /* App Links for Logged In Users */
                         <>
                             <Link href="/dashboard" className={styles.link} role="menuitem">Dashboard</Link>
+                            {(session?.user?.role === "ADMIN" || session?.user?.role === "SUPER_ADMIN") && (
+                                <Link href="/admin" className={`${styles.link} ${styles.adminLink}`} role="menuitem">Admin Hub</Link>
+                            )}
                             <Link href="/projects" className={styles.link} role="menuitem">Projects</Link>
                             <Link href="/paths" className={styles.link} role="menuitem">All Paths</Link>
                         </>
@@ -79,12 +83,12 @@ export const Navbar: React.FC = () => {
                                 Features
                             </a>
                         </>
-                    )}
+                    ))}
                 </div>
 
                 <div className={styles.actions}>
                     <ThemeToggle />
-                    {session ? (
+                    {hasMounted && (session ? (
                         <div className={styles.userSection}>
                             <div className={styles.userProfile}>
                                 <User size={18} />
@@ -97,9 +101,6 @@ export const Navbar: React.FC = () => {
                         </div>
                     ) : (
                         <>
-                            <Link href="/contact" className={styles.link}>
-                                Contact
-                            </Link>
                             <Link href="/login" className={`${styles.link} ${styles.loginBtn}`}>
                                 Log in
                             </Link>
@@ -107,7 +108,7 @@ export const Navbar: React.FC = () => {
                                 Get Started
                             </Link>
                         </>
-                    )}
+                    ))}
                 </div>
             </div>
             <ScrollProgress />

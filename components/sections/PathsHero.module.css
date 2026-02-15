@@ -8,6 +8,8 @@
     overflow: hidden;
     padding: 0;
     background: radial-gradient(circle at 10% 20%, var(--primary-soft) 0%, var(--background) 90%);
+    visibility: visible;
+    opacity: 1;
 }
 
 .ambientOverlay {
@@ -61,6 +63,8 @@
     max-width: 800px;
     margin: 0 auto;
     text-align: center;
+    visibility: visible;
+    opacity: 1;
 }
 
 .content h1 {
@@ -69,6 +73,8 @@
     line-height: 1.1;
     margin-bottom: 1.5rem;
     color: var(--primary);
+    visibility: visible;
+    opacity: 1;
 }
 
 .description {
@@ -76,6 +82,8 @@
     line-height: 1.6;
     color: var(--text-muted);
     margin-bottom: 3rem;
+    visibility: visible;
+    opacity: 1;
 }
 
 .searchSection {
@@ -118,6 +126,16 @@
     font-size: 1rem;
     outline: none;
     width: 100%;
+    box-shadow: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.searchInput:focus {
+    outline: none;
+    border: none;
+    box-shadow: none;
 }
 
 .searchInput::placeholder {

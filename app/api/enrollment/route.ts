@@ -1,5 +1,43 @@
 import { NextResponse } from 'next/server';
 import { db } from '@/lib/db';
+import { auth } from '@/auth';
+
+export async function GET(request: Request) {
+  try {
+    const session = await auth();
+    
+    if (!session?.user?.id) {
+      return NextResponse.json(
+        { error: 'Unauthorized' },
+        { status: 401 }
+      );
+    }
+
+    const enrollments = await db.enrollment.findMany({
+      where: { userId: session.user.id },
+      include: {
+        careerPath: {
+          select: {
+            id: true,
+            slug: true,
+            title: true,
+            description: true,
+            icon: true,
+          },
+        },
+      },
+      orderBy: { enrolledAt: 'desc' },
+    });
+
+    return NextResponse.json({ enrollments });
+  } catch (error) {
+    console.error('Get enrollments error:', error);
+    return NextResponse.json(
+      { error: 'Failed to fetch enrollments' },
+      { status: 500 }
+    );
+  }
+}
 
 export async function POST(request: Request) {
   try {

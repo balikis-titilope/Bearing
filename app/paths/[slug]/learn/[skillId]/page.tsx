@@ -13,7 +13,7 @@ interface PageProps {
 export default async function SkillPage({ params }: PageProps) {
   const { slug, skillId } = await params;
   const session = await auth();
-  
+
   if (!session?.user?.id) {
     return notFound();
   }
@@ -34,6 +34,17 @@ export default async function SkillPage({ params }: PageProps) {
             include: {
               skills: {
                 orderBy: { order: 'asc' },
+                include: {
+                  resources: {
+                    orderBy: { order: 'asc' },
+                  },
+                  questions: {
+                    orderBy: { order: 'asc' },
+                  },
+                  projects: {
+                    where: { isMiniProject: true },
+                  },
+                },
               },
             },
           },
@@ -52,7 +63,7 @@ export default async function SkillPage({ params }: PageProps) {
   // Find the skill
   let skill: any = null;
   let level: any = null;
-  
+
   for (const lvl of enrollment.careerPath.levels) {
     const found = lvl.skills.find((s: any) => s.id === skillId);
     if (found) {
@@ -72,7 +83,7 @@ export default async function SkillPage({ params }: PageProps) {
     <>
       <Navbar />
       <main className={styles.page}>
-        <SkillContent 
+        <SkillContent
           skill={skill}
           level={level}
           enrollment={enrollment}

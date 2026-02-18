@@ -16,9 +16,15 @@ export const RegisterSchema = z.object({
     password: z.string().min(8, {
         message: "Minimum 8 characters required",
     }),
+    confirmPassword: z.string().min(8, {
+        message: "Confirmation password is required",
+    }),
     name: z.string().min(1, {
         message: "Name is required",
     }),
+}).refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
 });
 
 export const ResetSchema = z.object({

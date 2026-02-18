@@ -38,9 +38,12 @@ export const login = async (values: LoginValues): Promise<LoginResult> => {
         return { error: "Email does not exist!" };
     }
 
+    // Email verification check removed due to Resend free tier limits
+    /*
     if (!existingUser.emailVerified) {
         return { error: "Please verify your email before logging in. Check your inbox for the verification link." };
     }
+    */
 
     try {
         await signIn("credentials", {

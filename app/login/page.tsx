@@ -3,7 +3,7 @@
 import React, { useState, useTransition } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Compass, CheckCircle2, AlertCircle } from 'lucide-react';
+import { Compass, CheckCircle2, AlertCircle, Eye, EyeOff } from 'lucide-react';
 import styles from '../register/page.module.css';
 import { login } from '@/actions/login';
 import { socialLogin } from '@/actions/social-login';
@@ -40,6 +40,8 @@ export default function LoginPage() {
             setError("You already have an account with Google. Please log in.");
         }
     }, [verified, errorParam]);
+
+    const [showPassword, setShowPassword] = useState(false);
 
     const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -166,7 +168,25 @@ export default function LoginPage() {
                                 <label htmlFor="password">Password</label>
                                 <Link href="/auth/reset" className={styles.forgotBtn}>Forgot?</Link>
                             </div>
-                            <input name="password" type="password" id="password" placeholder="Enter your password" className={styles.input} required disabled={isPending} />
+                            <div className={styles.passwordInput}>
+                                <input
+                                    name="password"
+                                    type={showPassword ? "text" : "password"}
+                                    id="password"
+                                    placeholder="Enter your password"
+                                    className={styles.input}
+                                    required
+                                    disabled={isPending}
+                                />
+                                <button
+                                    type="button"
+                                    className={styles.passwordToggle}
+                                    onClick={() => setShowPassword(!showPassword)}
+                                    disabled={isPending}
+                                >
+                                    {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                                </button>
+                            </div>
                         </div>
 
 

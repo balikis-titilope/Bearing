@@ -2,16 +2,16 @@
 
 import React, { useTransition, useState, useMemo, useEffect } from 'react';
 import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { Compass, CheckCircle2, ChevronRight, AlertCircle, Eye, EyeOff } from 'lucide-react';
 import styles from './page.module.css';
 import { register } from '@/actions/register';
 import { socialLogin } from '@/actions/social-login';
-import Modal from '@/components/ui/Modal';
 
 interface RegisterValues {
     email: string;
+    confirmPassword: string;
     password: string;
     name?: string;
 }
@@ -32,11 +32,12 @@ const isPasswordStrong = (validation: ReturnType<typeof validatePassword>) => {
 
 
 export default function RegisterPage() {
+    const router = useRouter();
     const [isPending, startTransition] = useTransition();
     const [error, setError] = React.useState<string | undefined>("");
     const [success, setSuccess] = React.useState<string | undefined>("");
-    const [showModal, setShowModal] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [password, setPassword] = useState("");
     const [passwordTouched, setPasswordTouched] = useState(false);
     const searchParams = useSearchParams();
@@ -48,15 +49,16 @@ export default function RegisterPage() {
     const passwordValidation = useMemo(() => validatePassword(password), [password]);
     const isStrong = isPasswordStrong(passwordValidation);
 
-    // Redirect to dashboard after successful OAuth completion
+    // Redirect to dashboard after successful registration or OAuth completion
     useEffect(() => {
-        if (success && isOAuthComplete) {
+        if (success) {
             const timer = setTimeout(() => {
-                window.location.href = '/dashboard';
+                router.refresh();
+                router.push('/dashboard');
             }, 1500);
             return () => clearTimeout(timer);
         }
-    }, [success, isOAuthComplete]);
+    }, [success, router]);
 
     const errorParam = searchParams.get("error");
 
@@ -74,14 +76,20 @@ export default function RegisterPage() {
             return;
         }
 
-        setError("");
-        setSuccess("");
-
         const formData = new FormData(e.currentTarget);
         const values = Object.fromEntries(formData.entries());
 
+        if (!isOAuthComplete && values.password !== values.confirmPassword) {
+            setError("Passwords do not match");
+            return;
+        }
+
+        setError("");
+        setSuccess("");
+
         const registerValues: RegisterValues = {
             email: values.email as string,
+            confirmPassword: values.confirmPassword as string,
             password: values.password as string,
             name: values.name as string,
         };
@@ -90,8 +98,8 @@ export default function RegisterPage() {
             register(registerValues, isOAuthComplete).then((data) => {
                 setError(data?.error);
                 if (data?.success) {
-                    setShowModal(true);
                     setSuccess(data.success);
+                    // Redirect is handled by the useEffect watching success
                 }
             });
         });
@@ -165,6 +173,15 @@ export default function RegisterPage() {
                         </div>
                     )}
 
+                    {success && (
+                        <div className={styles.successContainer}>
+                            <div className={styles.successMsg}>
+                                <CheckCircle2 size={16} />
+                                <span>{success}</span>
+                            </div>
+                        </div>
+                    )}
+
                     <div className={styles.divider}>
                         SIGN UP WITH EMAIL
                     </div>
@@ -202,57 +219,83 @@ export default function RegisterPage() {
                             />
                         </div>
                         {!isOAuthComplete && (
-                            <div className={styles.inputGroup}>
-                                <label htmlFor="password">Password</label>
-                                <div className={styles.passwordInput}>
-                                    <input
-                                        name="password"
-                                        type={showPassword ? "text" : "password"}
-                                        id="password"
-                                        placeholder="Minimum 8 characters"
-                                        className={styles.input}
-                                        required
-                                        disabled={isPending}
-                                        value={password}
-                                        onChange={(e) => setPassword(e.target.value)}
-                                        onFocus={() => setPasswordTouched(true)}
-                                    />
-                                    <button
-                                        type="button"
-                                        className={styles.passwordToggle}
-                                        onClick={() => setShowPassword(!showPassword)}
-                                        disabled={isPending}
-                                    >
-                                        {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-                                    </button>
-                                </div>
-                                {passwordTouched && (
-                                    <div className={styles.passwordRequirements}>
-                                        <span className={passwordValidation.length ? styles.valid : styles.invalid}>
-                                            {passwordValidation.length ? <CheckCircle2 size={14} /> : <span>•</span>} 8+ characters
-                                        </span>
-                                        <span className={passwordValidation.uppercase ? styles.valid : styles.invalid}>
-                                            {passwordValidation.uppercase ? <CheckCircle2 size={14} /> : <span>•</span>} 1 uppercase
-                                        </span>
-                                        <span className={passwordValidation.lowercase ? styles.valid : styles.invalid}>
-                                            {passwordValidation.lowercase ? <CheckCircle2 size={14} /> : <span>•</span>} 1 lowercase
-                                        </span>
-                                        <span className={passwordValidation.number ? styles.valid : styles.invalid}>
-                                            {passwordValidation.number ? <CheckCircle2 size={14} /> : <span>•</span>} 1 number
-                                        </span>
-                                        <span className={passwordValidation.special ? styles.valid : styles.invalid}>
-                                            {passwordValidation.special ? <CheckCircle2 size={14} /> : <span>•</span>} 1 special char
-                                        </span>
+                            <>
+                                <div className={styles.inputGroup}>
+                                    <label htmlFor="password">Password</label>
+                                    <div className={styles.passwordInput}>
+                                        <input
+                                            name="password"
+                                            type={showPassword ? "text" : "password"}
+                                            id="password"
+                                            placeholder="Minimum 8 characters"
+                                            className={styles.input}
+                                            required
+                                            disabled={isPending}
+                                            value={password}
+                                            onChange={(e) => setPassword(e.target.value)}
+                                            onFocus={() => setPasswordTouched(true)}
+                                        />
+                                        <button
+                                            type="button"
+                                            className={styles.passwordToggle}
+                                            onClick={() => setShowPassword(!showPassword)}
+                                            disabled={isPending}
+                                        >
+                                            {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                                        </button>
                                     </div>
-                                )}
-                            </div>
+                                    {passwordTouched && (
+                                        <div className={styles.passwordRequirements}>
+                                            <span className={passwordValidation.length ? styles.valid : styles.invalid}>
+                                                {passwordValidation.length ? <CheckCircle2 size={14} /> : <span>•</span>} 8+ characters
+                                            </span>
+                                            <span className={passwordValidation.uppercase ? styles.valid : styles.invalid}>
+                                                {passwordValidation.uppercase ? <CheckCircle2 size={14} /> : <span>•</span>} 1 uppercase
+                                            </span>
+                                            <span className={passwordValidation.lowercase ? styles.valid : styles.invalid}>
+                                                {passwordValidation.lowercase ? <CheckCircle2 size={14} /> : <span>•</span>} 1 lowercase
+                                            </span>
+                                            <span className={passwordValidation.number ? styles.valid : styles.invalid}>
+                                                {passwordValidation.number ? <CheckCircle2 size={14} /> : <span>•</span>} 1 number
+                                            </span>
+                                            <span className={passwordValidation.special ? styles.valid : styles.invalid}>
+                                                {passwordValidation.special ? <CheckCircle2 size={14} /> : <span>•</span>} 1 special char
+                                            </span>
+                                        </div>
+                                    )}
+                                </div>
+                                <div className={styles.inputGroup}>
+                                    <label htmlFor="confirmPassword">Confirm Password</label>
+                                    <div className={styles.passwordInput}>
+                                        <input
+                                            name="confirmPassword"
+                                            type={showConfirmPassword ? "text" : "password"}
+                                            id="confirmPassword"
+                                            placeholder="Confirm your password"
+                                            className={styles.input}
+                                            required
+                                            disabled={isPending}
+                                        />
+                                        <button
+                                            type="button"
+                                            className={styles.passwordToggle}
+                                            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                                            disabled={isPending}
+                                        >
+                                            {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                                        </button>
+                                    </div>
+                                </div>
+                            </>
                         )}
 
 
 
-                        <button type="submit" className={styles.submitBtn} disabled={isPending}>
+                        <button type="submit" className={styles.submitBtn} disabled={isPending || !!success}>
                             {isPending ? (
                                 <span className={styles.spinner}></span>
+                            ) : success ? (
+                                'Success!'
                             ) : (
                                 'Sign Up'
                             )}
@@ -262,15 +305,9 @@ export default function RegisterPage() {
                     <p className={styles.terms}>
                         By signing up, you agree to our <Link href="/privacy">Privacy Policy</Link> and <Link href="/terms">Terms of Service</Link>.
                     </p>
-
-                    <Modal
-                        isOpen={showModal}
-                        onClose={() => setShowModal(false)}
-                        title="Check your email"
-                        message={success || "We've sent you a verification link. Please check your inbox and click the link to activate your account."}
-                    />
                 </div>
             </div>
         </div>
     );
 }
+

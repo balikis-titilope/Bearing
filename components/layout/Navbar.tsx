@@ -3,6 +3,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useSession, signOut } from 'next-auth/react';
+import { usePathname } from 'next/navigation';
 import { Button } from '../ui/Button';
 import styles from './Navbar.module.css';
 import { Compass, User, LogOut, Menu, X } from 'lucide-react';
@@ -13,6 +14,7 @@ import { useHasMounted } from '@/hooks/useHasMounted';
 
 export const Navbar: React.FC = () => {
     const { data: session } = useSession();
+    const pathname = usePathname();
     const hasMounted = useHasMounted();
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [activeSection, setActiveSection] = useState<string>('');
@@ -94,12 +96,12 @@ export const Navbar: React.FC = () => {
                 <div className={styles.desktopLinks}>
                     {hasMounted && (session ? (
                         <>
-                            <Link href="/dashboard" className={styles.link}>Dashboard</Link>
+                            <Link href="/dashboard" className={`${styles.link} ${pathname === '/dashboard' ? styles.active : ''}`}>Dashboard</Link>
                             {(session?.user?.role === "ADMIN" || session?.user?.role === "SUPER_ADMIN") && (
-                                <Link href="/admin" className={`${styles.link} ${styles.adminLink}`}>Admin Hub</Link>
+                                <Link href="/admin" className={`${styles.link} ${styles.adminLink} ${pathname === '/admin' ? styles.active : ''}`}>Admin Hub</Link>
                             )}
-                            <Link href="/projects" className={styles.link}>Projects</Link>
-                            <Link href="/paths" className={styles.link}>All Paths</Link>
+                            <Link href="/projects" className={`${styles.link} ${pathname === '/projects' ? styles.active : ''}`}>Projects</Link>
+                            <Link href="/paths" className={`${styles.link} ${pathname === '/paths' ? styles.active : ''}`}>All Paths</Link>
                         </>
                     ) : (
                         <>
@@ -144,12 +146,12 @@ export const Navbar: React.FC = () => {
                     <div className={styles.mobileLinks}>
                         {hasMounted && (session ? (
                             <>
-                                <Link href="/dashboard" className={styles.link} onClick={() => setMobileMenuOpen(false)}>Dashboard</Link>
+                                <Link href="/dashboard" className={`${styles.link} ${pathname === '/dashboard' ? styles.active : ''}`} onClick={() => setMobileMenuOpen(false)}>Dashboard</Link>
                                 {(session?.user?.role === "ADMIN" || session?.user?.role === "SUPER_ADMIN") && (
-                                    <Link href="/admin" className={`${styles.link} ${styles.adminLink}`} onClick={() => setMobileMenuOpen(false)}>Admin Hub</Link>
+                                    <Link href="/admin" className={`${styles.link} ${styles.adminLink} ${pathname === '/admin' ? styles.active : ''}`} onClick={() => setMobileMenuOpen(false)}>Admin Hub</Link>
                                 )}
-                                <Link href="/projects" className={styles.link} onClick={() => setMobileMenuOpen(false)}>Projects</Link>
-                                <Link href="/paths" className={styles.link} onClick={() => setMobileMenuOpen(false)}>All Paths</Link>
+                                <Link href="/projects" className={`${styles.link} ${pathname === '/projects' ? styles.active : ''}`} onClick={() => setMobileMenuOpen(false)}>Projects</Link>
+                                <Link href="/paths" className={`${styles.link} ${pathname === '/paths' ? styles.active : ''}`} onClick={() => setMobileMenuOpen(false)}>All Paths</Link>
                             </>
                         ) : (
                             <>

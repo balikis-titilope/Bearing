@@ -43,8 +43,9 @@
     font-size: 0.95rem;
 }
 
-.link:hover {
-    color: var(--accent);
+.link:hover,
+.link.active {
+    color: var(--primary);
 }
 
 .adminLink {

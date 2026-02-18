@@ -15,6 +15,7 @@ export const Navbar: React.FC = () => {
     const { data: session } = useSession();
     const hasMounted = useHasMounted();
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const [activeSection, setActiveSection] = useState<string>('');
 
     const onLogout = () => {
         signOut({ callbackUrl: '/' });
@@ -29,6 +30,34 @@ export const Navbar: React.FC = () => {
         setMobileMenuOpen(false);
     }, []);
 
+    // Active section detection
+    useEffect(() => {
+        const sections = ['highlight', 'how-it-works', 'paths', 'philosophy'];
+
+        const observerOptions = {
+            root: null,
+            rootMargin: '-20% 0px -70% 0px', // Detect when section is in the upper part of viewport
+            threshold: 0
+        };
+
+        const observerCallback = (entries: IntersectionObserverEntry[]) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    setActiveSection(entry.target.id);
+                }
+            });
+        };
+
+        const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+        sections.forEach(id => {
+            const element = document.getElementById(id);
+            if (element) observer.observe(element);
+        });
+
+        return () => observer.disconnect();
+    }, []);
+
     // Force scroll to top on page load, ignoring hash
     useEffect(() => {
         // Clear the hash from the URL without triggering a scroll or page reload
@@ -37,6 +66,13 @@ export const Navbar: React.FC = () => {
         }
         window.scrollTo(0, 0);
     }, []);
+
+    const navLinks = [
+        { id: 'highlight', label: 'Features' },
+        { id: 'philosophy', label: 'Our Philosophy' },
+        { id: 'how-it-works', label: 'How It Works' },
+        { id: 'paths', label: 'Career Paths' },
+    ];
 
     return (
         <nav className={styles.nav} role="navigation" aria-label="Main navigation">
@@ -67,9 +103,16 @@ export const Navbar: React.FC = () => {
                         </>
                     ) : (
                         <>
-                            <a href="#how-it-works" className={styles.link} onClick={(e) => handleScrollToSection(e, 'how-it-works')}>How It Works</a>
-                            <a href="#paths" className={styles.link} onClick={(e) => handleScrollToSection(e, 'paths')}>Career Paths</a>
-                            <a href="#highlight" className={styles.link} onClick={(e) => handleScrollToSection(e, 'highlight')}>Features</a>
+                            {navLinks.map(link => (
+                                <a
+                                    key={link.id}
+                                    href={`#${link.id}`}
+                                    className={`${styles.link} ${activeSection === link.id ? styles.active : ''}`}
+                                    onClick={(e) => handleScrollToSection(e, link.id)}
+                                >
+                                    {link.label}
+                                </a>
+                            ))}
                         </>
                     ))}
                 </div>
@@ -110,9 +153,19 @@ export const Navbar: React.FC = () => {
                             </>
                         ) : (
                             <>
-                                <a href="#how-it-works" className={styles.link} onClick={(e) => handleScrollToSection(e, 'how-it-works')}>How It Works</a>
-                                <a href="#paths" className={styles.link} onClick={(e) => handleScrollToSection(e, 'paths')}>Career Paths</a>
-                                <a href="#highlight" className={styles.link} onClick={(e) => handleScrollToSection(e, 'highlight')}>Features</a>
+                                {navLinks.map(link => (
+                                    <a
+                                        key={link.id}
+                                        href={`#${link.id}`}
+                                        className={`${styles.link} ${activeSection === link.id ? styles.active : ''}`}
+                                        onClick={(e) => {
+                                            handleScrollToSection(e, link.id);
+                                            setMobileMenuOpen(false);
+                                        }}
+                                    >
+                                        {link.label}
+                                    </a>
+                                ))}
                             </>
                         ))}
                     </div>

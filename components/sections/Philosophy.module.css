@@ -1,0 +1,133 @@
+.section {
+    padding: 10rem 0;
+    background-color: var(--background);
+    position: relative;
+    overflow: hidden;
+}
+
+.intro {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 5rem;
+}
+
+.label {
+    display: inline-block;
+    color: var(--primary);
+    background: var(--primary-soft);
+    padding: 0.5rem 1.25rem;
+    border-radius: 100px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid rgba(14, 165, 233, 0.2);
+}
+
+.title {
+    font-size: clamp(2.5rem, 4vw, 3.5rem);
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    color: var(--primary);
+}
+
+.description {
+    font-size: 1.25rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 3rem;
+    margin-bottom: 6rem;
+}
+
+.card {
+    padding: 3rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+:global([data-theme='light']) .card {
+    background: rgba(0, 0, 0, 0.02);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.05);
+    border-color: var(--primary-soft);
+}
+
+.cardIcon {
+    margin-bottom: 2rem;
+    color: var(--primary);
+}
+
+.card h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--primary);
+}
+
+.card p {
+    color: var(--text-muted);
+    line-height: 1.6;
+}
+
+.mvSection {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    padding-top: 6rem;
+    border-top: 1px solid var(--border);
+}
+
+.mvItem h4 {
+    font-size: 1rem;
+    color: var(--primary);
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.mvItem p {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    line-height: 1.4;
+}
+
+@media (max-width: 991px) {
+    .mvSection {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .section {
+        padding: 6rem 0;
+    }
+
+    .grid {
+        gap: 1.5rem;
+    }
+
+    .card {
+        padding: 2rem;
+    }
+
+    .mvItem p {
+        font-size: 1.25rem;
+    }
+}

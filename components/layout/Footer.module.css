@@ -3,6 +3,44 @@
     color: white;
     padding: 6rem 0 3rem;
     font-family: var(--font-body);
+    position: relative;
+    overflow: hidden;
+}
+
+.ambientOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.glow {
+    position: absolute;
+    filter: blur(120px);
+    border-radius: 50%;
+    opacity: 0.15;
+}
+
+.glow1 {
+    width: 600px;
+    height: 600px;
+    background: var(--primary-light);
+    top: -200px;
+    right: -100px;
+    opacity: 0.1;
+}
+
+.glow2 {
+    width: 400px;
+    height: 400px;
+    background: var(--primary);
+    bottom: -100px;
+    left: -50px;
+    opacity: 0.08;
 }
 
 .grid {
@@ -112,8 +150,46 @@
 }
 
 @media (max-width: 768px) {
+    .footer {
+        padding: 4rem 0 2rem;
+    }
+
     .grid {
         grid-template-columns: 1fr;
         gap: 2rem;
+    }
+
+    .linksContainer {
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .brand {
+        text-align: center;
+    }
+
+    .logo {
+        justify-content: center;
+    }
+
+    .brand p {
+        max-width: none;
+    }
+
+    .brandAction {
+        display: flex;
+        justify-content: center;
+    }
+
+    .links {
+        text-align: center;
+    }
+
+    .links h4 {
+        margin-bottom: 1rem;
+    }
+
+    .links li {
+        font-size: 1rem;
     }
 }

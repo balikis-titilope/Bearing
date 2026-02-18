@@ -6,6 +6,8 @@ import { Footer } from '@/components/layout/Footer';
 import { LearningHeader } from "@/components/learning/LearningHeader";
 import { SkillCard } from "@/components/learning/SkillCard";
 import { ProjectCard } from "@/components/learning/ProjectCard";
+import { canAccess } from "@/lib/permissions";
+import { getAdminMode } from "@/lib/permissions-server";
 import styles from './page.module.css';
 
 interface PageProps {
@@ -15,7 +17,7 @@ interface PageProps {
 export default async function LearnPage({ params }: PageProps) {
   const { slug } = await params;
   const session = await auth();
-  
+
   if (!session?.user?.id) {
     return notFound();
   }
@@ -55,19 +57,21 @@ export default async function LearnPage({ params }: PageProps) {
 
   // Get all projects for current level
   const projects = await db.project.findMany({
-    where: { 
+    where: {
       levelId: currentLevel.id,
       isFinalProject: true,
     },
     orderBy: { order: 'asc' },
   });
 
+  const adminMode = await getAdminMode();
+
   return (
     <>
       <Navbar />
       <main className={styles.page}>
         <div className="container">
-          <LearningHeader 
+          <LearningHeader
             path={path}
             currentLevel={currentLevel}
             enrollment={enrollment}
@@ -89,6 +93,17 @@ export default async function LearnPage({ params }: PageProps) {
                   const progress = enrollment.skillProgress.find(
                     p => p.skillId === skill.id
                   );
+
+                  // Sequential level locking: lock if any previous level is not completed
+                  const previousLevels = path.levels.filter(l => l.order < currentLevel.order);
+                  const isLevelLocked = previousLevels.some(level => {
+                    // Simple check: check if all skills in that level are completed
+                    return level.skills.some(s => {
+                      const p = enrollment.skillProgress.find(sp => sp.skillId === s.id);
+                      return p?.status !== 'COMPLETED';
+                    });
+                  });
+
                   return (
                     <SkillCard
                       key={skill.id}
@@ -98,6 +113,7 @@ export default async function LearnPage({ params }: PageProps) {
                       levelOrder={currentLevel.order}
                       enrollmentId={enrollment.id}
                       slug={slug}
+                      isLocked={!canAccess(!isLevelLocked, session?.user, adminMode)}
                     />
                   );
                 })}
@@ -115,14 +131,17 @@ export default async function LearnPage({ params }: PageProps) {
                 const submission = enrollment.projectProgress.find(
                   p => p.projectId === project.id
                 );
+
+                const skillProgressMap = enrollment.skillProgress.some(
+                  p => p.status !== 'COMPLETED'
+                );
+
                 return (
                   <ProjectCard
                     key={project.id}
                     project={project}
                     status={submission?.status || 'NOT_STARTED'}
-                    isLocked={enrollment.skillProgress.some(
-                      p => p.status !== 'COMPLETED'
-                    )}
+                    isLocked={!canAccess(!skillProgressMap, session?.user, adminMode)}
                   />
                 );
               })}
@@ -133,11 +152,10 @@ export default async function LearnPage({ params }: PageProps) {
               <h2 className={styles.sectionTitle}>Your Progress</h2>
               <div className={styles.progressOverview}>
                 {path.levels.map((level, index) => (
-                  <div 
-                    key={level.id} 
-                    className={`${styles.progressLevel} ${
-                      level.id === currentLevel.id ? styles.current : ''
-                    } ${index < path.levels.findIndex(l => l.id === currentLevel.id) ? styles.completed : ''}`}
+                  <div
+                    key={level.id}
+                    className={`${styles.progressLevel} ${level.id === currentLevel.id ? styles.current : ''
+                      } ${index < path.levels.findIndex(l => l.id === currentLevel.id) ? styles.completed : ''}`}
                   >
                     <div className={styles.progressLevelNumber}>{level.order}</div>
                     <div className={styles.progressLevelTitle}>{level.shortTitle}</div>

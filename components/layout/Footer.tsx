@@ -12,7 +12,13 @@ export const Footer: React.FC = () => {
 
     return (
         <footer className={styles.footer}>
-            <div className="container">
+            {/* Ambient Background - Moved from Hero for better placement */}
+            <div className={styles.ambientOverlay} aria-hidden="true">
+                <div className={`${styles.glow} ${styles.glow1}`}></div>
+                <div className={`${styles.glow} ${styles.glow2}`}></div>
+            </div>
+
+            <div className="container" style={{ position: 'relative', zIndex: 2 }}>
                 <div className={styles.grid}>
                     <div className={styles.brand}>
                         <div className={styles.logo}>

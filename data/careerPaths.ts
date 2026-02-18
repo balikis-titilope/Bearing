@@ -15,6 +15,7 @@ export interface CareerPath {
     progression: string[];
     skills: Skill[];
     icon: string;
+    category: 'Development' | 'Data' | 'AI' | 'Design' | 'Security' | 'Management' | 'Infrastructure' | 'QA';
 }
 
 export const careerPaths: CareerPath[] = [
@@ -24,6 +25,7 @@ export const careerPaths: CareerPath[] = [
         title: 'Frontend Developer',
         description: 'Build beautiful, interactive user interfaces and digital experiences.',
         icon: 'Layout',
+        category: 'Development',
         responsibilities: [
             'Translating designs to code',
             'Optimizing web performance',
@@ -46,6 +48,7 @@ export const careerPaths: CareerPath[] = [
         title: 'Backend Developer',
         description: 'Design and build the robust architecture that powers modern applications.',
         icon: 'Server',
+        category: 'Development',
         responsibilities: [
             'API design and implementation',
             'Database management',
@@ -67,6 +70,7 @@ export const careerPaths: CareerPath[] = [
         title: 'Full Stack Developer',
         description: 'Master both frontend and backend development to build complete applications.',
         icon: 'Layers',
+        category: 'Development',
         responsibilities: [
             'End-to-end application development',
             'Database design and management',
@@ -88,6 +92,7 @@ export const careerPaths: CareerPath[] = [
         title: 'Data Analyst',
         description: 'Turn complex data into actionable insights and business decisions.',
         icon: 'PieChart',
+        category: 'Data',
         responsibilities: [
             'Data cleaning and preparation',
             'Statistical analysis',
@@ -109,6 +114,7 @@ export const careerPaths: CareerPath[] = [
         title: 'Mobile Developer',
         description: 'Create native and cross-platform mobile applications for iOS and Android.',
         icon: 'Smartphone',
+        category: 'Development',
         responsibilities: [
             'Mobile app development',
             'UI/UX implementation',
@@ -130,6 +136,7 @@ export const careerPaths: CareerPath[] = [
         title: 'DevOps Engineer',
         description: 'Bridge development and operations to enable continuous delivery and scalability.',
         icon: 'Settings',
+        category: 'Infrastructure',
         responsibilities: [
             'CI/CD pipeline setup',
             'Infrastructure automation',
@@ -151,6 +158,7 @@ export const careerPaths: CareerPath[] = [
         title: 'UI Designer',
         description: 'Create beautiful and intuitive user interfaces for digital products.',
         icon: 'Palette',
+        category: 'Design',
         responsibilities: [
             'Visual design creation',
             'Design system maintenance',
@@ -172,6 +180,7 @@ export const careerPaths: CareerPath[] = [
         title: 'Project Manager',
         description: 'Master the art of delivery. From Agile methodology to stakeholder management and strategic program leadership.',
         icon: 'Briefcase',
+        category: 'Management',
         responsibilities: [
             'Agile project delivery',
             'Stakeholder communication',
@@ -193,6 +202,7 @@ export const careerPaths: CareerPath[] = [
         title: 'Data Science',
         description: 'Master the art of uncovering patterns in data and building predictive intelligence systems.',
         icon: 'Microscope',
+        category: 'Data',
         responsibilities: [
             'Model development and evaluation',
             'Statistical research and hypothesis testing',
@@ -214,6 +224,7 @@ export const careerPaths: CareerPath[] = [
         title: 'Data Engineer',
         description: 'Architect the systems that make data accessible and reliable at scale.',
         icon: 'Database',
+        category: 'Data',
         responsibilities: [
             'Building ETL/ELT pipelines',
             'Data warehouse architecture',
@@ -235,6 +246,7 @@ export const careerPaths: CareerPath[] = [
         title: 'AI Development',
         description: 'Engineer the future with Generative AI, LLM Agents, and Scalable AI Infrastructure.',
         icon: 'Cpu',
+        category: 'AI',
         responsibilities: [
             'GenAI and RAG system engineering',
             'LLM Agent development',
@@ -256,6 +268,7 @@ export const careerPaths: CareerPath[] = [
         title: 'Cybersecurity Engineer',
         description: 'Protect digital assets and infrastructure from evolving cyber threats.',
         icon: 'Shield',
+        category: 'Security',
         responsibilities: [
             'Security auditing and pentesting',
             'Threat detection and response',
@@ -277,6 +290,7 @@ export const careerPaths: CareerPath[] = [
         title: 'Cloud Architect',
         description: 'Design and manage complex, scalable cloud environments for enterprise needs.',
         icon: 'Cloud',
+        category: 'Infrastructure',
         responsibilities: [
             'Enterprise cloud strategy',
             'Hybrid and multi-cloud design',
@@ -298,6 +312,7 @@ export const careerPaths: CareerPath[] = [
         title: 'Machine Learning Engineer',
         description: 'Bridge the gap between data science and production software engineering.',
         icon: 'Workflow',
+        category: 'AI',
         responsibilities: [
             'ML system design and scale',
             'Production model deployment',
@@ -319,6 +334,7 @@ export const careerPaths: CareerPath[] = [
         title: 'Product Manager',
         description: 'Lead product strategy, discovery, and development to deliver high user value.',
         icon: 'Target',
+        category: 'Management',
         responsibilities: [
             'Product strategy and vision',
             'User discovery and research',
@@ -340,6 +356,7 @@ export const careerPaths: CareerPath[] = [
         title: 'Software Tester',
         description: 'Ensure software quality through rigorous testing, automation, and quality assurance processes.',
         icon: 'Search',
+        category: 'QA',
         responsibilities: [
             'Developing test plans and test cases',
             'Executing manual and automated tests',

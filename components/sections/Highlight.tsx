@@ -1,16 +1,52 @@
 'use client';
 
-import React from 'react';
+import React, { useRef } from 'react';
 import styles from './Highlight.module.css';
-import { useInView } from '@/hooks/useInView';
+import { useSectionScroll } from '@/hooks/useSectionScroll';
 
 export const Highlight: React.FC = () => {
-    const [ref, isInView] = useInView({ threshold: 0.2 });
+    const sectionRef = useRef<HTMLElement>(null);
+    const progress = useSectionScroll(sectionRef, { useViewport: true });
+
+    // Shrink stops at 50% - by the time section reaches 50vh
+    const shrinkEndPoint = 0.5;
+    const shrinkProgress = Math.min(progress / shrinkEndPoint, 1);
+    const scale = 1 - (shrinkProgress * 0.1); // 1 to 0.9 (10% shrink)
+
+    // Parallax: keep foreground and background synced
+    const intensity = 120;
+    
+    // Both move at same speed to keep content inside bg
+    const backgroundY = progress * -intensity;
+    const foregroundY = progress * -intensity;
 
     return (
-        <section className={styles.highlight} id="highlight" ref={ref}>
-            <div className={`container ${styles.container}`}>
-                <div className={`${styles.content} reveal-on-scroll ${isInView ? 'is-visible' : ''}`}>
+        <section className={styles.highlight} id="highlight" ref={sectionRef}>
+            <div
+                className={styles.backgroundWrapper}
+                style={{
+                    transform: `scaleX(${scale})`,
+                    borderRadius: `${shrinkProgress * 50}px`,
+                    willChange: 'transform, border-radius'
+                }}
+            >
+                <div
+                    className={styles.backgroundLayer}
+                    style={{
+                        transform: `translateY(${backgroundY}px)`,
+                        willChange: 'transform'
+                    }}
+                ></div>
+            </div>
+
+            <div
+                className={`container ${styles.container}`}
+                style={{
+                    transform: `translateY(${foregroundY}px)`,
+                    willChange: 'transform'
+                }}
+            >
+                <div className={styles.content}>
                     <h2 className={styles.title}>
                         Navigate Your Career. <br />
                         Own Your Future.

@@ -1,6 +1,6 @@
 .hero {
     /* Same as Hero.module.css */
-    height: calc(100vh - 80px);
+    height: 100vh;
     min-height: 600px;
     display: flex;
     align-items: center;
@@ -142,174 +142,54 @@
     color: var(--text-muted);
 }
 
-.filterBtn {
-    white-space: nowrap;
+.chipsContainer {
     display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.875rem 1.5rem;
-    border: none;
-    border-radius: var(--radius-md);
-    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-    color: white;
-    font-weight: 600;
-    font-size: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.chip {
+    padding: 0.5rem 1.25rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    font-weight: 500;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
+    white-space: nowrap;
 }
 
-.filterBtn:hover {
+.chip:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--primary-soft);
+    color: var(--text);
     transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(14, 165, 233, 0.4);
 }
 
-.filterBtn:active {
-    transform: translateY(0);
+.activeChip {
+    background: var(--primary) !important;
+    border-color: var(--primary) !important;
+    color: white !important;
+    box-shadow: 0 4px 12px var(--primary-soft);
 }
 
-.filterBtn.active {
-    background: linear-gradient(135deg, var(--accent), var(--accent-dark));
-}
-
-.filterCount {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 20px;
-    height: 20px;
-    padding: 0 6px;
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 10px;
-    font-size: 0.75rem;
-    font-weight: 700;
-    margin-left: 0.25rem;
-}
-
-.chevron {
-    transition: transform 0.3s ease;
-}
-
-.chevron.open {
-    transform: rotate(180deg);
-}
-
-.filtersPanel {
-    margin-top: 2rem;
-    padding: 2rem;
-    background: rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: var(--radius-lg);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-    animation: slideDown 0.3s ease;
-}
-
-/* Light theme adjustments */
-:global([data-theme='light']) .filtersPanel {
-    background: rgba(255, 255, 255, 0.9);
-    border: 1px solid rgba(255, 255, 255, 0.8);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
-}
-
-.filtersHeader {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 2rem;
-}
-
-.filtersHeader h3 {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: var(--text);
-    margin: 0;
-}
-
-.clearBtn {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.5rem 1rem;
-    background: transparent;
-    border: 1px solid var(--border);
-    border-radius: var(--radius-md);
+/* Light theme chip adjustments */
+:global([data-theme='light']) .chip {
+    background: rgba(0, 0, 0, 0.05);
     color: var(--text-muted);
-    font-size: 0.875rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s ease;
 }
 
-.clearBtn:hover {
-    background: var(--surface);
+:global([data-theme='light']) .chip:hover {
+    background: rgba(0, 0, 0, 0.08);
     color: var(--text);
-    border-color: var(--text-muted);
-}
-
-.filterGroups {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
-}
-
-.filterGroup h4 {
-    font-size: 1rem;
-    font-weight: 600;
-    color: var(--text);
-    margin-bottom: 1rem;
-}
-
-.checkboxGroup {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-}
-
-.checkboxLabel {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    cursor: pointer;
-    color: var(--text);
-    font-size: 0.875rem;
-    font-weight: 500;
-    transition: color 0.2s ease;
-}
-
-.checkboxLabel:hover {
-    color: var(--primary);
-}
-
-.checkboxLabel input[type="checkbox"] {
-    display: none;
-}
-
-.checkmark {
-    width: 18px;
-    height: 18px;
-    border: 2px solid var(--border);
-    border-radius: var(--radius-sm);
-    position: relative;
-    transition: all 0.2s ease;
-    flex-shrink: 0;
-}
-
-.checkboxLabel input[type="checkbox"]:checked + .checkmark {
-    background: var(--primary);
-    border-color: var(--primary);
-}
-
-.checkboxLabel input[type="checkbox"]:checked + .checkmark::after {
-    content: '';
-    position: absolute;
-    top: 2px;
-    left: 5px;
-    width: 5px;
-    height: 9px;
-    border: solid white;
-    border-width: 0 2px 2px 0;
-    transform: rotate(45deg);
 }
 
 @keyframes slideDown {
@@ -317,6 +197,7 @@
         opacity: 0;
         transform: translateY(-20px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -383,23 +264,115 @@
 }
 
 @keyframes subtle-float {
-    0%, 100% { transform: translateY(0px) translateX(0px); }
-    33% { transform: translateY(-10px) translateX(5px); }
-    66% { transform: translateY(5px) translateX(-5px); }
+
+    0%,
+    100% {
+        transform: translateY(0px) translateX(0px);
+    }
+
+    33% {
+        transform: translateY(-10px) translateX(5px);
+    }
+
+    66% {
+        transform: translateY(5px) translateX(-5px);
+    }
 }
 
 @keyframes float-around {
-    0% { transform: translate(0px, 0px) scale(1); }
-    25% { transform: translate(50px, -30px) scale(1.05); }
-    50% { transform: translate(-30px, 20px) scale(0.95); }
-    75% { transform: translate(-20px, -10px) scale(1.02); }
-    100% { transform: translate(0px, 0px) scale(1); }
+    0% {
+        transform: translate(0px, 0px) scale(1);
+    }
+
+    25% {
+        transform: translate(50px, -30px) scale(1.05);
+    }
+
+    50% {
+        transform: translate(-30px, 20px) scale(0.95);
+    }
+
+    75% {
+        transform: translate(-20px, -10px) scale(1.02);
+    }
+
+    100% {
+        transform: translate(0px, 0px) scale(1);
+    }
 }
 
 @keyframes float-around-reverse {
-    0% { transform: translate(0px, 0px) scale(1); }
-    25% { transform: translate(-40px, 20px) scale(0.98); }
-    50% { transform: translate(30px, -20px) scale(1.03); }
-    75% { transform: translate(20px, 10px) scale(0.97); }
-    100% { transform: translate(0px, 0px) scale(1); }
+    0% {
+        transform: translate(0px, 0px) scale(1);
+    }
+
+    25% {
+        transform: translate(-40px, 20px) scale(0.98);
+    }
+
+    50% {
+        transform: translate(30px, -20px) scale(1.03);
+    }
+
+    75% {
+        transform: translate(20px, 10px) scale(0.97);
+    }
+
+    100% {
+        transform: translate(0px, 0px) scale(1);
+    }
+}
+
+@media (max-width: 768px) {
+    .hero {
+        height: auto;
+        min-height: auto;
+        padding: 6rem 0 4rem;
+    }
+
+    .container {
+        padding: 0 1rem;
+    }
+
+    .content h1 {
+        font-size: 2.5rem;
+    }
+
+    .description {
+        font-size: 1rem;
+        margin-bottom: 2rem;
+    }
+
+    .searchSection {
+        margin-bottom: 1.5rem;
+    }
+
+    .chipsContainer {
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        padding: 0 1rem;
+    }
+
+    .chip {
+        padding: 0.4rem 1rem;
+        font-size: 0.8rem;
+    }
+
+    .search {
+        width: 100%;
+    }
+
+    .stats {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .stat {
+        padding: 1rem;
+    }
+
+    .stat strong {
+        font-size: 1.75rem;
+    }
 }

@@ -10,6 +10,10 @@ declare module "next-auth" {
     interface Session {
         user: ExtendedUser;
     }
+
+    interface Credentials {
+        verificationToken?: string;
+    }
 }
 
 declare module "next-auth/jwt" {

@@ -2,23 +2,46 @@
     /* Ensure this slides OVER the sticky hero */
     position: relative;
     z-index: 10;
-
-    background-color: var(--primary);
-    background-image: radial-gradient(circle at 70% 30%, var(--primary-light) 0%, var(--primary) 70%);
-    background-attachment: fixed;
-    /* Creates the "stay" effect as content scrolls over it */
-    color: white;
-    height: 100vh;
+    height: 80vh;
     display: flex;
     align-items: center;
     text-align: center;
-    /* Reverted back to center */
     overflow: hidden;
+    background-color: transparent;
+    margin-top: -1px;
+    /* Connect seamlessly with previous section */
+    border-top: 1px solid transparent;
+    /* Prevents margin collapse */
+}
+
+.backgroundWrapper {
+    position: absolute;
+    top: -1px;
+    left: 0;
+    width: 100%;
+    height: calc(100% + 2px);
+    z-index: -1;
+    overflow: hidden;
+    transform-origin: center;
+    border-radius: 0;
+}
+
+.backgroundLayer {
+    position: absolute;
+    top: -1px;
+    left: 0;
+    width: 100%;
+    height: calc(100% + 2px);
+    background-color: var(--primary);
+    background-image: radial-gradient(circle at 70% 30%, var(--primary-light) 0%, var(--primary) 70%);
+    z-index: -2;
+    border-radius: inherit;
 }
 
 .container {
     max-width: 1100px !important;
-    /* Increased from 900px */
+    margin: 0 auto;
+    padding: 0 2rem;
 }
 
 .content {
@@ -119,10 +142,20 @@
 
 @media (max-width: 768px) {
     .highlight {
-        padding: 6rem 0;
+        padding: 4rem 0;
+        height: auto;
+        min-height: auto;
+    }
+
+    .container {
+        padding: 0 1.5rem;
     }
 
     .title {
-        font-size: 2.5rem;
+        font-size: 2rem;
+    }
+
+    .description {
+        font-size: 1rem;
     }
 }

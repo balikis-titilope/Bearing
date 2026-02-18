@@ -19,7 +19,31 @@ interface RegisterResult {
     error?: string;
 }
 
-export const register = async (values: RegisterValues): Promise<RegisterResult> => {
+export const register = async (values: RegisterValues, isOAuthCompletion = false): Promise<RegisterResult> => {
+    // For OAuth completion, just update the user's name
+    if (isOAuthCompletion) {
+        const { email, name } = values;
+        
+        if (!email || !name) {
+            return { error: "Email and name are required" };
+        }
+
+        const existingUser = await getUserByEmail(email);
+        
+        if (!existingUser) {
+            return { error: "User not found. Please sign in with Google again." };
+        }
+
+        // Update the user's name to complete registration
+        await db.user.update({
+            where: { id: existingUser.id },
+            data: { name },
+        });
+
+        return { success: "Registration completed! Redirecting to dashboard..." };
+    }
+
+    // Normal registration flow
     // Rate limiting based on email and IP
     const rateLimitResult = rateLimit(values.email, 3, 60 * 60 * 1000); // 3 attempts per hour
     if (!rateLimitResult.success) {

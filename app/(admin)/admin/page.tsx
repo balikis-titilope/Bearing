@@ -1,9 +1,11 @@
 import { db } from "@/lib/db";
+import Link from "next/link";
 import {
     Users,
     Layers,
     Clock,
-    TrendingUp
+    TrendingUp,
+    ArrowRight
 } from "lucide-react";
 
 export default async function AdminDashboardPage() {
@@ -40,18 +42,38 @@ export default async function AdminDashboardPage() {
                 ))}
             </div>
 
-            {/* Placeholder for more detailed stats/charts */}
+            {/* Administrative Tools */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <div className="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm min-h-[400px]">
-                    <h2 className="text-xl font-bold mb-6 text-slate-900 dark:text-white">Recent Activity</h2>
-                    <div className="space-y-4">
-                        <p className="text-slate-400 text-sm italic">User activity feed integration coming soon...</p>
+                <div className="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+                    <h2 className="text-xl font-bold mb-4 text-slate-900 dark:text-white">Content Management</h2>
+                    <p className="text-slate-500 mb-6">Build and refine your data-driven curriculum.</p>
+                    <div className="space-y-3">
+                        <Link href="/admin/paths" className="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-800 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors group">
+                            <span className="font-medium">Career Path Editor</span>
+                            <ArrowRight size={18} className="translate-x-0 group-hover:translate-x-1 transition-transform" />
+                        </Link>
+                        <Link href="/admin/paths" className="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-800 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors group">
+                            <span className="font-medium">Module & Skill Manager</span>
+                            <ArrowRight size={18} className="translate-x-0 group-hover:translate-x-1 transition-transform" />
+                        </Link>
                     </div>
                 </div>
-                <div className="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm min-h-[400px]">
-                    <h2 className="text-xl font-bold mb-6 text-slate-900 dark:text-white">Content Performance</h2>
-                    <div className="space-y-4">
-                        <p className="text-slate-400 text-sm italic">Path engagement metrics integration coming soon...</p>
+
+                <div className="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+                    <h2 className="text-xl font-bold mb-4 text-slate-900 dark:text-white">Simulation & Testing</h2>
+                    <p className="text-slate-500 mb-6">Test user flows by overriding constraints and simulating states.</p>
+                    <div className="space-y-3">
+                        <Link href="/dashboard" className="flex items-center justify-between p-4 bg-indigo-50 dark:bg-indigo-900/20 rounded-lg hover:bg-indigo-100 dark:hover:bg-indigo-900/30 transition-colors group border border-indigo-100 dark:border-indigo-900/50">
+                            <div className="flex flex-col">
+                                <span className="font-bold text-indigo-600 dark:text-indigo-400">Launch User Dashboard</span>
+                                <span className="text-xs text-indigo-500/80">Use Admin Mode toggle to bypass locks</span>
+                            </div>
+                            <ArrowRight size={18} className="text-indigo-600 dark:text-indigo-400 translate-x-0 group-hover:translate-x-1 transition-transform" />
+                        </Link>
+                        <Link href="/admin/users" className="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-800 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors group">
+                            <span className="font-medium">Manage User Roles</span>
+                            <ArrowRight size={18} className="translate-x-0 group-hover:translate-x-1 transition-transform" />
+                        </Link>
                     </div>
                 </div>
             </div>

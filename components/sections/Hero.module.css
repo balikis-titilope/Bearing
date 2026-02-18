@@ -1,6 +1,5 @@
 .hero {
     /* Accounting for the 80px navbar to ensure perfect 100vh fit for the first fold */
-    /* Accounting for the 80px navbar to ensure perfect 100vh fit for the first fold */
     height: 100vh;
     padding-top: 80px;
     min-height: 600px;
@@ -10,6 +9,7 @@
     overflow: hidden;
     padding: 0;
     background: radial-gradient(circle at 10% 20%, var(--primary-soft) 0%, var(--background) 90%);
+    margin-bottom: -1px; /* Connect seamlessly with next section */
 }
 
 .ambientOverlay {
@@ -59,6 +59,9 @@
     align-items: center;
     position: relative;
     z-index: 10;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 2rem;
 }
 
 .content {
@@ -191,7 +194,6 @@
     position: relative;
     width: 90%;
     margin: 0 auto;
-    animation: subtle-float 10s ease-in-out infinite;
     border-radius: 48px;
     cursor: pointer;
 }
@@ -213,11 +215,8 @@
         0 4px 16px rgba(59, 130, 246, 0.15),
         0 2px 8px rgba(59, 130, 246, 0.1);
     background: var(--primary);
-    /* Image background is now primary */
     aspect-ratio: 1.0;
     max-height: calc(100vh - 200px);
-    /* Dynamically cap image height relative to viewport */
-    animation: imageGlow 4s ease-in-out infinite;
 }
 
 .heroImage {
@@ -236,11 +235,8 @@
         0 4px 16px rgba(59, 130, 246, 0.15),
         0 2px 8px rgba(59, 130, 246, 0.1);
     background: var(--primary);
-    /* Image background is now primary */
     aspect-ratio: 1.0;
     max-height: calc(100vh - 200px);
-    /* Dynamically cap image height relative to viewport */
-    animation: imageGlow 4s ease-in-out infinite;
     transform: scale(1);
     transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
     cursor: pointer;
@@ -321,11 +317,13 @@
     .hero {
         padding: 6rem 0;
         text-align: center;
+        height: auto;
+        min-height: auto;
     }
 
     .container {
         grid-template-columns: 1fr;
-        gap: 4rem;
+        gap: 3rem;
     }
 
     .content {
@@ -333,6 +331,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        order: 1;
     }
 
     .description {
@@ -342,10 +341,37 @@
 
     .actions {
         justify-content: center;
+        flex-wrap: wrap;
     }
 
     .imageSection {
-        max-width: 600px;
+        max-width: 500px;
         margin: 0 auto;
+        order: 2;
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero h1 {
+        font-size: 2rem;
+    }
+
+    .description {
+        font-size: 1rem;
+    }
+
+    .actions {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .actions > * {
+        width: 100%;
+    }
+
+    .badge {
+        font-size: 0.75rem;
+        padding: 0.4rem 0.8rem;
     }
 }

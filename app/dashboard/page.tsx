@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/Button";
 import { AuthCard } from "@/components/auth/AuthCard";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import styles from './page.module.css';
 
 interface Enrollment {
@@ -26,8 +27,11 @@ interface Enrollment {
 
 function DashboardContent() {
   const { data: session } = useSession();
+  const searchParams = useSearchParams();
   const [enrollments, setEnrollments] = useState<Enrollment[]>([]);
   const [loading, setLoading] = useState(true);
+
+  const isNewUser = searchParams.get('newuser') === 'true';
 
   useEffect(() => {
     if (session?.user?.id) {
@@ -40,6 +44,29 @@ function DashboardContent() {
         .catch(() => setLoading(false));
     }
   }, [session]);
+
+  // Show welcome message for new OAuth users
+  if (isNewUser && session?.user) {
+    return (
+      <>
+        <Navbar />
+        <main className={styles.page}>
+          <div className="container">
+            <Card className={styles.welcomeCard}>
+              <div className={styles.welcomeContent}>
+                <h1>Welcome! Complete Your Registration</h1>
+                <p>You&apos;ve signed in with Google. Please complete your profile to get started.</p>
+                <Link href="/register">
+                  <Button variant="primary" size="lg">Complete Registration</Button>
+                </Link>
+              </div>
+            </Card>
+          </div>
+        </main>
+        <Footer />
+      </>
+    );
+  }
 
   const completedCount = enrollments.filter(e => e.status === 'COMPLETED').length;
   const isServerAdmin = session?.user?.role === "ADMIN" || session?.user?.role === "SUPER_ADMIN";

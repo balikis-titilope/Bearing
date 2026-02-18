@@ -5,6 +5,25 @@
     padding-top: 90px;
 }
 
+.welcomeCard {
+    max-width: 600px;
+    margin: 4rem auto;
+    text-align: center;
+    padding: 3rem;
+}
+
+.welcomeContent h1 {
+    font-size: 2rem;
+    color: var(--primary);
+    margin-bottom: 1rem;
+}
+
+.welcomeContent p {
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+}
+
 .authRequired {
     display: flex;
     flex-direction: column;

@@ -16,54 +16,41 @@ import { useState, useMemo } from 'react';
 export default function CareerPathsPage() {
     const { data: session } = useSession();
     const [searchQuery, setSearchQuery] = useState('');
-    const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-    const [selectedImportance, setSelectedImportance] = useState<string[]>([]);
-    const [showFilters, setShowFilters] = useState(false);
+    const [activeCategory, setActiveCategory] = useState('All');
 
     const filteredPaths = useMemo(() => {
         return careerPaths.filter((path) => {
             // Search logic
-            const matchesSearch = searchQuery === '' || 
+            const matchesSearch = searchQuery === '' ||
                 path.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
                 path.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                path.skills.some((skill) => 
+                path.skills.some((skill) =>
                     skill.name.toLowerCase().includes(searchQuery.toLowerCase())
                 );
 
-            // Category filter logic
-            const matchesCategories = selectedCategories.length === 0 ||
-                path.skills.some((skill) => selectedCategories.includes(skill.category));
+            // Category chip logic
+            const matchesCategory = activeCategory === 'All' || path.category === activeCategory;
 
-            // Importance filter logic
-            const matchesImportance = selectedImportance.length === 0 ||
-                path.skills.some((skill) => selectedImportance.includes(skill.importance));
-
-            return matchesSearch && matchesCategories && matchesImportance;
+            return matchesSearch && matchesCategory;
         });
-    }, [searchQuery, selectedCategories, selectedImportance]);
+    }, [searchQuery, activeCategory]);
 
     const clearFilters = () => {
-        setSelectedCategories([]);
-        setSelectedImportance([]);
+        setActiveCategory('All');
         setSearchQuery('');
     };
 
-    const hasActiveFilters = Boolean(selectedCategories.length > 0 || selectedImportance.length > 0);
-    
+    const hasActiveFilters = Boolean(activeCategory !== 'All' || searchQuery !== '');
+
     return (
         <>
             <PathsNavbar />
-            <PathsHero 
+            <PathsHero
                 searchQuery={searchQuery}
                 setSearchQuery={setSearchQuery}
-                selectedCategories={selectedCategories}
-                setSelectedCategories={setSelectedCategories}
-                selectedImportance={selectedImportance}
-                setSelectedImportance={setSelectedImportance}
-                showFilters={showFilters}
-                setShowFilters={setShowFilters}
+                activeCategory={activeCategory}
+                setActiveCategory={setActiveCategory}
                 clearFilters={clearFilters}
-                hasActiveFilters={hasActiveFilters}
             />
             <main className={styles.page} id="main-content">
                 <div className="container">
@@ -77,7 +64,7 @@ export default function CareerPathsPage() {
                         {filteredPaths.map((path) => {
                             // eslint-disable-next-line @typescript-eslint/no-explicit-any
                             const IconComponent = (Icons as any)[path.icon] || Icons.HelpCircle;
-                            
+
                             return (
                                 <Link href={session ? `/paths/${path.slug}` : "/register"} key={path.id}>
                                     <Card className={styles.pathCard}>
@@ -86,7 +73,7 @@ export default function CareerPathsPage() {
                                         </div>
                                         <h3>{path.title}</h3>
                                         <p>{path.description}</p>
-                                        
+
                                         <div className={styles.skills}>
                                             {path.skills.slice(0, 3).map((skill) => (
                                                 <span key={skill.id} className={`${styles.skill} ${styles[skill.category]}`}>
@@ -97,7 +84,7 @@ export default function CareerPathsPage() {
                                                 <span className={styles.moreSkills}>+{path.skills.length - 3} more</span>
                                             )}
                                         </div>
-                                        
+
                                         <div className={styles.footer}>
                                             <div className={styles.meta}>
                                                 <span>{path.skills.length} skills</span>

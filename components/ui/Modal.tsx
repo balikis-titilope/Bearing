@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect } from 'react';
-import { CheckCircle, X } from 'lucide-react';
+import { CheckCircle, X, AlertCircle } from 'lucide-react';
 import styles from './Modal.module.css';
 
 interface ModalProps {
@@ -33,7 +33,7 @@ export default function Modal({ isOpen, onClose, title, message, type = 'success
                     <X size={20} />
                 </button>
                 <div className={`${styles.icon} ${styles[type]}`}>
-                    <CheckCircle size={48} />
+                    {type === 'error' ? <AlertCircle size={48} /> : <CheckCircle size={48} />}
                 </div>
                 <h2 className={styles.title}>{title}</h2>
                 <p className={styles.message}>{message}</p>

@@ -24,6 +24,38 @@ export const {
     secret: authSecret,
     ...authConfig,
     callbacks: {
+        async signIn({ user, account, profile }) {
+            // Allow credentials login to proceed (checks are in authorize)
+            if (account?.provider === "credentials") return true;
+
+            if (account?.provider === "google") {
+                if (!user.email) return false;
+
+                // Check auth context from cookie
+                const { cookies } = await import("next/headers");
+                const cookieStore = await cookies();
+                const authContext = cookieStore.get("auth-context")?.value;
+
+                const existingUser = await getUserByEmail(user.email);
+
+                // Scenario 1: User tries to LOGIN but account does not exist
+                if (authContext === "login" && !existingUser) {
+                    return "/register?error=OAuthAccountDoesNotExist";
+                }
+
+                // Scenario 2: User tries to REGISTER but account already exists with Google
+                // (If account exists with Email, Auth.js throws OAuthAccountNotLinked automatically)
+                if (authContext === "register" && existingUser) {
+                    // We check if they are already linked to Google by checking if they can just sign in
+                    // But here we might want to be explicit as per user request
+                    return "/login?error=OAuthAccountAlreadyExists";
+                }
+
+                return true;
+            }
+
+            return true;
+        },
         async session({ token, session }) {
             if (authConfig.callbacks?.session) {
                 session = await authConfig.callbacks.session({ session, token }) as any;

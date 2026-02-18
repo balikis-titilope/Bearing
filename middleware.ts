@@ -18,6 +18,9 @@ export default auth((req) => {
         return;
     }
 
+    // Check if OAuth user needs to complete registration
+    const needsRegistration = (req.auth?.user as any)?.needsRegistration;
+
     // Protect admin routes
     if (isAdminRoute) {
         if (!isLoggedIn) {
@@ -30,8 +33,17 @@ export default auth((req) => {
         }
     }
 
+    // Redirect OAuth users who need to complete registration
+    if (isLoggedIn && needsRegistration && !isAuthRoute && nextUrl.pathname !== "/register") {
+        return Response.redirect(new URL("/register?complete=true", nextUrl));
+    }
+
     // Protect auth routes - redirect logged in users away from login/register
     if (isAuthRoute && isLoggedIn) {
+        // Allow OAuth users who need registration to access register
+        if (needsRegistration && nextUrl.pathname === "/register") {
+            return;
+        }
         return Response.redirect(new URL("/", nextUrl));
     }
 

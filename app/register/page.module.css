@@ -475,24 +475,67 @@
     }
 
     .leftSide {
-        padding: 3rem 2rem;
+        padding: 2rem 1.5rem;
         flex: none;
         border-right: none;
         border-bottom: 1px solid var(--border);
     }
 
+    .leftSide h1 {
+        font-size: 2rem;
+    }
+
+    .description {
+        font-size: 1rem;
+        margin-bottom: 2rem;
+    }
+
+    .features {
+        gap: 1rem;
+    }
+
+    .feature {
+        font-size: 1rem;
+    }
+
+    .testimonial {
+        padding: 1.5rem;
+        margin-top: 2rem;
+    }
+
     .rightSide {
-        padding: 3rem 1.5rem;
+        padding: 2rem 1.5rem;
         background-color: var(--background);
-        /* Match left side on mobile */
     }
 
     .formWrapper {
         background-color: var(--surface);
-        padding: 2.5rem;
+        padding: 2rem 1.5rem;
         border-radius: var(--radius-lg);
         border: 1px solid var(--border);
         box-shadow: var(--shadow-sm);
+    }
+}
+
+@media (max-width: 480px) {
+    .leftSide h1 {
+        font-size: 1.75rem;
+    }
+
+    .switcher {
+        margin-bottom: 1.5rem;
+    }
+
+    .formWrapper {
+        padding: 1.5rem;
+    }
+
+    .input {
+        padding: 0.75rem;
+    }
+
+    .submitBtn {
+        padding: 0.875rem;
     }
 }
 

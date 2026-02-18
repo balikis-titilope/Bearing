@@ -10,6 +10,7 @@ interface PathsHeroProps {
     activeCategory: string;
     setActiveCategory: (category: string) => void;
     clearFilters: () => void;
+    children?: React.ReactNode;
 }
 
 const categories = ['All', 'Development', 'Data', 'AI', 'Design', 'Security', 'Management', 'Infrastructure', 'QA'];
@@ -19,7 +20,8 @@ export const PathsHero: React.FC<PathsHeroProps> = ({
     setSearchQuery,
     activeCategory,
     setActiveCategory,
-    clearFilters
+    clearFilters,
+    children
 }) => {
     return (
         <section className={styles.hero}>
@@ -38,29 +40,36 @@ export const PathsHero: React.FC<PathsHeroProps> = ({
                         Choose your journey. Each path is carefully crafted with real-world skills and projects to take you from where you are to where you want to be.
                     </p>
 
-                    <div className={styles.searchSection}>
-                        <div className={styles.search}>
-                            <Search size={20} className={styles.searchIcon} />
-                            <input
-                                type="text"
-                                placeholder="Search career paths..."
-                                className={styles.searchInput}
-                                value={searchQuery}
-                                onChange={(e) => setSearchQuery(e.target.value)}
-                            />
-                        </div>
+                    {/* Path Grid rendered as children here */}
+                    <div className={styles.childrenContainer}>
+                        {children}
                     </div>
 
-                    <div className={styles.chipsContainer}>
-                        {categories.map((category) => (
-                            <button
-                                key={category}
-                                className={`${styles.chip} ${activeCategory === category ? styles.activeChip : ''}`}
-                                onClick={() => setActiveCategory(category)}
-                            >
-                                {category}
-                            </button>
-                        ))}
+                    <div className={styles.filterSection}>
+                        <div className={styles.searchSection}>
+                            <div className={styles.search}>
+                                <Search size={20} className={styles.searchIcon} />
+                                <input
+                                    type="text"
+                                    placeholder="Search career paths..."
+                                    className={styles.searchInput}
+                                    value={searchQuery}
+                                    onChange={(e) => setSearchQuery(e.target.value)}
+                                />
+                            </div>
+                        </div>
+
+                        <div className={styles.chipsContainer}>
+                            {categories.map((category) => (
+                                <button
+                                    key={category}
+                                    className={`${styles.chip} ${activeCategory === category ? styles.activeChip : ''}`}
+                                    onClick={() => setActiveCategory(category)}
+                                >
+                                    {category}
+                                </button>
+                            ))}
+                        </div>
                     </div>
 
                     <div className={styles.stats}>

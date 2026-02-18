@@ -2,11 +2,14 @@
 
 import React from 'react';
 import Link from 'next/link';
+import { useSession } from 'next-auth/react';
 import { Button } from '../ui/Button';
 import { ScrollReveal } from '../ui/ScrollReveal';
 import styles from './Hero.module.css';
 
 export const Hero: React.FC = () => {
+    const { data: session } = useSession();
+
     return (
         <section
             className={styles.hero}
@@ -29,9 +32,9 @@ export const Hero: React.FC = () => {
 
                     <ScrollReveal direction="up" delay={800}>
                         <div className={styles.actions} role="group" aria-label="Primary actions">
-                            <Link href="/register">
+                            <Link href={session ? "/dashboard" : "/register"}>
                                 <Button variant="primary" size="lg" className={styles.ctaButton}>
-                                    Start Your Journey
+                                    {session ? "Go to Dashboard" : "Start Your Journey"}
                                 </Button>
                             </Link>
                             <Link href="/paths">

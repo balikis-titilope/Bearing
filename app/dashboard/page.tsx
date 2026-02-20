@@ -8,10 +8,11 @@ import { Compass, User, Clock, CheckCircle, BookOpen, ShieldAlert } from "lucide
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { AuthCard } from "@/components/auth/AuthCard";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import styles from './page.module.css';
+import React from 'react';
 
 interface Enrollment {
   id: string;
@@ -199,19 +200,21 @@ function DashboardContent() {
 
 export default function Dashboard() {
   return (
-    <ProtectedRoute fallback={
-      <AuthCard
-        title="Authentication Required"
-        description="Please log in to access your dashboard."
-        backHref="/login"
-        backLabel="Go to Login"
-      >
-        <div className={styles.authRequired}>
-          <Compass size={48} className={styles.authIcon} />
-        </div>
-      </AuthCard>
-    }>
-      <DashboardContent />
-    </ProtectedRoute>
+    <Suspense fallback={<div>Loading...</div>}>
+      <ProtectedRoute fallback={
+        <AuthCard
+          title="Authentication Required"
+          description="Please log in to access your dashboard."
+          backHref="/login"
+          backLabel="Go to Login"
+        >
+          <div className={styles.authRequired}>
+            <Compass size={48} className={styles.authIcon} />
+          </div>
+        </AuthCard>
+      }>
+        <DashboardContent />
+      </ProtectedRoute>
+    </Suspense>
   );
 }

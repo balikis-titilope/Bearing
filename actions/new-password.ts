@@ -3,16 +3,16 @@
 import * as z from "zod";
 import bcrypt from "bcryptjs";
 import { NewPasswordSchema } from "@/lib/schemas";
-import { getPasswordResetTokenByToken } from "@/lib/tokens";
 import { getUserByEmail } from "@/lib/user";
 import { db } from "@/lib/db";
 
 export const newPassword = async (
     values: z.infer<typeof NewPasswordSchema>,
-    token?: string | null,
+    email?: string | null,
+    name?: string | null,
 ) => {
-    if (!token) {
-        return { error: "Missing token!" };
+    if (!email || !name) {
+        return { error: "Missing identity information!" };
     }
 
     const validatedFields = NewPasswordSchema.safeParse(values);
@@ -23,34 +23,22 @@ export const newPassword = async (
 
     const { password } = validatedFields.data;
 
-    const existingToken = await getPasswordResetTokenByToken(token);
-
-    if (!existingToken) {
-        return { error: "Invalid token!" };
-    }
-
-    const hasExpired = new Date(existingToken.expires) < new Date();
-
-    if (hasExpired) {
-        return { error: "Token has expired!" };
-    }
-
-    const existingUser = await getUserByEmail(existingToken.email);
+    const existingUser = await getUserByEmail(email);
 
     if (!existingUser) {
         return { error: "Email does not exist!" };
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+    if (existingUser.name?.toLowerCase() !== name.toLowerCase()) {
+        return { error: "Identity verification failed!" };
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 12);
 
     await db.user.update({
         where: { id: existingUser.id },
         data: { password: hashedPassword },
     });
 
-    await db.passwordResetToken.delete({
-        where: { id: existingToken.id }
-    });
-
-    return { success: "Password updated!" };
+    return { success: "Password updated successfully!" };
 };

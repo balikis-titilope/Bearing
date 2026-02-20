@@ -14,7 +14,7 @@ interface LoginValues {
     password: string;
 }
 
-export default function LoginPage() {
+function LoginContent() {
     const router = useRouter();
     const searchParams = useSearchParams();
     const [isPending, startTransition] = useTransition();
@@ -209,5 +209,13 @@ export default function LoginPage() {
                 </div>
             </div>
         </div>
+    );
+}
+
+export default function LoginPage() {
+    return (
+        <React.Suspense fallback={<div>Loading...</div>}>
+            <LoginContent />
+        </React.Suspense>
     );
 }

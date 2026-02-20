@@ -47,12 +47,26 @@ export function ProjectSubmissionForm({ project, enrollment, submission }: Proje
     }
   };
 
-  let requirements: string[] = [];
-  try {
-    requirements = project.requirements ? JSON.parse(project.requirements) : [];
-  } catch (e) {
-    requirements = [];
-  }
+  const safeParse = (data: any, fallback: any = []) => {
+    if (!data) return fallback;
+    try {
+      let parsed = typeof data === 'string' ? JSON.parse(data) : data;
+      while (typeof parsed === 'string') {
+        try {
+          const next = JSON.parse(parsed);
+          if (next === parsed) break;
+          parsed = next;
+        } catch {
+          break;
+        }
+      }
+      return Array.isArray(parsed) ? parsed : fallback;
+    } catch (e) {
+      return fallback;
+    }
+  };
+
+  const requirements = safeParse(project.requirements);
 
   // Show submission status if exists
   if (submission && submission.status !== 'NOT_STARTED' && submission.status !== 'IN_PROGRESS') {
@@ -67,22 +81,22 @@ export function ProjectSubmissionForm({ project, enrollment, submission }: Proje
         </div>
 
         <div className={styles.statusCard}>
-          <div 
+          <div
             className={styles.statusIcon}
-            style={{ 
+            style={{
               background: submission.status === 'PASSED' ? 'rgba(34, 197, 94, 0.1)' : 'rgba(245, 158, 11, 0.1)',
               color: submission.status === 'PASSED' ? '#22c55e' : '#f59e0b'
             }}
           >
             {submission.status === 'PASSED' ? <CheckCircle size={32} /> : <Clock size={32} />}
           </div>
-          
+
           <h2>
             {submission.status === 'PASSED' && 'Project Passed!'}
             {submission.status === 'SUBMITTED' && 'Under Review'}
             {submission.status === 'FAILED' && 'Project Needs Revision'}
           </h2>
-          
+
           <p>
             {submission.status === 'PASSED' && 'Congratulations! You have successfully completed this level.'}
             {submission.status === 'SUBMITTED' && 'Your project is being reviewed. Check back soon!'}
@@ -117,7 +131,7 @@ export function ProjectSubmissionForm({ project, enrollment, submission }: Proje
           </div>
 
           {submission.status !== 'PASSED' && (
-            <Button 
+            <Button
               variant="primary"
               onClick={() => window.location.reload()}
             >
@@ -165,7 +179,7 @@ export function ProjectSubmissionForm({ project, enrollment, submission }: Proje
 
         <div className={styles.section}>
           <h2 className={styles.sectionTitle}>Submit Your Project</h2>
-          
+
           <form onSubmit={handleSubmit} className={styles.form}>
             <div className={styles.formGroup}>
               <label htmlFor="github">GitHub Repository URL *</label>

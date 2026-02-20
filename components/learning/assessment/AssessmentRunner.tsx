@@ -5,14 +5,6 @@ import { Button } from "@/components/ui/Button";
 import { ArrowRight, CheckCircle, XCircle, AlertCircle } from "lucide-react";
 import styles from "./Assessment.module.css";
 
-interface Question {
-    id: string;
-    question: string;
-    options: string; // JSON string
-    correctAnswer: string;
-    explanation?: string;
-}
-
 interface AssessmentRunnerProps {
     questions: any[];
     onComplete: (score: number) => void;
@@ -24,8 +16,37 @@ export function AssessmentRunner({ questions, onComplete }: AssessmentRunnerProp
     const [isAnswered, setIsAnswered] = useState(false);
     const [score, setScore] = useState(0);
 
+    if (!questions || questions.length === 0) {
+        return (
+            <div className={styles.emptyQuestions}>
+                <AlertCircle size={48} />
+                <p>No questions found for this assessment.</p>
+            </div>
+        );
+    }
+
     const currentQuestion = questions[currentIndex];
-    const options = JSON.parse(currentQuestion.options);
+
+    // Safely parse options (handles potential double-stringification from seed data)
+    let options: string[] = [];
+    let rawOptions = currentQuestion.options;
+
+    try {
+        // Recursive parse in case of double stringification
+        while (typeof rawOptions === 'string') {
+            const parsed = JSON.parse(rawOptions);
+            // If parsing results in the same string or something that's not a string/array, we stop
+            if (parsed === rawOptions) break;
+            rawOptions = parsed;
+        }
+
+        if (Array.isArray(rawOptions)) {
+            options = rawOptions;
+        }
+    } catch (e) {
+        console.error("Failed to parse options for question:", currentQuestion.id, e);
+    }
+
     const isCorrect = selectedAnswer === currentQuestion.correctAnswer;
 
     const handleSelect = (option: string) => {
@@ -43,21 +64,8 @@ export function AssessmentRunner({ questions, onComplete }: AssessmentRunnerProp
             setSelectedAnswer(null);
             setIsAnswered(false);
         } else {
-            // Finished
-            const finalScore = Math.round(((score + (isCorrect ? 0 : 0)) / questions.length) * 100);
-            // Note: isCorrect is for the current question, but score is already updated if correct
-            // Wait, score update is async-ish in React state, but here we can just use the state value
-            // simpler: calculation at the end.
-
-            // Actually, let's calculate exact score based on correct answers count
-            // We need to track total correct answers.
-            // Let's use a ref or just rely on state. 
-            // state `score` holds count of correct answers so far.
-
-            const totalCorrect = score; // This misses the current one if we just clicked? 
-            // No, handleSelect updates score immediately.
-
-            const percentage = Math.round((totalCorrect / questions.length) * 100);
+            const finalScore = score;
+            const percentage = Math.round((finalScore / questions.length) * 100);
             onComplete(percentage);
         }
     };
@@ -78,50 +86,62 @@ export function AssessmentRunner({ questions, onComplete }: AssessmentRunnerProp
                 <h3 className={styles.questionText}>{currentQuestion.question}</h3>
 
                 <div className={styles.optionsGrid}>
-                    {options.map((option: string, idx: number) => {
-                        let optionClass = styles.optionBtn;
-                        if (isAnswered) {
-                            if (option === currentQuestion.correctAnswer) {
-                                optionClass += ` ${styles.optionCorrect}`;
-                            } else if (option === selectedAnswer) {
-                                optionClass += ` ${styles.optionWrong}`;
-                            } else {
-                                optionClass += ` ${styles.optionDisabled}`; // dimmed
-                            }
-                        } else if (selectedAnswer === option) {
-                            optionClass += ` ${styles.optionSelected}`;
-                        }
+                    {options.length > 0 ? (
+                        options.map((option: string, idx: number) => {
+                            let optionClass = styles.optionBtn;
+                            let isSelected = selectedAnswer === option;
+                            let isCorrectOption = option === currentQuestion.correctAnswer;
 
-                        return (
-                            <button
-                                key={idx}
-                                className={optionClass}
-                                onClick={() => handleSelect(option)}
-                                disabled={isAnswered}
-                            >
-                                <span>{option}</span>
-                                {isAnswered && option === currentQuestion.correctAnswer && <CheckCircle size={20} />}
-                                {isAnswered && option === selectedAnswer && option !== currentQuestion.correctAnswer && <XCircle size={20} />}
-                            </button>
-                        );
-                    })}
+                            if (isAnswered) {
+                                if (isCorrectOption) {
+                                    optionClass += ` ${styles.optionCorrect}`;
+                                } else if (isSelected) {
+                                    optionClass += ` ${styles.optionWrong}`;
+                                }
+                            } else if (isSelected) {
+                                optionClass += ` ${styles.optionSelected}`;
+                            }
+
+                            return (
+                                <button
+                                    key={idx}
+                                    className={optionClass}
+                                    onClick={() => handleSelect(option)}
+                                    disabled={isAnswered}
+                                >
+                                    <span>{option}</span>
+                                    {isAnswered && isCorrectOption && <CheckCircle size={20} />}
+                                    {isAnswered && isSelected && !isCorrectOption && <XCircle size={20} />}
+                                </button>
+                            );
+                        })
+                    ) : (
+                        <div className={styles.errorText}>
+                            No valid options data found for this question.
+                        </div>
+                    )}
                 </div>
 
                 {isAnswered && (
-                    <div className={styles.nextBtnWrapper}>
-                        <div className={`styles.feedback ${isCorrect ? styles.correct : styles.wrong}`}>
-                            {!isCorrect && (
-                                <div className={styles.feedbackMsg}>
-                                    <AlertCircle size={16} />
-                                    <span>{currentQuestion.explanation}</span>
-                                </div>
+                    <div className={styles.answerFeedback}>
+                        <div className={`${styles.feedback} ${isCorrect ? styles.correct : styles.wrong}`}>
+                            <div className={styles.feedbackHeader}>
+                                {isCorrect ? <CheckCircle size={18} /> : <XCircle size={18} />}
+                                <span className={styles.feedbackTitle}>
+                                    {isCorrect ? 'Correct!' : 'Incorrect'}
+                                </span>
+                            </div>
+                            {!isCorrect && currentQuestion.explanation && (
+                                <p className={styles.explanationText}>{currentQuestion.explanation}</p>
                             )}
                         </div>
 
-                        <Button onClick={handleNext} variant="primary">
-                            {currentIndex === questions.length - 1 ? 'Finish' : 'Next Question'}
-                            <ArrowRight size={18} />
-                        </Button>
+                        <div className={styles.navigation}>
+                            <Button onClick={handleNext} variant="primary" size="sm" className={styles.nextBtn}>
+                                {currentIndex === questions.length - 1 ? 'Finish' : 'Next Question'}
+                                <ArrowRight size={16} />
+                            </Button>
+                        </div>
                     </div>
                 )}
             </div>

@@ -56,9 +56,10 @@ export const {
 
             return true;
         },
-        async session({ token, session }) {
+        async session(args) {
+            let { session, token } = args;
             if (authConfig.callbacks?.session) {
-                session = await authConfig.callbacks.session({ session, token }) as any;
+                session = await authConfig.callbacks.session(args as any) as any;
             }
 
             if (token.sub && session.user) {
@@ -67,9 +68,10 @@ export const {
 
             return session;
         },
-        async jwt({ token, user, trigger, session }) {
+        async jwt(args) {
+            let { token, user, trigger, session } = args;
             if (authConfig.callbacks?.jwt) {
-                token = await authConfig.callbacks.jwt({ token, user, trigger, session }) as any;
+                token = await authConfig.callbacks.jwt(args as any) as any;
             }
 
             if (!token.sub) return token;
@@ -86,52 +88,24 @@ export const {
         ...authConfig.providers,
         Credentials({
             async authorize(credentials) {
-                try {
-                    // Handle verification token login (auto-login after email verification)
-                    if (credentials.verificationToken) {
-                        const token = credentials.verificationToken as string;
-                        const verificationToken = await db.verificationToken.findUnique({
-                            where: { token }
-                        });
+                // Handle regular credentials login
+                const validatedFields = LoginSchema.safeParse(credentials);
 
-                        if (!verificationToken) return null;
+                if (validatedFields.success) {
+                    const { email, password } = validatedFields.data;
 
-                        const hasExpired = new Date(verificationToken.expires) < new Date();
-                        if (hasExpired) return null;
+                    const user = await getUserByEmail(email);
+                    if (!user || !user.password) return null;
 
-                        const user = await getUserByEmail(verificationToken.email);
-                        if (!user || !user.emailVerified) return null;
+                    const passwordsMatch = await bcrypt.compare(
+                        password,
+                        user.password,
+                    );
 
-                        // Delete the verification token after use
-                        await db.verificationToken.delete({
-                            where: { id: verificationToken.id }
-                        });
-
-                        return user;
-                    }
-
-                    // Handle regular credentials login
-                    const validatedFields = LoginSchema.safeParse(credentials);
-
-                    if (validatedFields.success) {
-                        const { email, password } = validatedFields.data;
-
-                        const user = await getUserByEmail(email);
-                        if (!user || !user.password) return null;
-
-                        const passwordsMatch = await bcrypt.compare(
-                            password,
-                            user.password,
-                        );
-
-                        if (passwordsMatch) return user;
-                    }
-
-                    return null;
-                } catch (error) {
-                    console.error("Auth error:", error);
-                    return null;
+                    if (passwordsMatch) return user;
                 }
+
+                return null;
             },
         }),
     ],

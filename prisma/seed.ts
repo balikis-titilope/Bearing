@@ -15,6 +15,7 @@ import { uiDesignerContent } from '../data/learning/uidesigner'
 import { projectManagerContent } from '../data/learning/projectmanager'
 import { dataEngineerContent } from '../data/learning/dataengineer'
 import { machinelearningContent } from '../data/learning/machinelearning'
+import { productManagerContent } from '../data/learning/productmanager'
 
 const prisma = new PrismaClient()
 
@@ -36,40 +37,40 @@ async function main() {
   })
   console.log('Default Super Admin created: admin@bearing.com / admin123')
 
-  // Clear existing data in correct dependency order
-  await prisma.projectSubmission.deleteMany()
-  await prisma.skillProgress.deleteMany()
-  await prisma.enrollment.deleteMany()
-  await prisma.resource.deleteMany()
-  await prisma.userProgress.deleteMany()
+  // Clear existing data using individual DELETEs to handle timeouts better
+  console.log('Clearing database...')
+  const tables = [
+    "project_submissions", "skill_progress", "enrollments", "resources", "user_progress",
+    "projects", "skills", "levels", "assessment_questions", "assessments",
+    "learning_subtopics", "learning_steps", "responsibilities", "career_paths"
+  ]
 
-  await prisma.project.deleteMany()
-  await prisma.skill.deleteMany()
-
-  await prisma.level.deleteMany()
-  await prisma.assessmentQuestion.deleteMany()
-  await prisma.assessment.deleteMany()
-
-  await prisma.learningSubtopic.deleteMany()
-  await prisma.learningStep.deleteMany()
-  await prisma.responsibility.deleteMany()
-
-  await prisma.careerPath.deleteMany()
+  for (const table of tables) {
+    try {
+      await prisma.$executeRawUnsafe(`DELETE FROM "${table}";`)
+      console.log(`Cleared table: ${table}`)
+    } catch (e) {
+      console.warn(`Could not clear table ${table}, might be empty or locked:`, e)
+    }
+  }
 
   console.log('Database cleared.')
 
   let globalQuestionOrder = 1
 
+  const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
+
   // Helper for seeding rich path content
   const seedPathContent = async (pathId: string, assessmentId: string, content: any) => {
     for (const levelData of content.levels) {
+      const levelOrder = parseInt(levelData.id.split('-l')[1]) || 1;
       const level = await prisma.level.create({
         data: {
           id: levelData.id,
           title: levelData.title,
-          shortTitle: levelData.id.endsWith('l1') ? 'Junior' : 'Senior',
-          description: 'High-standard curriculum.',
-          order: levelData.id.endsWith('l1') ? 1 : 2,
+          shortTitle: levelOrder === 1 ? 'Junior' : levelOrder === 2 ? 'Intermediate' : levelOrder === 3 ? 'Senior' : 'Principal',
+          description: levelData.description || 'Professional curriculum.',
+          order: levelOrder,
           careerPathId: pathId,
         }
       })
@@ -95,18 +96,16 @@ async function main() {
           }
 
           if (skillData.questions) {
-            for (const q of skillData.questions) {
-              await prisma.assessmentQuestion.create({
-                data: {
-                  ...q,
-                  options: JSON.stringify(q.options),
-                  assessmentId,
-                  skillId: skill.id,
-                  type: 'MULTIPLE_CHOICE',
-                  order: globalQuestionOrder++
-                }
-              })
-            }
+            await prisma.assessmentQuestion.createMany({
+              data: skillData.questions.map((q: any) => ({
+                ...q,
+                options: JSON.stringify(q.options),
+                assessmentId,
+                skillId: skill.id,
+                type: 'MULTIPLE_CHOICE',
+                order: globalQuestionOrder++
+              }))
+            })
           }
 
           if (skillData.miniProject) {
@@ -126,10 +125,31 @@ async function main() {
               }
             })
           }
+
+          // Add a small delay between skills to stabilize connection
+          await sleep(50)
         } catch (err) {
           console.error(`Error seeding skill ${skillData.id}:`, err)
           throw err
         }
+      }
+
+      // Seed Final Project for the Level if exists
+      if (levelData.finalProject) {
+        await prisma.project.create({
+          data: {
+            ...levelData.finalProject,
+            requirements: JSON.stringify(levelData.finalProject.requirements || []),
+            testCases: JSON.stringify(levelData.finalProject.testCases || []),
+            guide: levelData.finalProject.guide ? JSON.stringify(levelData.finalProject.guide) : null,
+            hints: levelData.finalProject.hints ? JSON.stringify(levelData.finalProject.hints) : null,
+            stuckLinks: levelData.finalProject.stuckLinks ? JSON.stringify(levelData.finalProject.stuckLinks) : null,
+            levelId: level.id,
+            isMiniProject: false,
+            isFinalProject: true,
+            order: 99 // Always last in the level
+          }
+        })
       }
     }
   }
@@ -179,6 +199,39 @@ async function main() {
   })
 
   await seedPathContent(frontendPath.id, feAssessment.id, frontendContent)
+  await sleep(200)
+
+  // ==========================================
+  // PATH 2: BACKEND DEVELOPER
+  // ==========================================
+  const backendPath = await prisma.careerPath.create({
+    data: { slug: 'backend-developer', title: 'Backend Developer', description: 'Architect robust systems.', icon: 'Server', isPublished: true },
+  })
+  const beAssessment = await prisma.assessment.create({
+    data: {
+      careerPathId: backendPath.id,
+      title: 'Backend Engineering Core Assessment',
+      description: 'Test your understanding of distributed systems and high-integrity ledgers.'
+    }
+  })
+  await seedPathContent(backendPath.id, beAssessment.id, backendContent)
+  await sleep(200)
+
+  // ==========================================
+  // PATH 3: FULL STACK DEVELOPER
+  // ==========================================
+  const fsPath = await prisma.careerPath.create({
+    data: { slug: 'full-stack-developer', title: 'Full Stack Developer', description: 'Build end-to-end applications.', icon: 'Layers', isPublished: true },
+  })
+  const fsAssessment = await prisma.assessment.create({
+    data: {
+      careerPathId: fsPath.id,
+      title: 'Full Stack Engineering Core Assessment',
+      description: 'Test your understanding of the complete development lifecycle.'
+    }
+  })
+  await seedPathContent(fsPath.id, fsAssessment.id, fullStackContent)
+  await sleep(200)
 
 
   // ==========================================
@@ -195,6 +248,7 @@ async function main() {
     }
   })
   await seedPathContent(dataPath.id, dataAssessment.id, dataAnalystContent)
+  await sleep(200)
 
 
   // ==========================================
@@ -211,6 +265,7 @@ async function main() {
     }
   })
   await seedPathContent(mobilePath.id, mobileAssessment.id, mobileContent)
+  await sleep(200)
 
 
   // ==========================================
@@ -227,6 +282,7 @@ async function main() {
     }
   })
   await seedPathContent(devopsPath.id, devopsAssessment.id, devopsContent)
+  await sleep(200)
 
 
   // ==========================================
@@ -243,7 +299,7 @@ async function main() {
     }
   })
   await seedPathContent(uiPath.id, uiAssessment.id, uiDesignerContent)
-
+  await sleep(200)
 
   // ==========================================
   // PATH 9: DATA SCIENCE
@@ -259,7 +315,7 @@ async function main() {
     }
   })
   await seedPathContent(dsPath.id, dsAssessment.id, dataScienceContent)
-
+  await sleep(200)
 
   // ==========================================
   // PATH 10: DATA ENGINEER
@@ -275,7 +331,7 @@ async function main() {
     }
   })
   await seedPathContent(dePath.id, deAssessment.id, dataEngineerContent)
-
+  await sleep(200)
 
   // ==========================================
   // PATH 11: AI DEVELOPMENT
@@ -291,7 +347,7 @@ async function main() {
     }
   })
   await seedPathContent(aiPath.id, aiAssessment.id, aiDevelopmentContent)
-
+  await sleep(200)
 
 
   // ==========================================
@@ -308,7 +364,7 @@ async function main() {
     }
   })
   await seedPathContent(cyberPath.id, csAssessment.id, cyberSecurityContent)
-
+  await sleep(200)
 
   // ==========================================
   // PATH 13: CLOUD ARCHITECT
@@ -324,7 +380,7 @@ async function main() {
     }
   })
   await seedPathContent(cloudPath.id, caAssessment.id, cloudArchitectContent)
-
+  await sleep(200)
 
   // ==========================================
   // PATH 14: ML ENGINEER
@@ -340,7 +396,7 @@ async function main() {
     }
   })
   await seedPathContent(mlePath.id, mleAssessment.id, machinelearningContent)
-
+  await sleep(200)
 
   // ==========================================
   // PATH 15: PROJECT MANAGER
@@ -356,7 +412,7 @@ async function main() {
     }
   })
   await seedPathContent(pmnPath.id, pmnAssessment.id, projectManagerContent)
-
+  await sleep(200)
 
   // ==========================================
   // PATH 16: SOFTWARE TESTER
@@ -372,51 +428,26 @@ async function main() {
     }
   })
   await seedPathContent(testerPath.id, testerAssessment.id, softwareTesterContent)
-
+  await sleep(200)
 
   // ==========================================
-  // PROJECTS WITH "META TWIST"
+  // PATH 17: PRODUCT MANAGER
   // ==========================================
-
-  // Cybersecurity Level 3 Project
-  await prisma.project.create({
-    data: {
-      id: 'p-cs-l3',
-      title: 'Enterprise Vulnerability Lab',
-      description: 'Build and audit a secure micro-services environment with zero-trust principles.',
-      requirements: JSON.stringify([
-        'Zero-trust network segmentation',
-        'Automated vulnerability scanning in CI/CD',
-        'Custom WAF rules for OWASP protection',
-        'Incident Response playbook for simulated breach',
-      ]),
-      isFinalProject: true,
-      levelId: 'cs-l3',
-      order: 1,
-      testCases: JSON.stringify([{ type: 'audit', score: '>95' }]),
-    },
+  const pdmPath = await prisma.careerPath.create({
+    data: { slug: 'product-manager', title: 'Product Manager', description: 'Lead product strategy and discovery.', icon: 'Target', isPublished: true },
   })
-
-  // AI Development Level 3 Project
-  await prisma.project.create({
+  const pdmAssessment = await prisma.assessment.create({
     data: {
-      id: 'p-ai-l3',
-      title: 'Multimodal RAG Agent',
-      description: 'Build an autonomous agent capable of reasoning across text, images, and tools.',
-      requirements: JSON.stringify([
-        'Custom vector indexing for complex docs',
-        'Tool-use with LangChain / AutoGPT',
-        'Image reasoning via Vision models',
-        'Evaluation loop for hallucination check',
-      ]),
-      isFinalProject: true,
-      levelId: 'ai-l3',
-      order: 1,
-      testCases: JSON.stringify([{ type: 'accuracy', threshold: '0.85' }]),
-    },
+      careerPathId: pdmPath.id,
+      title: 'Product Strategy Core Assessment',
+      description: 'Test your understanding of product strategy, discovery, and growth.'
+    }
   })
+  await seedPathContent(pdmPath.id, pdmAssessment.id, productManagerContent)
+  await sleep(200)
 
-  console.log('Seed Expansion (15 paths, 480 skills) completed successfully.')
+
+  console.log('Seed Expansion (16 paths, 512+ skills) completed successfully.')
 }
 
 main()

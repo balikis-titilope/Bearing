@@ -31,7 +31,7 @@ const isPasswordStrong = (validation: ReturnType<typeof validatePassword>) => {
 };
 
 
-export default function RegisterPage() {
+function RegisterContent() {
     const router = useRouter();
     const [isPending, startTransition] = useTransition();
     const [error, setError] = React.useState<string | undefined>("");
@@ -308,6 +308,14 @@ export default function RegisterPage() {
                 </div>
             </div>
         </div>
+    );
+}
+
+export default function RegisterPage() {
+    return (
+        <React.Suspense fallback={<div>Loading...</div>}>
+            <RegisterContent />
+        </React.Suspense>
     );
 }
 

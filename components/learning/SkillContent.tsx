@@ -3,13 +3,10 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { CheckCircle, ArrowLeft, ArrowRight, BookOpen, Code, ExternalLink } from 'lucide-react';
+import { CheckCircle, ArrowLeft, ArrowRight, BookOpen, Code, ExternalLink, Play } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import styles from './SkillContent.module.css';
 
-import { AssessmentIntro } from './assessment/AssessmentIntro';
-import { AssessmentRunner } from './assessment/AssessmentRunner';
-import { AssessmentResult } from './assessment/AssessmentResult';
 import { saveSkillScore } from '@/actions/assessment';
 
 interface SkillContentProps {
@@ -17,27 +14,13 @@ interface SkillContentProps {
   level: any;
   enrollment: any;
   progress: any;
+  slug: string;
 }
 
-export function SkillContent({ skill, level, enrollment, progress }: SkillContentProps) {
+export function SkillContent({ skill, level, enrollment, progress, slug }: SkillContentProps) {
   const router = useRouter();
   const [isCompleting, setIsCompleting] = useState(false);
   const [isCompleted, setIsCompleted] = useState(progress?.status === 'COMPLETED');
-
-  // Assessment State
-  const [isAssessmentStarted, setIsAssessmentStarted] = useState(false);
-  const [isAssessmentFinished, setIsAssessmentFinished] = useState(false);
-  const [assessmentScore, setAssessmentScore] = useState(0);
-
-  const handleAssessmentComplete = async (score: number) => {
-    setAssessmentScore(score);
-    setIsAssessmentFinished(true);
-
-    // Save score
-    await saveSkillScore(enrollment.id, skill.id, score);
-
-    router.refresh(); // Refresh to update best score
-  };
 
   const handleMarkComplete = async () => {
     setIsCompleting(true);
@@ -94,7 +77,7 @@ export function SkillContent({ skill, level, enrollment, progress }: SkillConten
             Learning Resources
           </h2>
           <p className={styles.sectionDesc}>
-            Study these resources to master this skill. Add your own resources to enhance learning.
+            Study these resources to master this skill.
           </p>
 
           <div className={styles.resourcesList}>
@@ -102,11 +85,11 @@ export function SkillContent({ skill, level, enrollment, progress }: SkillConten
               skill.resources.map((resource: any) => (
                 <div key={resource.id} className={styles.resourceCard}>
                   <div className={styles.resourceIcon}>
-                    <Code size={24} />
+                    <BookOpen size={24} />
                   </div>
                   <div className={styles.resourceContent}>
                     <h3>{resource.title}</h3>
-                    <p>{resource.type}</p>
+                    <p>{resource.type} • {resource.duration}m</p>
                   </div>
                   <a href={resource.url} target="_blank" rel="noopener noreferrer">
                     <Button variant="outline" size="sm">
@@ -117,74 +100,41 @@ export function SkillContent({ skill, level, enrollment, progress }: SkillConten
                 </div>
               ))
             ) : (
-              <>
-                <div className={styles.resourceCard}>
-                  <div className={styles.resourceIcon}>
-                    <Code size={24} />
-                  </div>
-                  <div className={styles.resourceContent}>
-                    <h3>Documentation & Tutorials</h3>
-                    <p>Official documentation and interactive tutorials</p>
-                  </div>
-                  <Button variant="outline" size="sm">
-                    <ExternalLink size={14} />
-                    Open
-                  </Button>
-                </div>
-                <div className={styles.resourceCard}>
-                  <div className={styles.resourceIcon}>
-                    <BookOpen size={24} />
-                  </div>
-                  <div className={styles.resourceContent}>
-                    <h3>Practice Exercises</h3>
-                    <p>Questions to reinforce learning</p>
-                  </div>
-                  <Button variant="outline" size="sm">
-                    <ExternalLink size={14} />
-                    Start
-                  </Button>
-                </div>
-              </>
+              <div className={styles.emptyResources}>
+                <BookOpen size={40} className={styles.emptyIcon} />
+                <p>Learning materials for this skill are being compiled.</p>
+              </div>
             )}
           </div>
         </div>
 
-        {/* Practice Exercises */}
+        {/* Practice Exercises - Moved after Learning Resources */}
         {skill.questions && skill.questions.length > 0 && (
-          <div className={styles.section}>
-            <h2 className={styles.sectionTitle}>
-              <CheckCircle size={20} />
-              Practice Exercises
-            </h2>
-            <p className={styles.sectionDesc}>
-              Master the concepts with interactive validation. Select an answer to see if you're right and understand why.
-            </p>
-
-            <div className={styles.assessmentContainer}>
-              {!isAssessmentStarted ? (
-                <AssessmentIntro
-                  onStart={() => setIsAssessmentStarted(true)}
-                  questionCount={skill.questions.length}
-                  bestScore={progress?.bestScore || 0}
-                />
-              ) : !isAssessmentFinished ? (
-                <AssessmentRunner
-                  questions={skill.questions}
-                  onComplete={handleAssessmentComplete}
-                />
-              ) : (
-                <AssessmentResult
-                  score={assessmentScore}
-                  passed={assessmentScore >= 70}
-                  bestScore={progress?.bestScore || 0}
-                  onRetake={() => {
-                    setIsAssessmentStarted(false);
-                    setIsAssessmentFinished(false);
-                    setAssessmentScore(0);
-                  }}
-                />
-              )}
+          <div className={`${styles.section} ${styles.practiceSection}`}>
+            <div className={styles.practiceHero}>
+              <div className={styles.practiceContent}>
+                <h2 className={styles.sectionTitle}>
+                  <CheckCircle size={20} />
+                  Practice Exercises
+                </h2>
+                <p className={styles.sectionDesc}>
+                  Master the concepts with interactive validation. Select an answer to see if you're right and understand why.
+                </p>
+              </div>
+              <Link href={`/paths/${enrollment.careerPath.slug}/learn/${skill.id}/quiz`}>
+                <Button variant="primary" size="md" className={styles.practiceBtn}>
+                  <Play size={18} />
+                  Start Assessment
+                </Button>
+              </Link>
             </div>
+
+            {progress?.bestScore > 0 && (
+              <div className={styles.scoreBadge}>
+                <span>Personal Best: </span>
+                <strong>{progress.bestScore}%</strong>
+              </div>
+            )}
           </div>
         )}
 
@@ -195,7 +145,7 @@ export function SkillContent({ skill, level, enrollment, progress }: SkillConten
             Practice Project
           </h2>
           <p className={styles.sectionDesc}>
-            Build a small project to practice this specific skill before moving to the final project.
+            Build a small project to practice this specific skill.
           </p>
 
           {skill.projects && skill.projects.length > 0 ? (
@@ -205,11 +155,13 @@ export function SkillContent({ skill, level, enrollment, progress }: SkillConten
                   <h3>{project.title}</h3>
                   <p>{project.description}</p>
                 </div>
-                <Link href={`/projects/${project.id}/guide`}>
-                  <Button variant="primary">
-                    Start
-                  </Button>
-                </Link>
+                <div className={styles.projectActions}>
+                  <Link href={`/projects/${project.id}/guide`}>
+                    <Button variant="primary" size="sm">
+                      Start Guide
+                    </Button>
+                  </Link>
+                </div>
               </div>
             ))
           ) : (
@@ -219,7 +171,7 @@ export function SkillContent({ skill, level, enrollment, progress }: SkillConten
                 <p>Apply what you've learned with a hands-on mini-project.</p>
               </div>
               <Link href="/projects">
-                <Button variant="primary">
+                <Button variant="primary" size="sm">
                   Start
                 </Button>
               </Link>

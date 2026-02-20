@@ -204,7 +204,33 @@ export const frontendContent = {
                         order: 4
                     }
                 }
-            ]
+            ],
+            finalProject: {
+                title: "Flux - Meta-Standard Marketing Landing Page",
+                description: "Build a high-conversion, pixel-perfect, and fully accessible landing page for 'Flux', a modern productivity tool. This project integrates semantic structure, advanced CSS grid layouts, and responsive engineering.",
+                requirements: [
+                    "Implement a 12-column CSS Grid system for the main layout.",
+                    "Use at least 5 different semantic HTML5 landmarks (main, nav, aside, footer, section).",
+                    "Score 100/100 on Lighthouse Accessibility audit.",
+                    "Use CSS Variables (Tokens) for a scalable design system.",
+                    "Fully responsive design (Mobile, Tablet, Desktop) using clamp() and media queries.",
+                    "Implement a complex header with sticky behavior and a responsive mobile menu."
+                ],
+                guide: [
+                    "Step 1: Set up the global design system tokens using CSS Variables.",
+                    "Step 2: Define the semantic skeleton of the landing page.",
+                    "Step 3: Implement the hero section using CSS Grid with background overlays.",
+                    "Step 4: Build a responsive 'Features' grid with staggered animations.",
+                    "Step 5: Create a professional footer using Flexbox for grouped links.",
+                    "Step 6: Perform a full accessibility and performance audit."
+                ],
+                hints: [
+                    "Use 'repeat(auto-fit, minmax(250px, 1fr))' for a fluid features grid.",
+                    "Follow the BEM (Block Element Modifier) convention for clean, scalable CSS.",
+                    "Ensure all decorative images have empty alt attributes (alt='') to avoid noise for screen readers."
+                ],
+                testCases: [{ name: "Semantic Correctness", verify: "Manual landmark check" }, { name: "A11y Score", verify: "100/100 Lighthouse" }],
+            }
         },
         {
             id: "fe-l2",
@@ -244,7 +270,33 @@ export const frontendContent = {
                         order: 2
                     }
                 }
-            ]
+            ],
+            finalProject: {
+                title: "Omni-Market - Enterprise Data Dashboard",
+                description: "Build an industrial-grade, real-time analytics dashboard for an e-commerce platform. This project requires strict TypeScript usage, advanced React performance patterns, and seamless data orchestration.",
+                requirements: [
+                    "Implement a fully type-safe state management system (no 'any').",
+                    "Virtualize large data sets (10k+ rows) using 'react-window' or 'tanstack-virtual'.",
+                    "Achieve a 90+ Lighthouse Performance score with optimized bundle splitting.",
+                    "Implement real-time updates via mocked WebSockets (Interval/PubSub).",
+                    "Custom Hook architecture for data fetching, filtering, and theme management.",
+                    "Strict Zod validation for all incoming API data (mocked)."
+                ],
+                guide: [
+                    "Step 1: Architect the global theme and state container using TypeScript Interfaces.",
+                    "Step 2: Implement the virtualized list component for transaction logs.",
+                    "Step 3: Build the real-time analytics charts using a performant charting library.",
+                    "Step 4: Optimize re-renders in the filtering system using 'useMemo' and 'useCallback'.",
+                    "Step 5: Implement dynamic code splitting for the dashboard modules.",
+                    "Step 6: Verify Type Integrity and Performance benchmarks."
+                ],
+                hints: [
+                    "Use 'React.memo' to prevent re-renders of heavy dashboard widgets.",
+                    "Leverage TypeScript 'Discriminated Unions' for complex UI states (Loading, Success, Error).",
+                    "Check the 'Profiler' tab in React DevTools to identify rendering bottlenecks."
+                ],
+                testCases: [{ name: "Type Safety", verify: "Zero TS errors in strict mode" }, { name: "Render Perf", verify: "No jank on 10k items" }],
+            }
         },
         {
             id: "fe-l3",
@@ -284,7 +336,33 @@ export const frontendContent = {
                         order: 2
                     }
                 }
-            ]
+            ],
+            finalProject: {
+                title: "Nexus Design System & Library",
+                description: "Design and implement a professional-grade design system and component library from scratch. This project focuses on architecture, TDD, and creating a scalable UI foundation.",
+                requirements: [
+                    "Implement a suite of 10+ accessible compound components (Select, Modal, etc.).",
+                    "Achieve 95%+ test coverage using Vitest and React Testing Library.",
+                    "Implement a documented state management pattern for complex components.",
+                    "Themeable architecture using CSS-in-JS or CSS Modules with Tokens.",
+                    "Comprehensive documentation site for the library.",
+                    "Strict semantic versioning flow and automated build pipelines."
+                ],
+                guide: [
+                    "Step 1: Define the core tokens and theme architecture.",
+                    "Step 2: Implement the base UI primitives (Button, Input, Layout).",
+                    "Step 3: Build complex compound components using context and ARIA patterns.",
+                    "Step 4: Develop an exhaustive test suite for every component variant.",
+                    "Step 5: Create a documentation site using MDX or a similar static generator.",
+                    "Step 6: Configure CI/CD for automated testing and package distribution."
+                ],
+                hints: [
+                    "Use React Context for shared state in compound components.",
+                    "Think like a library author: keep your APIs intuitive and flexible.",
+                    "Snapshot testing is great for preventing UI regressions, but focus on interaction tests."
+                ],
+                testCases: [{ name: "Test Coverage", verify: ">95% unit coverage" }, { name: "Accessibility", verify: "Full keyboard navigation support" }],
+            }
         },
         {
             id: "fe-l4",
@@ -307,7 +385,33 @@ export const frontendContent = {
                         order: 1
                     }
                 }
-            ]
+            ],
+            finalProject: {
+                title: "Global Content Edge Infrastructure",
+                description: "Design and simulate a global infrastructure strategy for an ultra-scale web application. Focus on maximizing Core Web Vitals and minimizing Latency at the Edge.",
+                requirements: [
+                    "Design a multi-region CDN and caching strategy with 99.9% cache-hit ratio goal.",
+                    "Implement an Edge-computing strategy for personalized content delivery.",
+                    "Define an optimization plan to achieve <2s LCP on real devices (simulated).",
+                    "Architect a server-side rendering (SSR) strategy with partial hydration.",
+                    "Security audit including CSRF, XSS, and Rate Limiting at the Edge.",
+                    "Cost-benefit analysis of different infrastructure providers (AWS, Cloudflare, Vercel)."
+                ],
+                guide: [
+                    "Step 1: Audit a slow application and identify primary bottlenecks in Core Web Vitals.",
+                    "Step 2: Design a caching hierarchy from Browser to Origin.",
+                    "Step 3: Implement Edge-side Logic for dynamic route protection.",
+                    "Step 4: Build a monitoring dashboard for real-user metrics (RUM).",
+                    "Step 5: Simulate a global rollout and measure latency improvements.",
+                    "Step 6: Finalize the scale and performance report for executive stakeholders."
+                ],
+                hints: [
+                    "Focus on the 'Critical Rendering Path' - every millisecond counts.",
+                    "Edge compute is powerful, but keep your bundles small to avoid cold starts.",
+                    "Use 'Pre-fetching' and 'Pre-loading' strategically for first-page loads."
+                ],
+                testCases: [{ name: "Performance Strategy", verify: "Lighthouse Performance >95" }, { name: "Infrastructure Design", verify: "Zero single-points-of-failure" }],
+            }
         }
     ]
 };

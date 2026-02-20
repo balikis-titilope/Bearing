@@ -21,7 +21,33 @@ export const machinelearningContent = {
                         order: 1
                     }
                 }
-            ]
+            ],
+            finalProject: {
+                title: "Predict-Flow - Optimized Linear Engine",
+                description: "Design and implement a professional-grade predictive engine using statistical regression foundations. Focus on rigorous data validation, feature scaling, and production-ready Python patterns.",
+                requirements: [
+                    "Develop a robust preprocessing pipeline using Scikit-Learn's 'ColumnTransformer'.",
+                    "Implement a series of linear models (Ridge, Lasso, ElasticNet) and compare performance.",
+                    "Build a custom 'Outlier Detector' using Z-score and IQR methods.",
+                    "Achieve an R-Squared score of >0.85 on a complex real-estate dataset.",
+                    "Serialize the trained model using 'joblib' with integrated version metadata.",
+                    "Implement a suite of unit tests for data-shape and type validation."
+                ],
+                guide: [
+                    "Step 1: Perform comprehensive Exploratory Data Analysis (EDA) to find feature correlations.",
+                    "Step 2: Build the 'Predict-Flow' transformation suite (Scaling, Encoding, Imputing).",
+                    "Step 3: Implement the cross-validation strategy to prevent data leakage.",
+                    "Step 4: Train and tune the linear ensemble using Bayesian optimization.",
+                    "Step 5: Conduct a residual analysis audit to verify model assumptions.",
+                    "Step 6: Final demonstration: Deploy the serialized model and perform bulk inference."
+                ],
+                hints: [
+                    "Slightly biased models (Regularization) often generalize better than complex ones.",
+                    "Log-transform highly skewed features to improve linear model performance.",
+                    "Always standardize features before using L1/L2 regularization."
+                ],
+                testCases: [{ name: "Inference Stability", verify: "Model handles missing categorical inputs without crashing" }, { name: "Prediction Accuracy", verify: "Mean Absolute Error < 10% of target mean" }],
+            }
         },
         {
             id: "mle-l2",
@@ -61,7 +87,33 @@ export const machinelearningContent = {
                         order: 2
                     }
                 }
-            ]
+            ],
+            finalProject: {
+                title: "Neuro-Scan - Industrial Object Recognition",
+                description: "Architect and train a deep learning system for high-accuracy image recognition. This project focuses on custom CNN design, transfer learning, and advanced data augmentation for computer vision.",
+                requirements: [
+                    "Implement a custom PyTorch model utilizing Depthwise Separable Convolutions.",
+                    "Develop a data augmentation pipeline (Rotation, Jitter, Mixup) to improve robustness.",
+                    "Use 'Transfer Learning' with a pre-trained EfficientNet backbone for specific domains.",
+                    "Achieve an F1-score of >0.92 on a noisy industrial dataset.",
+                    "Implement 'Grad-CAM' visualizations to explain the model's focus points.",
+                    "Optimize training using learning-rate warmups and cosine annealing."
+                ],
+                guide: [
+                    "Step 1: Curate and balance the image dataset using stratified sampling.",
+                    "Step 2: Build the 'Neuro-Scan' training loop with integrated validation checkpoints.",
+                    "Step 3: Implement the augmentation suite and audit its impact on validation loss.",
+                    "Step 4: Execute the Transfer Learning workflow and fine-tune the top layers.",
+                    "Step 5: Perform a qualitative audit using saliency maps (Grad-CAM).",
+                    "Step 6: Final demonstration: Deploy the model to an edge-device simulator and measure FPS."
+                ],
+                hints: [
+                    "Class imbalance is deadly in vision; use 'WeightedRandomSampler' in your DataLoader.",
+                    "Label smoothing can significantly reduce model overconfidence and improve calibration.",
+                    "Start with a small image resolution (e.g., 128x128) to iterate quickly before scaling up."
+                ],
+                testCases: [{ name: "Model FPS", verify: ">30 FPS sustained on targeted hardware" }, { name: "Recall Score", verify: "Detects 95%+ of critical anomalies" }],
+            }
         },
         {
             id: "mle-l3",
@@ -101,7 +153,33 @@ export const machinelearningContent = {
                         order: 2
                     }
                 }
-            ]
+            ],
+            finalProject: {
+                title: "Linguist-AI - Multilingual BERT Finetuning",
+                description: "Design and fine-tune a state-of-the-art transformer model for multilingual text understanding. This project focuses on Hugging Face ecosystems, tokenization, and domain adaptation.",
+                requirements: [
+                    "Fine-tune a multilingual BERT or RoBERTa model for complex intent classification.",
+                    "Implement a custom 'Tokenizer' extension to handle domain-specific jargon.",
+                    "Develop a production-grade inference engine using ONNX Runtime for 4x speedup.",
+                    "Achieve >90% cross-lingual transfer accuracy across 3 major languages.",
+                    "Implement 'Active Learning' to iteratively improve the model with human-in-the-loop.",
+                    "Design a multi-tenant monitoring dashboard for tracking model drift per region."
+                ],
+                guide: [
+                    "Step 1: Curate the multilingual dataset and perform domain-specific text normalizations.",
+                    "Step 2: Build the finetuning pipeline using Hugging Face 'Accelerator' for multi-GPU support.",
+                    "Step 3: Implement the ONNX export and optimization (Quantization) workflow.",
+                    "Step 4: Develop the inference API with custom logging for drift detection.",
+                    "Step 5: Conduct a 'Cross-Lingual' audit to verify language-agnostic understanding.",
+                    "Step 6: Final demonstration: Deploy the system and process a 5-language intent stream."
+                ],
+                hints: [
+                    "Freeze the base transformer layers initially to avoid catastrophic forgetting during finetuning.",
+                    "Use 'BPE' (Byte Pair Encoding) or 'WordPiece' for the most efficient tokenization.",
+                    "Monitor 'Confusion Matrices' per language to find specific linguistic weaknesses."
+                ],
+                testCases: [{ name: "Language Invariance", verify: "Accuracy variance across languages < 5%" }, { name: "Throughput", verify: "Handles 500 requests/sec with ONNX optimization" }],
+            }
         },
         {
             id: "mle-l4",
@@ -124,8 +202,33 @@ export const machinelearningContent = {
                         order: 1
                     }
                 }
-            ]
+            ],
+            finalProject: {
+                title: "Omni-ML - Global MLOps Infrastructure",
+                description: "Architect a self-healing, global-scale MLOps platform for an enterprise. Focus on automated model governance, continuous training (CT), and multi-cloud inference serving.",
+                requirements: [
+                    "Design a multi-region Model Registry using MLflow with integrated lineage tracking.",
+                    "Implement an automated 'Continuous Training' (CT) pipeline triggered by data drift.",
+                    "Build a 'Shadow Deployment' and 'Canary' infrastructure for risk-free model rollouts.",
+                    "Implement a 'Feature Store' (Feast/Hopsworks) to eliminate train-serve skew.",
+                    "Design a global monitoring engine using Prometheus and specialized ML alert rules.",
+                    "Lead a strategic AI ethics review for all models deployed on the platform."
+                ],
+                guide: [
+                    "Step 1: Architect the 'Platform-as-a-Service' layer for ML using Kubernetes (Kubeflow).",
+                    "Step 2: Develop the automation for 'Self-Serve' feature engineering and registration.",
+                    "Step 3: Implement the CT/CI/CD pipelines with integrated model-quality gates.",
+                    "Step 4: Build the observability layer for both infrastructure and model behavior.",
+                    "Step 5: Execute a 'Shadow' and 'Live' promotion of a mission-critical model.",
+                    "Step 6: Final demonstration: Present the unified MLOps platform architecture to stakeholders."
+                ],
+                hints: [
+                    "A 'Feature Store' is expensive but vital for consistency; start with offline-only if needed.",
+                    "Automated 'Rollback' on accuracy drop is your best friend in production ML.",
+                    "Think of 'Model Governance' as the CI/CD equivalent for data and weights."
+                ],
+                testCases: [{ name: "Drift Remediation", verify: "Automated retraining triggers and succeeds upon drift detection" }, { name: "Audit Lineage", verify: "100% of production models can be traced back to raw data and hyperparams" }],
+            }
         }
     ]
 };
-

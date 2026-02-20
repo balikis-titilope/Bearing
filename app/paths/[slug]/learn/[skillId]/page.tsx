@@ -88,6 +88,7 @@ export default async function SkillPage({ params }: PageProps) {
           level={level}
           enrollment={enrollment}
           progress={progress}
+          slug={slug}
         />
       </main>
       <Footer />

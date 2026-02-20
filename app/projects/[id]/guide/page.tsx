@@ -28,7 +28,11 @@ export default async function ProjectGuidePage({ params }: ProjectGuidePageProps
         where: { id },
         include: {
             skill: true,
-            level: true
+            level: {
+                include: {
+                    careerPath: true
+                }
+            }
         }
     });
 
@@ -36,10 +40,30 @@ export default async function ProjectGuidePage({ params }: ProjectGuidePageProps
         notFound();
     }
 
-    const guideSteps = project.guide ? JSON.parse(project.guide) : [];
-    const hints = project.hints ? JSON.parse(project.hints) : [];
-    const stuckLinks = project.stuckLinks ? JSON.parse(project.stuckLinks) : [];
-    const requirements = project.requirements ? JSON.parse(project.requirements) : [];
+    const safeParse = (data: any, fallback: any = []) => {
+        if (!data) return fallback;
+        try {
+            let parsed = typeof data === 'string' ? JSON.parse(data) : data;
+            // Handle double-stringification recursively
+            while (typeof parsed === 'string') {
+                try {
+                    const next = JSON.parse(parsed);
+                    if (next === parsed) break; // Prevent infinite loop if it's just a string that happens to look like JSON
+                    parsed = next;
+                } catch {
+                    break;
+                }
+            }
+            return Array.isArray(parsed) ? parsed : fallback;
+        } catch (e) {
+            return fallback;
+        }
+    };
+
+    const guideSteps = safeParse(project.guide);
+    const hints = safeParse(project.hints);
+    const stuckLinks = safeParse(project.stuckLinks);
+    const requirements = safeParse(project.requirements);
 
     return (
         <>
@@ -149,6 +173,24 @@ export default async function ProjectGuidePage({ params }: ProjectGuidePageProps
                             Tip: If you're struggling, try to rebuild a simpler version of the requirement first.
                         </div>
                     </section>
+
+                    {/* Submit Section - Only for Final Projects */}
+                    {project.level?.careerPath?.slug && !project.isMiniProject && (
+                        <section className={styles.submitSection}>
+                            <div className={styles.submitCard}>
+                                <div>
+                                    <h3>Project Completion & Submission</h3>
+                                    <p>Once you have implemented all Meta-standard requirements and verified your solution, proceed to the final submission.</p>
+                                </div>
+                                <Link href={`/paths/${project.level.careerPath.slug}/learn/project/${project.id}`}>
+                                    <Button variant="primary">
+                                        Submit Project
+                                        <Play size={16} />
+                                    </Button>
+                                </Link>
+                            </div>
+                        </section>
+                    )}
                 </div>
             </main>
             <Footer />

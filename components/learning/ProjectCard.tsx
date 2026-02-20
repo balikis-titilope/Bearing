@@ -4,13 +4,16 @@ import { CheckCircle, Lock, Trophy, GitBranch } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import styles from './ProjectCard.module.css';
 
+import Link from 'next/link';
+
 interface ProjectCardProps {
   project: any;
   status: string;
   isLocked: boolean;
+  slug: string;
 }
 
-export function ProjectCard({ project, status, isLocked }: ProjectCardProps) {
+export function ProjectCard({ project, status, isLocked, slug }: ProjectCardProps) {
   const statusConfig: Record<string, { label: string; color: string }> = {
     NOT_STARTED: { label: 'Start Project', color: 'var(--primary)' },
     IN_PROGRESS: { label: 'Continue Project', color: 'var(--accent)' },
@@ -28,13 +31,13 @@ export function ProjectCard({ project, status, isLocked }: ProjectCardProps) {
           <Lock size={32} />
           <span>Complete all skills to unlock</span>
         </div>
-        
+
         <div className={styles.cardContent}>
           <div className={styles.projectBadge}>
             <Trophy size={20} />
             <span>Final Project</span>
           </div>
-          
+
           <h3 className={styles.projectTitle}>{project.title}</h3>
           <p className={styles.projectDescription}>
             Complete all skills in this level to unlock this project.
@@ -85,13 +88,15 @@ export function ProjectCard({ project, status, isLocked }: ProjectCardProps) {
         )}
 
         <div className={styles.cardFooter}>
-          <Button 
-            variant={status === 'PASSED' ? 'outline' : 'primary'}
-            className={styles.actionButton}
-          >
-            <Trophy size={18} />
-            <span>{config.label}</span>
-          </Button>
+          <Link href={`/projects/${project.id}/guide`} className="block w-full">
+            <Button
+              variant={status === 'PASSED' ? 'outline' : 'primary'}
+              className={styles.actionButton}
+            >
+              <Trophy size={18} />
+              <span>{config.label}</span>
+            </Button>
+          </Link>
         </div>
       </div>
     </div>

@@ -6,19 +6,24 @@ import { AlertCircle, CheckCircle } from "lucide-react";
 
 import { AuthCard } from "@/components/auth/AuthCard";
 import { reset } from "@/actions/reset";
+import { newPassword } from "@/actions/new-password";
 import styles from "@/app/register/page.module.css";
 
 const ResetPage = () => {
     const [error, setError] = useState<string | undefined>("");
     const [success, setSuccess] = useState<string | undefined>("");
-    const [resetLink, setResetLink] = useState<string | undefined>("");
+    const [isVerified, setIsVerified] = useState(false);
+    const [verifiedEmail, setVerifiedEmail] = useState("");
+    const [verifiedName, setVerifiedName] = useState("");
     const [isPending, startTransition] = useTransition();
 
-    const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+
+    const onVerifySubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setError("");
         setSuccess("");
-        setResetLink("");
 
         const formData = new FormData(e.currentTarget);
         const email = formData.get("email") as string;
@@ -26,20 +31,47 @@ const ResetPage = () => {
 
         startTransition(() => {
             reset({ email, name }).then((data) => {
+                if (data?.error) {
+                    setError(data.error);
+                } else {
+                    setSuccess(data?.success);
+                    setIsVerified(true);
+                    setVerifiedEmail(email);
+                    setVerifiedName(name);
+                }
+            });
+        });
+    };
+
+    const onPasswordSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setError("");
+        setSuccess("");
+
+        if (password !== confirmPassword) {
+            setError("Passwords do not match!");
+            return;
+        }
+
+        startTransition(() => {
+            newPassword({ password }, verifiedEmail, verifiedName).then((data) => {
                 setError(data?.error);
                 setSuccess(data?.success);
-                setResetLink(data?.resetLink);
+                if (data?.success) {
+                    // Success! Clean up or redirect
+                    setIsVerified(false);
+                }
             });
         });
     };
 
     return (
         <AuthCard
-            title="Forgot your password?"
-            description="Verify your identity to reset your password"
+            title={isVerified ? "Create new password" : "Forgot your password?"}
+            description={isVerified ? "Enter your new secure password below" : "Verify your identity to reset your password"}
         >
-            {!resetLink ? (
-                <form onSubmit={onSubmit} className={styles.form}>
+            {!isVerified ? (
+                <form onSubmit={onVerifySubmit} className={styles.form}>
                     <div className={styles.inputGroup}>
                         <label htmlFor="email">Email Address</label>
                         <input
@@ -76,20 +108,59 @@ const ResetPage = () => {
                     <button type="submit" className={styles.submitBtn} disabled={isPending}>
                         {isPending ? <span className={styles.spinner}></span> : "Verify Identity"}
                     </button>
+
+                    <div className={styles.backToLogin}>
+                        <Link href="/login" className={styles.backLink}>
+                            Back to login
+                        </Link>
+                    </div>
                 </form>
             ) : (
-                <div className={styles.form}>
+                <form onSubmit={onPasswordSubmit} className={styles.form}>
                     <div className={styles.successMsg}>
                         <CheckCircle size={16} />
                         <span>{success}</span>
                     </div>
-                    <p className={styles.description} style={{ textAlign: 'center', marginTop: '1rem', marginBottom: '1.5rem' }}>
-                        Your identity has been verified. You can now reset your password.
-                    </p>
-                    <Link href={resetLink} className={styles.submitBtn} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', textDecoration: 'none' }}>
-                        Go to Reset Page
-                    </Link>
-                </div>
+
+                    <div className={styles.inputGroup}>
+                        <label htmlFor="password">New Password</label>
+                        <input
+                            type="password"
+                            id="password"
+                            placeholder="Min. 8 characters"
+                            className={styles.input}
+                            required
+                            disabled={isPending}
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                    </div>
+
+                    <div className={styles.inputGroup}>
+                        <label htmlFor="confirmPassword">Confirm New Password</label>
+                        <input
+                            type="password"
+                            id="confirmPassword"
+                            placeholder="Repeat your password"
+                            className={styles.input}
+                            required
+                            disabled={isPending}
+                            value={confirmPassword}
+                            onChange={(e) => setConfirmPassword(e.target.value)}
+                        />
+                    </div>
+
+                    {error && (
+                        <div className={styles.errorMsg}>
+                            <AlertCircle size={16} />
+                            <span>{error}</span>
+                        </div>
+                    )}
+
+                    <button type="submit" className={styles.submitBtn} disabled={isPending}>
+                        {isPending ? <span className={styles.spinner}></span> : "Reset Password"}
+                    </button>
+                </form>
             )}
         </AuthCard>
     );

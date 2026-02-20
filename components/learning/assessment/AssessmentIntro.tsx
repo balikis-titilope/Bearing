@@ -40,8 +40,8 @@ export function AssessmentIntro({ onStart, questionCount, bestScore }: Assessmen
                 </div>
             </div>
 
-            <Button onClick={onStart} variant="primary" size="lg" className={styles.startBtn}>
-                <Play size={20} />
+            <Button onClick={onStart} variant="primary" size="md" className={styles.startBtn}>
+                <Play size={18} />
                 Start Assessment
             </Button>
         </div>

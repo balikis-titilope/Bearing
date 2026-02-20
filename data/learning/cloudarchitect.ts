@@ -53,7 +53,33 @@ export const cloudArchitectContent = {
                         order: 1
                     }
                 }
-            ]
+            ],
+            finalProject: {
+                title: "Sky-Base - High-Availability Infrastructure",
+                description: "Design and implement a professional-grade cloud foundation that satisfies the 'Well-Architected' pillars. This project focuses on high-availability, security isolation, and automated scalability patterns.",
+                requirements: [
+                    "Design a multi-AZ VPC architecture with separate tiers for Web, App, and Data.",
+                    "Implement a cross-region read replica strategy for a relational database (RDS).",
+                    "Configure an Application Load Balancer with SSL termination and health checks.",
+                    "Implement an Auto Scaling Group with custom cloud-init hardening scripts.",
+                    "Set up an Bastion Host (Jump Box) for secure administrative access.",
+                    "Achieve documented 'RTO' (Recovery Time Objective) of under 1 hour."
+                ],
+                guide: [
+                    "Step 1: Map out the address space (CIDR) for a scalable multi-region VPC.",
+                    "Step 2: Design the security group matrix with the principle of least privilege.",
+                    "Step 3: Build the multi-tier subnet architecture across at least 3 AZs.",
+                    "Step 4: Configure the Load Balancing and Scaling policies based on custom metrics.",
+                    "Step 5: Implement the database persistence layer with automated failover.",
+                    "Step 6: Final audit: Perform a 'Chaos' test by simulating an AZ outage."
+                ],
+                hints: [
+                    "Use 'NAT Gateways' instead of 'NAT Instances' for better reliability and performance.",
+                    "Leverage 'Security Groups' as identity-based firewalls rather than IP-based ones.",
+                    "Standardize tags (Environment, Project, Owner) to ensure manageable multi-tenant billing."
+                ],
+                testCases: [{ name: "Fault Tolerance", verify: "System maintains 100% uptime during AZ termination" }, { name: "Security Perimeter", verify: "Zero direct internet access to Private/Data tiers" }],
+            }
         },
         {
             id: "ca-l2",
@@ -93,7 +119,33 @@ export const cloudArchitectContent = {
                         order: 2
                     }
                 }
-            ]
+            ],
+            finalProject: {
+                title: "Nitro-Scale - Serverless API Ecosystem",
+                description: "Architect and deploy a global-scale serverless ecosystem using Infrastructure as Code (Terraform). This project focuses on event-driven design, secure state management, and multi-region deployment logic.",
+                requirements: [
+                    "Develop a serverless API that handles 1,000+ Requests Per Second (RPS) using AWS Lambda.",
+                    "Implement a 'Global Table' strategy in DynamoDB for sub-second global latency.",
+                    "Configure an API Gateway with custom Authorizers and per-client Rate Limiting.",
+                    "Automate the entire deployment using modular Terraform with Remote State locking.",
+                    "Implement an event-driven 'Dead Letter Queue' (DLQ) pattern for failed async tasks.",
+                    "Achieve significant cost reduction (70%+) compared to traditional instance-based hosting."
+                ],
+                guide: [
+                    "Step 1: Architect the multi-region serverless topology using Terraform modules.",
+                    "Step 2: Build the core business logic using async Lambda triggers and event buses.",
+                    "Step 3: Implement the 'Global DynamoDB' layer with automated conflict resolution.",
+                    "Step 4: Secure the edge using WAF (Web Application Firewall) and CloudFront caches.",
+                    "Step 5: Developments the integrated monitoring dashboard with X-Ray tracing.",
+                    "Step 6: Stress test: Push the ecosystem to its scaling limits and audit cold-starts."
+                ],
+                hints: [
+                    "Use 'Provisioned Concurrency' for critical Lambda functions to eliminate cold-start spikes.",
+                    "Keep your Terraform modules 'unopinionated' so they can be reused across different projects.",
+                    "Enable 'DynamoDB Streams' to trigger downstream analytics or search-indexing."
+                ],
+                testCases: [{ name: "IAC Integrity", verify: "Terraform plan matches architectural blueprint 100%" }, { name: "Throughput", verify: "0% failure rate at 1,000 RPS sustained" }],
+            }
         },
         {
             id: "ca-l3",
@@ -133,7 +185,33 @@ export const cloudArchitectContent = {
                         order: 2
                     }
                 }
-            ]
+            ],
+            finalProject: {
+                title: "Monolith-Zero - Enterprise Modernization",
+                description: "Lead the architectural transformation of a legacy enterprise monolith into a modern, cloud-native microservices ecosystem. This project focuses on migration patterns, container orchestration, and observability.",
+                requirements: [
+                    "Implement a 'Strangler Fig' migration plan for a complex 10-year-old monolith.",
+                    "Design a production-grade Kubernetes cluster (EKS/Aks) with multi-tenant isolation.",
+                    "Implement a 'Service Mesh' (Istio/Linkerd) for advanced traffic management and mTLS.",
+                    "Build a distributed tracing and logging stack using OpenTelemetry and Prometheus.",
+                    "Implement the 'SAGA' pattern for managing distributed transactions across services.",
+                    "Achieve zero-downtime deployment capabilities using Canary or Blue/Green strategies."
+                ],
+                guide: [
+                    "Step 1: Conduct a thorough service-decomposition audit and map dependencies.",
+                    "Step 2: Deploy the pilot Kubernetes environment with strict security namespaces.",
+                    "Step 3: Implement the centralized event bus and schema registry for inter-service comms.",
+                    "Step 4: Build the automated CI/CD pipeline with container-scanning gates.",
+                    "Step 5: Roll out the Service Mesh and configure global observability.",
+                    "Step 6: Execute a live migration of the core 'Order' service with zero user impact."
+                ],
+                hints: [
+                    "A 'Service Mesh' is complex; only add it if you really need mTLS or advanced traffic splitting.",
+                    "Focus on 'Observability' early; knowing where a request failed is 90% of the battle in microservices.",
+                    "Database migration is the hard part: consider 'Dual-Writing' before the final cutover."
+                ],
+                testCases: [{ name: "Migration Integrity", verify: "Legacy and New services run in parallel without data skew" }, { name: "System Resilience", verify: "Circuit breakers prevent cascading failures during service outages" }],
+            }
         },
         {
             id: "ca-l4",
@@ -156,7 +234,33 @@ export const cloudArchitectContent = {
                         order: 1
                     }
                 }
-            ]
+            ],
+            finalProject: {
+                title: "Global-Cloud - Multi-Region Governance",
+                description: "Architect a global cloud governance framework for a multi-national organization. Focus on automated compliance, cost-orchestration, and cross-cloud sovereign architecture.",
+                requirements: [
+                    "Design a multi-account organization structure (AWS Organizations/Control Tower).",
+                    "Implement automated 'Service Control Policies' (SCPs) to enforce global budget limits.",
+                    "Build an automated compliance engine that reverts non-compliant resource changes in real-time.",
+                    "Architect a cross-cloud (AWS + Azure) disaster recovery strategy for mission-critical core services.",
+                    "Design a global data sovereignty framework for GDPR/CCPA compliance using regional isolations.",
+                    "Present a strategic executive roadmap for cloud financial management (FinOps)."
+                ],
+                guide: [
+                    "Step 1: Define the organizational landing zone and account structure.",
+                    "Step 2: Implement the global guardrails and automated compliance logic.",
+                    "Step 3: Build the multi-cloud connectivity layer using VPNs or Direct-Connect.",
+                    "Step 4: Develop the 'FinOps' dashboard for enterprise-wide cost transparency.",
+                    "Step 5: Conduct a full-scale DR (Disaster Recovery) drill across cloud providers.",
+                    "Step 6: Present the final global architecture to a simulated executive board."
+                ],
+                hints: [
+                    "Automation is the only way to manage governance at the scale of 100+ accounts.",
+                    "Think of 'Cloud Financial Management' as an engineering problem, not just an accounting one.",
+                    "Sovereignty means knowing exactly where every byte of user data is stored and processed."
+                ],
+                testCases: [{ name: "Governance Coverage", verify: "100% of accounts compliant with 'Region-Locked' policies" }, { name: "DR Latency", verify: "Failover to secondary cloud completed in <15 minutes" }],
+            }
         }
     ]
 };

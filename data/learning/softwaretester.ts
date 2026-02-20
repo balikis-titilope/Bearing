@@ -40,7 +40,33 @@ export const softwareTesterContent = {
                         order: 2
                     }
                 }
-            ]
+            ],
+            finalProject: {
+                title: "Bug-Hunter - Global Commerce Audit",
+                description: "Perform a professional, multi-dimensional quality audit on a complex e-commerce platform. This project focuses on high-fidelity test case design, edge-case discovery, and professional defect communication.",
+                requirements: [
+                    "Design a comprehensive test suite of 40+ manual test cases covering all 'Critical' user flows.",
+                    "Identify and document 10+ unique defects using a standardized 'Bug Report' template.",
+                    "Perform a cross-browser and cross-device UI consistency audit.",
+                    "Develop an API regression collection in Postman with automated assertions.",
+                    "Achieve documented 100% requirement coverage for the 'Checkout' module.",
+                    "Submit a final 'Quality Scorecard' that ranks release readiness based on bug density."
+                ],
+                guide: [
+                    "Step 1: Perform a deep requirement analysis of the target e-commerce platform.",
+                    "Step 2: Build the 'Bug Hunter' test plan with clear Scope and Out-of-Scope boundaries.",
+                    "Step 3: Execute exploratory testing to find 'Zero-Day' logic errors.",
+                    "Step 4: Develop the API validation suite using Postman scripts (Tests/Assertions).",
+                    "Step 5: Conduct a thorough regression cycle to verify historical fixes.",
+                    "Step 6: Final demonstration: Present your defect registry and release recommendation to stakeholders."
+                ],
+                hints: [
+                    "Think like a malicious user: what happens if I subtract items in the cart to get a negative total?",
+                    "A good bug report includes: Title, Summary, Severity, Steps, Actual Result, and Expected Result.",
+                    "Always verify the 'Empty State' of lists, carts, and search results."
+                ],
+                testCases: [{ name: "Defect Precision", verify: "100% of reported bugs are reproducible following the documented steps" }, { name: "API Integrity", verify: "Postman collection passes all 20+ automated status-code checks" }],
+            }
         },
         {
             id: "st-l2",
@@ -81,7 +107,33 @@ export const softwareTesterContent = {
                         order: 2
                     }
                 }
-            ]
+            ],
+            finalProject: {
+                title: "Flow-Gate - End-to-End Automation Suite",
+                description: "Architect and build a high-fidelity automated testing suite for a modern web application. Focus on the Page Object Model (POM), data-driven testing, and database validation.",
+                requirements: [
+                    "Develop a Cypress/Playwright automation suite using the Page Object Model (POM).",
+                    "Implement a 'Data-Driven' testing layer that reads test data from JSON/CSV files.",
+                    "Build an automated database-state check using SQL to verify UI actions.",
+                    "Achieve >80% automated coverage of the core 'Happy-Path' flows.",
+                    "Implement a sequence of 'API-Seeding' steps to ensure a clean test environment.",
+                    "Document the automation 'Flakiness' strategy (e.g., Retry logic, Wait patterns)."
+                ],
+                guide: [
+                    "Step 1: Map the application's DOM and design the Page Object classes.",
+                    "Step 2: Build the core automation scripts with sophisticated selector strategies (Data-IDs).",
+                    "Step 3: Develop the database-connection layer for back-end verification.",
+                    "Step 4: Implement the automated reporting dashboard using Mochawesome or similar.",
+                    "Step 5: Conduct a 'Stress Test' on your automation to ensure zero flakiness in the CI environment.",
+                    "Step 6: Final demonstration: A 5-minute automated demo showing the suite catch an intentional bug."
+                ],
+                hints: [
+                    "Avoid using 'wait(5000)'; instead, use 'intercept' or 'waitFor' specific elements/network-calls.",
+                    "Don't automate everything: focus on high-value, high-risk regression flows.",
+                    "Clear your database state before every test run to prevent 'Dirty Data' failures."
+                ],
+                testCases: [{ name: "Suite Stability", verify: "Zero false-negative results across 10 consecutive runs" }, { name: "POM Accuracy", verify: "All UI elements mapped correctly to reusable Page Object methods" }],
+            }
         },
         {
             id: "st-l3",
@@ -121,7 +173,33 @@ export const softwareTesterContent = {
                         order: 2
                     }
                 }
-            ]
+            ],
+            finalProject: {
+                title: "Reliability-First - Full-Scale Performance Bench",
+                description: "Design and execute a high-scale performance and reliability test suite. Focus on identifying bottlenecks, measuring 'Apdex' scores, and automated CI/CD performance gating.",
+                requirements: [
+                    "Develop a sophisticated load-test script using k6 or JMeter for a multi-user scenario.",
+                    "Implement a CI-based 'Performance Gate' that fails builds if p99 latency exceeds a threshold.",
+                    "Build a 'Stress Test' that identifies the system breaking point (Max Throughput).",
+                    "Implement a monitoring integration that tracks CPU/RAM usage during high-load events.",
+                    "Achieve documented 99% uptime during a simulated 'Black Friday' traffic spike.",
+                    "Conduct a thorough 'Endurance Test' that checks for memory leaks over a 24-hour period."
+                ],
+                guide: [
+                    "Step 1: Define the performance SLAs (Service Level Agreements) and SLIs (Service Level Indicators).",
+                    "Step 2: Build the 'Reliability-First' load script with realistic user-behavior modeling.",
+                    "Step 3: Execute the baseline tests and identify the current system 'Bottleneck'.",
+                    "Step 4: Implement the automated performance gates in your GitHub/GitLab pipeline.",
+                    "Step 5: Conduct a 'Chaos' performance test (Load + Random service failures).",
+                    "Step 6: Final demonstration: Present a 'Performance Scaling Report' with clear optimization recommendations."
+                ],
+                hints: [
+                    "Don't just measure 'Average' latency; it hides the experience of the unluckiest 1% (p99).",
+                    "Warm up your system before starting the main load test to ensure accurate measurements.",
+                    "Monitoring your database during load tests is vital; it's usually the first thing to break."
+                ],
+                testCases: [{ name: "Load Threshold", verify: "System maintains <500ms latency at 500 RPS" }, { name: "Failover Resilience", verify: "Load test identifies successful traffic rerouting during pod failure" }],
+            }
         },
         {
             id: "st-l4",
@@ -144,7 +222,33 @@ export const softwareTesterContent = {
                         order: 1
                     }
                 }
-            ]
+            ],
+            finalProject: {
+                title: "Quality-Sync - Enterprise Testing Governance",
+                description: "Architect and lead a global quality transformation for a large-scale engineering organization. Focus on testing maturity models, automated quality-as-code, and predictive defect analytics.",
+                requirements: [
+                    "Design an enterprise-wide 'Testing Maturity Framework' for across 10+ engineering teams.",
+                    "Implement a 'Quality-as-Code' infrastructure that automates test environment provisioning.",
+                    "Build a centralized 'Quality Intelligence' dashboard synthesizes data from Jira, GitHub, and Test tools.",
+                    "Develop a strategic 'Shift-Left' program that implements automated unit-testing gates for all devs.",
+                    "Achieve a 50% reduction in production-escaped defects over a 6-month simulated period.",
+                    "Lead an executive 'Quality Governance' council with simulated engineering leadership."
+                ],
+                guide: [
+                    "Step 1: Conduct a 'Quality Audit' of current engineering practices and find high-risk gaps.",
+                    "Step 2: Develop the centralized 'Quality Dashboard' to provide visibility into team health.",
+                    "Step 3: Implement the automated 'Quality-Gate' policies for the entire organization.",
+                    "Step 4: Build the predictive model for identifying high-risk code changes before merge.",
+                    "Step 5: Conduct a thorough 'Root Cause Analysis' (RCA) on a simulated major production outage.",
+                    "Step 6: Final demonstration: Present the 'Zero-Defect' cultural roadmap and investment plan."
+                ],
+                hints: [
+                    "Culture is more important than tools: if devs don't care about quality, no tool will save you.",
+                    "Automated 'Quality Metrics' (like code coverage) are good pointers but shouldn't be the only goal.",
+                    "Staff QA's job is to enable the whole team to own quality, not to be the only ones testing."
+                ],
+                testCases: [{ name: "Governance Impact", verify: "100% of teams are compliant with the new PR quality-gate policies" }, { name: "Detection Speed", verify: "Median time to detect a regression reduced by 70% with the new suite" }],
+            }
         }
     ]
 };

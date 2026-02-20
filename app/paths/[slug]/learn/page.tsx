@@ -142,6 +142,7 @@ export default async function LearnPage({ params }: PageProps) {
                     project={project}
                     status={submission?.status || 'NOT_STARTED'}
                     isLocked={!canAccess(!skillProgressMap, session?.user, adminMode)}
+                    slug={slug}
                   />
                 );
               })}

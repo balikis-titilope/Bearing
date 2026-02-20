@@ -69,10 +69,6 @@ export const register = async (values: RegisterValues, isOAuthCompletion = false
         },
     });
 
-    // Verification emails are disabled due to Resend free tier limits
-    // const verificationToken = await generateVerificationToken(email);
-    // await sendVerificationEmail(email, verificationToken.token);
-
     try {
         await signIn("credentials", {
             email,

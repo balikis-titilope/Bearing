@@ -91,7 +91,33 @@ export const fullStackContent = {
                     }
                 }
 
-            ]
+            ],
+            finalProject: {
+                title: "Stream-Core - Unified Command Center",
+                description: "Design and implement a professional-grade full-stack portal using modern semantic patterns and Node.js. This project focuses on end-to-end data flow, responsive UI engineering, and high-quality API design.",
+                requirements: [
+                    "Develop a 12-column CSS Grid dashboard with fully semantic HTML5 structure.",
+                    "Build a robust Node.js/Express API with full CRUD capabilities for a task engine.",
+                    "Implement a relational SQL schema with clear normalization and foreign key constraints.",
+                    "Achieve 100/100 Lighthouse accessibility and SEO scores.",
+                    "Develop an asynchronous notification system using JavaScript Promises and modern browser APIs.",
+                    "Implement a mobile-responsive navigation system that persists state between sessions."
+                ],
+                guide: [
+                    "Step 1: Design the relational database schema and the semantic skeleton of the UI.",
+                    "Step 2: Build the core Express server with structured logging and error handling.",
+                    "Step 3: Develop the frontend dashboard using CSS Grid and modular styling patterns.",
+                    "Step 4: Integrate the data-fetching layer with optimistic UI updates.",
+                    "Step 5: Conduct a full accessibility audit and optimize for performance.",
+                    "Step 6: Final demonstration: Perform a bulk-data operation and verify database integrity."
+                ],
+                hints: [
+                    "Use 'semantic tags' like <main>, <nav>, and <aside> for perfect accessibility out of the box.",
+                    "Always validate user input on BOTH the frontend (UX) and the backend (Security).",
+                    "Keep your CSS organized using BEM (Block-Element-Modifier) to avoid global style collisions."
+                ],
+                testCases: [{ name: "End-to-End Data Flow", verify: "UI correctly reflects database state after high-concurrency writes" }, { name: "Accessibility Score", verify: "Passes 100/100 on standard Lighthouse A11Y audit" }],
+            }
         },
         {
             id: "fs-l2",
@@ -131,7 +157,33 @@ export const fullStackContent = {
                         order: 2
                     }
                 }
-            ]
+            ],
+            finalProject: {
+                title: "Market-Hive - Global Commerce Ecosystem",
+                description: "Architect and build a professional high-security commerce platform using the MERN stack. Focus on advanced authentication, secure payment flows, and structured API versioning.",
+                requirements: [
+                    "Design a secure authentication layer using JWT with refresh-token rotation.",
+                    "Implement a robust Mongoose schema with complex relationships and validation.",
+                    "Build a versioned REST API (/v1, /v2) that follows strict HATEOAS principles.",
+                    "Integrate an automated rate-limiting and security middleware layer.",
+                    "Develop a high-performance global state management strategy using Redux Toolkit.",
+                    "Achieve documented 100% test coverage for the core business and payment logic."
+                ],
+                guide: [
+                    "Step 1: Architect the MERN integration and design the security-first data model.",
+                    "Step 2: Build the secure authentication and authorization middleware chain.",
+                    "Step 3: Develop the versioned API and generate Swagger/OpenAPI documentation.",
+                    "Step 4: Build the responsive React frontend with centralized state orchestration.",
+                    "Step 5: Conduct a thorough security audit focusing on OWASP Top 10 vulnerabilities.",
+                    "Step 6: Final demonstration: Successfully complete a multi-step checkout with real-time audit logs."
+                ],
+                hints: [
+                    "Never store passwords in plain text; use 'bcrypt' with high work-factors.",
+                    "API design is a contract: use versioning to avoid breaking changes for users.",
+                    "Redux Toolkit's 'createAsyncThunk' is vital for handling complex network state."
+                ],
+                testCases: [{ name: "Security Audit", verify: "JWT tokens are properly rotated and unauthorized attempts are auto-blocked" }, { name: "Throughput", verify: "API scales to 500+ requests per second with integrated rate-limiting active" }],
+            }
         },
         {
             id: "fs-l3",
@@ -171,7 +223,33 @@ export const fullStackContent = {
                         order: 2
                     }
                 }
-            ]
+            ],
+            finalProject: {
+                title: "Pulse-Dash - Real-Time Enterprise Infrastructure",
+                description: "Design and implement a high-scale real-time infrastructure using Next.js, WebSockets, and advanced testing suites. Focus on server-side performance, data hydration, and CI/CD maturity.",
+                requirements: [
+                    "Develop a real-time command center using Next.js with App Router and ISR.",
+                    "Implement a scalable WebSocket architecture for sub-100ms data synchronization.",
+                    "Build a comprehensive E2E testing suite using Playwright covering complex user flows.",
+                    "Design a zero-downtime deployment strategy using Vercel and feature flags.",
+                    "Achieve >90% code coverage across the entire full-stack ecosystem.",
+                    "Implement a per-user analytics engine with high-fidelity hydration patterns."
+                ],
+                guide: [
+                    "Step 1: Architect the real-time data flow and Next.js rendering strategy.",
+                    "Step 2: Build the WebSocket layer with fallback mechanisms and state reconciliation.",
+                    "Step 3: Develop the automated testing suite and integrate it into a GitHub Actions pipeline.",
+                    "Step 4: Implement the server-side patterns (SSG/ISR) for high-performance dashboard loads.",
+                    "Step 5: Conduct a performance 'Stress Test' on the real-time data bridge.",
+                    "Step 6: Final demonstration: Coordinate a multi-user real-time event with zero lag or data loss."
+                ],
+                hints: [
+                    "Incremental Static Regeneration (ISR) is the best pattern for high-traffic dashboards.",
+                    "WebSockets are powerful but require careful 'Connection Pooling' at scale.",
+                    "Always run E2E tests in a clean container environment to avoid 'Flaky' results."
+                ],
+                testCases: [{ name: "Real-time Sync", verify: "Changes propagate to all connected clients in <200ms" }, { name: "Deployment Safety", verify: "CI/CD pipeline catches and blocks intentional regression pushes 100% of the time" }],
+            }
         },
         {
             id: "fs-l4",
@@ -194,7 +272,33 @@ export const fullStackContent = {
                         order: 1
                     }
                 }
-            ]
+            ],
+            finalProject: {
+                title: "Apex-System - Million-User Strategic Architecture",
+                description: "Architect a global-scale software ecosystem designed to handle millions of concurrent users. Focus on distributed systems, data sharding, global caching, and high-availability governance.",
+                requirements: [
+                    "Design a multi-region distributed architecture with high-fidelity load balancing.",
+                    "Implement a strategic data sharding and replication plan for global consistency.",
+                    "Build a high-performance caching layer using Redis and CDN edge patterns.",
+                    "Design a 'Disaster Recovery' protocol with documented sub-minute RTO (Recovery Time Objective).",
+                    "Develop a strategic plan for micro-service isolation and service-mesh governance.",
+                    "Lead an architectural 'Deep Dive' with simulated VP-level stakeholders."
+                ],
+                guide: [
+                    "Step 1: Architect the high-level system components and data flow for global scale.",
+                    "Step 2: Develop the multi-region failover and traffic routing strategy.",
+                    "Step 3: Implement the data persistence strategy (Sharding, Archiving, Consistency).",
+                    "Step 4: Build the observability and alerting plane for global system health.",
+                    "Step 5: Conduct a 'Gameday' drill: Simulate a total regional outage and verify auto-recovery.",
+                    "Step 6: Final demonstration: Present the unified Strategic Technical Roadmap to the board."
+                ],
+                hints: [
+                    "Consistency vs. Availability (CAP Theorem) is the defining trade-offs for principal architects.",
+                    "A 'Service Mesh' is a powerful way to manage security and observability in large ecosystems.",
+                    "Design for failure: every component in your system WILL fail at some point."
+                ],
+                testCases: [{ name: "High Availability", verify: "System maintains availability during simulated 50% regional failure" }, { name: "Linear Scalability", verify: "Performance correlates linearly with the addition of horizontally scaled nodes" }],
+            }
         }
     ]
 };

@@ -21,7 +21,33 @@ export const projectManagerContent = {
                         order: 1
                     }
                 }
-            ]
+            ],
+            finalProject: {
+                title: "Backlog-Force - Agile Delivery Engine",
+                description: "Design and orchestrate a professional software development sprint using the Scrum framework. This project focuses on high-precision backlog management, acceptance criteria engineering, and velocity tracking.",
+                requirements: [
+                    "Construct a 20-item product backlog with detailed User Stories in Gherkin format.",
+                    "Implement a 'Priority Matrix' using the MoSCoW method for a complex product release.",
+                    "Design clear, measurable 'Doneness' criteria (Definition of Done) for the development team.",
+                    "Perform a mock 'Story Pointing' session using the Fibonacci sequence.",
+                    "Develop a visualized 'Sprint Burndown' chart based on simulated velocity data.",
+                    "Achieve documented alignment between stakeholder requirements and technical tasks."
+                ],
+                guide: [
+                    "Step 1: Define the Product Vision and high-level Project Roadmap.",
+                    "Step 2: Create the 'Epic' to 'User Story' hierarchy in your project management tool.",
+                    "Step 3: Conduct a Backlog Refinement workshop to clarify technical dependencies.",
+                    "Step 4: Execute a Sprint Planning simulation and commit to a set of sprint goals.",
+                    "Step 5: Build the 'Definition of Done' and 'Definition of Ready' audit lists.",
+                    "Step 6: Final demonstration: Present the 'Done' increment and the sprint metrics."
+                ],
+                hints: [
+                    "A good User Story follows the INVEST criteria (Independent, Negotiable, Valuable, Estimable, Small, Testable).",
+                    "Don't forget technical debt! Allocate at least 15% of your backlog to maintenance tasks.",
+                    "Acceptance Criteria should be binary (it either passed or it didn't)."
+                ],
+                testCases: [{ name: "Backlog Maturity", verify: "100% of sprint items have clear Acceptance Criteria" }, { name: "Velocity Audit", verify: "Burndown chart correctly reflects simulated progress and bottlenecks" }],
+            }
         },
         {
             id: "pm-l2",
@@ -61,7 +87,33 @@ export const projectManagerContent = {
                         order: 2
                     }
                 }
-            ]
+            ],
+            finalProject: {
+                title: "Risk-Armor - Enterprise Threat Mitigation",
+                description: "Architect a comprehensive risk and stakeholder management strategy for a high-risk enterprise project. Focus on proactive mitigation, professional communication, and crisis-response planning.",
+                requirements: [
+                    "Develop a master 'Risk Register' with 20+ categorized risks (Technical, Financial, Legal).",
+                    "Implement a 'Stakeholder Engagement Matrix' for a multi-department launch.",
+                    "Design a 'Crisis Communication Plan' with templates for internal and external updates.",
+                    "Perform a 'Force Field Analysis' to identify drivers and resistors for project change.",
+                    "Achieve sub-24h turnaround time for high-impact risk mitigation proposals.",
+                    "Document the trade-offs between 'Risk Avoidance', 'Mitigation', 'Transfer', and 'Acceptance'."
+                ],
+                guide: [
+                    "Step 1: Conduct a 'Pre-Mortem' workshop to identify all potential failure modes.",
+                    "Step 2: Build the 'Risk Armor' scoring system (Probability vs. Impact).",
+                    "Step 3: Develop the communication triggers and approval workflows.",
+                    "Step 4: Design the 'Change Control' process for managing inevitable scope requests.",
+                    "Step 5: Conduct a mock 'Status Update' to a hostile stakeholder group.",
+                    "Step 6: Final demonstration: Present a risk-mitigation plan for a sudden 20% budget cut."
+                ],
+                hints: [
+                    "Risks aren't just negatives; some are 'Opportunities' (Positives) that need a 'Capture' plan.",
+                    "The best communication plan is the one that prevents 'Surprise' for your boss.",
+                    "Always have a 'Plan B' (Contingency) for every 'Critical' risk on your list."
+                ],
+                testCases: [{ name: "Response Agility", verify: "Risk response plans address all 'High-Impact' scenarios" }, { name: "Alignment Score", verify: "100% of stakeholders have a defined communication frequency and method" }],
+            }
         },
         {
             id: "pm-l3",
@@ -101,7 +153,33 @@ export const projectManagerContent = {
                         order: 2
                     }
                 }
-            ]
+            ],
+            finalProject: {
+                title: "Scale-Master - Global Release Synchronization",
+                description: "Architect and manage a complex Program Increment (PI) for a multi-team technical organization. Focus on scaled agile governance, cross-team dependency mapping, and global release orchestration.",
+                requirements: [
+                    "Design a 'Program Board' for a 10-week cycle involving 5 different Agile teams.",
+                    "Implement a 'Cross-Team Dependency Matrix' that identifies critical-path bottlenecks.",
+                    "Develop a 'Release Governance' framework that coordinates high-stakes cloud deployments.",
+                    "Build an automated 'Benefits Tracking' dashboard for the overall program.",
+                    "Achieve zero 'Hidden Dependencies' in the final PI planning audit.",
+                    "Lead a strategic 'Inspect & Adapt' workshop to solve program-level systemic issues."
+                ],
+                guide: [
+                    "Step 1: Architect the Program Increment structure and set the 'North Star' objectives.",
+                    "Step 2: Collect the 'Team Breakouts' and synthesize them into a unified Program Board.",
+                    "Step 3: Develop the 'Scrum of Scrums' communication rhythm and status templates.",
+                    "Step 4: Implement the 'Emergency Response' protocol for program-level delays.",
+                    "Step 5: Conduct a 'Release Readiness' review for a simulated multi-service update.",
+                    "Step 6: Final demonstration: Present the Program Roadmap and the benefits-realization scorecard."
+                ],
+                hints: [
+                    "Visualizing dependencies with strings or colored lines (on digital boards) is vital for clarity.",
+                    "A 'Program Objective' should be a business result, not just a list of features.",
+                    "Decentralized decision-making is the key to velocity at scale; don't be a bottleneck."
+                ],
+                testCases: [{ name: "Dependency Fidelity", verify: "100% of inter-team blocks are identified and scheduled" }, { name: "Governance Audit", verify: "Release plan contains zero single-point-of-failure human bottlenecks" }],
+            }
         },
         {
             id: "pm-l4",
@@ -124,7 +202,33 @@ export const projectManagerContent = {
                         order: 1
                     }
                 }
-            ]
+            ],
+            finalProject: {
+                title: "Strategic-Optics - 100M+ Portfolio Governance",
+                description: "Architect and lead the strategic governance of a multi-million dollar project portfolio. Focus on executive alignment, resource optimization, and long-term value realization.",
+                requirements: [
+                    "Design a 'Strategic Scoring Model' that prioritizes 50+ projects against annual goals.",
+                    "Implement a 'Resource Capacity Planner' that identifies over-utilization across a 200+ person org.",
+                    "Build an 'Executive Portfolio Dashboard' showing ROI, Risk, and Strategic health.",
+                    "Develop a 'Portfolio Pivot' strategy for rapidly re-allocating funds during market shifts.",
+                    "Achieve documented 95%+ alignment between project spend and strategic objectives.",
+                    "Lead an annual 'Portfolio Review' with simulated C-suite stakeholders."
+                ],
+                guide: [
+                    "Step 1: Set the Portfolio Governance standards and decision-making criteria.",
+                    "Step 2: Develop the multi-dimensional scoring matrix (Value vs. Complexity vs. Risk).",
+                    "Step 3: Implement the resource-levelling strategy and 'Budget-Guardrails'.",
+                    "Step 4: Build the performance-monitoring framework for tracking 'Sunk Costs' vs. 'Return'.",
+                    "Step 5: Conduct a 'What-If' scenario analysis for a simulated market crash.",
+                    "Step 6: Final demonstration: Present the optimized Portfolio Roadmap and the strategic rationale."
+                ],
+                hints: [
+                    "Saying 'No' to a good project is the hardest part of Portfolio Management; say 'Yes' only to the best.",
+                    "Portfolio management is about 'Doing the Right Things', while project management is about 'Doing Things Right'.",
+                    "A 'Portfolio' is a living organism; it should be re-balanced at least every quarter."
+                ],
+                testCases: [{ name: "Resource Efficiency", verify: "Resource allocation plan shows zero 'Critical Overload' (>120%) spots" }, { name: "ROI Projection", verify: "Portfolio financial model accounts for both OPEX and CAPEX impacts" }],
+            }
         }
     ]
 };

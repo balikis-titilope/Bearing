@@ -53,7 +53,33 @@ export const aiDevelopmentContent = {
                         order: 1
                     }
                 }
-            ]
+            ],
+            finalProject: {
+                title: "Cognito - Scalable Sentiment Engine",
+                description: "Design and deploy a high-performance sentiment analysis engine using classic AI and modern deep learning foundations. This project focuses on high-precision text classification and scalable inference patterns.",
+                requirements: [
+                    "Perform deep text vectorization using both TF-IDF and pre-trained Word Embeddings.",
+                    "Develop an ensemble classifier combining Naive Bayes and a multilayer Perceptron.",
+                    "Implement a text-cleaning pipeline that handles 1,000+ different languages/dialects.",
+                    "Achieve an F1-Score of >0.88 on an imbalanced customer-feedback dataset.",
+                    "Build an inference API that processes 100+ reviews per second.",
+                    "Document the trade-offs between symbolic AI and neural approaches for this domain."
+                ],
+                guide: [
+                    "Step 1: Curate and label a high-quality sentiment dataset from multi-source reviews.",
+                    "Step 2: Build the 'Cognito' preprocessing suite for noise reduction and normalization.",
+                    "Step 3: Train and evaluate the classic ML baseline using Scikit-Learn.",
+                    "Step 4: Develop the deep learning classifier using Keras/PyTorch with an embedding layer.",
+                    "Step 5: Conduct a thorough error audit to find 'False Positives' in sarcastic text.",
+                    "Step 6: Performance benchmark: Compare latency-accuracy across all implemented models."
+                ],
+                hints: [
+                    "Stemming and Lemmatization are vital for normalizing text variations.",
+                    "Handling 'Negation' (e.g., 'not good') is the number one challenge in basic sentiment.",
+                    "Use 'FastAPI' for the inference layer for maximum performance."
+                ],
+                testCases: [{ name: "Inference Latency", verify: "<10ms per prediction batch" }, { name: "Accuracy", verify: "Matches gold-standard human labeling with 90% correlation" }],
+            }
         },
         {
             id: "ai-l2",
@@ -93,7 +119,33 @@ export const aiDevelopmentContent = {
                         order: 2
                     }
                 }
-            ]
+            ],
+            finalProject: {
+                title: "Synthetix - Intelligent Data Orchestrator",
+                description: "Architect a professional LLM-orchestration layer that converts unstructured chaos into structured enterprise data. Focus on advanced prompting, function-calling, and reliability patterns.",
+                requirements: [
+                    "Design a multi-stage prompt pipeline (Chain-of-Thought) for complex data extraction.",
+                    "Implement 'Function Calling' to reliably interact with SQL and CRM APIs.",
+                    "Develop a robust 'Retry with Error correction' logic that feeds API errors back to the LLM.",
+                    "Achieve 99% schema compliance using Zod/Pydantic validation layers.",
+                    "Implement a streaming architecture to provide real-time feedback to users.",
+                    "Optimize token consumption by implementing a custom 'Context Summerizer'."
+                ],
+                guide: [
+                    "Step 1: Define the target data schema and edge-case validation rules.",
+                    "Step 2: Build the 'Synthetix' prompt library using versioned templates.",
+                    "Step 3: Implement the Function-Calling layer to bridge the LLM and your data center.",
+                    "Step 4: Develop the recovery logic for when models return 'Hallucinated' or malformed JSON.",
+                    "Step 5: Conduct a performance audit focusing on token usage and latency cost.",
+                    "Step 6: Final evaluation: Process a 1,000-document batch and audit extraction precision."
+                ],
+                hints: [
+                    "Always use 'System Messages' to set strict rules for JSON formatting.",
+                    "Providing just 3-5 examples (Few-Shot) is often better than 100 lines of instructions.",
+                    "Monitor your costs! A recursive prompt chain can get very expensive very quickly."
+                ],
+                testCases: [{ name: "Schema Accuracy", verify: "100% of outputs pass Pydantic validation" }, { name: "Tool Integration", verify: "LLM correctly suggests function calls for SQL queries" }],
+            }
         },
         {
             id: "ai-l3",
@@ -133,7 +185,33 @@ export const aiDevelopmentContent = {
                         order: 2
                     }
                 }
-            ]
+            ],
+            finalProject: {
+                title: "Oracle-Brain - Self-Improving RAG Agent",
+                description: "Design and implement an enterprise-grade RAG system with autonomous agentic behavior. Focus on multi-vector retrieval, semantic caching, and autonomous research cycles.",
+                requirements: [
+                    "Design a multi-vector retrieval system using Hybrid Search (Semantic + Keywords).",
+                    "Implement 'ReRank' logic to surface the most relevant context from 100+ candidates.",
+                    "Build an autonomous 'Research Agent' using the ReAct pattern and tool-use.",
+                    "Implement a 'Long-term Memory' layer for the agent using personal knowledge graphs.",
+                    "Achieve >95% accuracy on 'Truthfulness' and 'Grounding' using RAGAS evaluation.",
+                    "Develop a 'Semantic Cache' to reduce LLM costs and latency for repeated queries."
+                ],
+                guide: [
+                    "Step 1: Develop the 'Oracle' ingestion pipeline with intelligent PDF/Markdown chunking.",
+                    "Step 2: Build the vector indexing strategy with a focus on cross-reference semantic search.",
+                    "Step 3: Implement the 'Agentic Reasoning' loop with access to external research tools.",
+                    "Step 4: Integrate the Re-Ranking layer to ensure high-fidelity context injection.",
+                    "Step 5: Conduct an automated evaluation audit using synthetic datasets (RAGAS).",
+                    "Step 6: Final demonstration: The agent solves a complex, 10-step research task."
+                ],
+                hints: [
+                    "Chunking strategy is the single most important factor in RAG performance.",
+                    "Use 'Self-Query' retrievers to handle filters (e.g., 'Find documents from 2023').",
+                    "Hallucinations in RAG usually happen because the retrieved context was irrelevant; fix the Search first."
+                ],
+                testCases: [{ name: "Retrieval Recall@5", verify: ">90% relevant chunks retrieved" }, { name: "Agent Autonomy", verify: "Agent successfully uses 3+ tools to answer a single query" }],
+            }
         },
         {
             id: "ai-l4",
@@ -156,7 +234,33 @@ export const aiDevelopmentContent = {
                         order: 1
                     }
                 }
-            ]
+            ],
+            finalProject: {
+                title: "Neural-Sync - Distributed LLM Governance",
+                description: "Architect a global-scale AI infrastructure for a multi-national organization. Focus on 'Model-as-a-Service' governance, local SLM deployment, and strategic fine-tuning workflows.",
+                requirements: [
+                    "Design a multi-provider AI Gateway (OpenAI, Anthropic, Local Mistral).",
+                    "Implement a 'Fine-Tuning' factory using QLoRA for domain-specific Small Language Models.",
+                    "Build an automated 'Red-Teaming' and 'Evaluation' bench for all production models.",
+                    "Design a 'Sovereign AI' strategy where private data never leaves the local VPC.",
+                    "Implement 'Model Quantization' (GGUF/EXL2) for high-performance edge inference.",
+                    "Develop the 'AI Ethics & Policy' engine that filters all inputs/outputs for compliance."
+                ],
+                guide: [
+                    "Step 1: Set up the centralized LLM gateway and account-level budget controls.",
+                    "Step 2: Implement the automated red-teaming and safety guardrail engine.",
+                    "Step 3: Develop the local fine-tuning pipeline for high-performance SLMs.",
+                    "Step 4: Architect the hybrid-cloud inference strategy (Cloud for reasoning, Local for data).",
+                    "Step 5: Conduct a 'Massive Inference' stress test (1,000+ concurrent requests).",
+                    "Step 6: Present the final 'Strategic AI Roadmap' to a simulated executive board."
+                ],
+                hints: [
+                    "Don't fine-tune just for knowledge; RAG is better for that. Fine-tune for 'Style' and 'Format'.",
+                    "Small models (7B) are becoming incredibly capable; never underestimate a well-tuned SLM.",
+                    "Governance is not just about blocking; it's about enabling teams to build safely and legally."
+                ],
+                testCases: [{ name: "Model Hot-Swap", verify: "Failover between providers occurs in <1s" }, { name: "Quantization Speedup", verify: "Inference latency reduced by 4x with <1% accuracy loss" }],
+            }
         }
     ]
 };

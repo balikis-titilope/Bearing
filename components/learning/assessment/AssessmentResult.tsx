@@ -32,7 +32,7 @@ export function AssessmentResult({ score, passed, onRetake, bestScore }: Assessm
             )}
 
             <div className={styles.actions}>
-                <Button onClick={onRetake} variant="outline">
+                <Button onClick={onRetake} variant="outline" size="sm">
                     <RefreshCcw size={16} />
                     Retake Assessment
                 </Button>

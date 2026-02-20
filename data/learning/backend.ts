@@ -152,7 +152,33 @@ export const backendContent = {
                         order: 3
                     }
                 }
-            ]
+            ],
+            finalProject: {
+                title: "Reliable Ledger - High-Integrity Transaction System",
+                description: "Build a professional-grade transaction processing engine that handles financial data with absolute reliability. This project integrates asynchronous stream processing, secure Express middleware, and ACID-compliant SQL transactions.",
+                requirements: [
+                    "Implement ACID transactions to ensure financial data integrity.",
+                    "Process bulk transaction logs (100MB+) using efficient Node.js streams.",
+                    "Secure all endpoints using JWT and custom validation middleware.",
+                    "Implement structured logging and comprehensive error boundaries.",
+                    "Achieve 90%+ test coverage for the core ledger logic.",
+                    "Implement a rate-limited API gateway to prevent denial-of-service."
+                ],
+                guide: [
+                    "Step 1: Design the relational schema with a focus on audit trails and immutable logs.",
+                    "Step 2: Build the core ledger logic using PostgreSQL transactions (Atomicity).",
+                    "Step 3: Develop a stream-based importer for legacy transaction files.",
+                    "Step 4: Secure the system with a multi-layered middleware architecture.",
+                    "Step 5: Implement a global error handler that prevents sensitive data leaks.",
+                    "Step 6: Stress test the system for race conditions and backpressure handling."
+                ],
+                hints: [
+                    "Use 'SELECT ... FOR UPDATE' to prevent double-spending in concurrent scenarios.",
+                    "Leverage 'pino' or 'winston' for structured, high-performance logging.",
+                    "Always validate input shapes using a library like Zod or Joi before processing."
+                ],
+                testCases: [{ name: "Transaction Atomicity", verify: "Partial failures rollback correctly" }, { name: "Throughput", verify: "500+ TPS sustained" }],
+            }
         },
         {
             id: "be-l2",
@@ -192,7 +218,33 @@ export const backendContent = {
                         order: 2
                     }
                 }
-            ]
+            ],
+            finalProject: {
+                title: "Scale-Hub - Intelligent Distributed Cache",
+                description: "Design and build a distributed caching and messaging layer capable of handling ultra-high throughput. This project integrates message queues, advanced database indexing, and multi-layered authentication.",
+                requirements: [
+                    "Implement a producer-consumer architecture using RabbitMQ or Kafka.",
+                    "Optimize database performance using advanced PostgreSQL indexing and partitioning.",
+                    "Implement a multi-tenant OAuth2/OIDC provider logic.",
+                    "Design a distributed locking mechanism to prevent cache stampedes.",
+                    "Achieve <50ms p99 latency for the core API endpoints.",
+                    "Comprehensive monitoring dashboard for queue depth and processing latency."
+                ],
+                guide: [
+                    "Step 1: Setup a local RabbitMQ instance and define the message schemas.",
+                    "Step 2: Implement the producer API with robust retry logic and dead-letter queues.",
+                    "Step 3: Develop the consumer workers with horizontal scaling capabilities.",
+                    "Step 4: Integrate the OAuth2 flow with support for external providers.",
+                    "Step 5: Implement Redis caching with a focus on expiration and invalidation strategies.",
+                    "Step 6: Stress test the system under high load and analyze the bottleneck."
+                ],
+                hints: [
+                    "Use 'Dead Letter Exchanges' in RabbitMQ to handle failed message processing gracefully.",
+                    "Remember to index your Foreign Keys in PostgreSQL for faster JOIN performance.",
+                    "Implement 'Exponential Backoff' for retrying failed external service calls."
+                ],
+                testCases: [{ name: "Queue Stability", verify: "Zero message loss under 1k msgs/sec" }, { name: "Latency", verify: "p99 < 50ms for cached reads" }],
+            }
         },
         {
             id: "be-l3",
@@ -232,7 +284,33 @@ export const backendContent = {
                         order: 2
                     }
                 }
-            ]
+            ],
+            finalProject: {
+                title: "Fortress API - Secure Enterprise Gateway",
+                description: "Architect and implement a high-stakes API gateway that serves as the single entry point for an enterprise micro-services ecosystem. Focus on Zero-Trust security and high-availability design.",
+                requirements: [
+                    "Implement a Federated GraphQL Gateway combining multiple micro-services.",
+                    "Design a sharded PostgreSQL architecture for multi-region data growth.",
+                    "Implement advanced Rate Limiting and WAF (Web Application Firewall) logic.",
+                    "Achieve 99.99% availability design through load balancing and redundancy.",
+                    "Implement end-to-end encryption for all sensitive data at rest and in transit.",
+                    "Comprehensive audit logging for all administrative actions."
+                ],
+                guide: [
+                    "Step 1: Define the Federated Schema using Apollo Federation.",
+                    "Step 2: Implement the sharding strategy for the database layer.",
+                    "Step 3: Build the API Gateway with support for custom Auth patterns.",
+                    "Step 4: Integrate a centralized logging and observability stack (ELK/Grafana).",
+                    "Step 5: Implement a 'Circuit Breaker' pattern for all downstream service calls.",
+                    "Step 6: Perform a full security audit and penetration test simulation."
+                ],
+                hints: [
+                    "Use 'DataLoader' to solve the N+1 problem in your GraphQL resolvers.",
+                    "Sharding is complex; consider logical sharding before moving to physical partitions.",
+                    "Implement 'Rate Limiting' at both the gateway and service levels for defense-in-depth."
+                ],
+                testCases: [{ name: "Federation Integrity", verify: "Queries successfully merge across 3+ services" }, { name: "Security Audit", verify: "Zero high-risk vulnerabilities" }],
+            }
         },
         {
             id: "be-l4",
@@ -255,7 +333,33 @@ export const backendContent = {
                         order: 1
                     }
                 }
-            ]
+            ],
+            finalProject: {
+                title: "Nexus Core - Distributed Consensus Engine",
+                description: "The ultimate backend challenge: Build a distributed consensus engine that manages state across multiple independent nodes. Focus on consistency, availability, and fault tolerance.",
+                requirements: [
+                    "Implement a distributed locking mechanism using the Redlock algorithm.",
+                    "Design an Event Sourcing architecture with a high-performance event store.",
+                    "Achieve strong consistency across 3+ simulated nodes for critical operations.",
+                    "Implement a CQRS (Command Query Responsibility Segregation) pattern.",
+                    "Handle network partitions and node failures without data loss.",
+                    "Design a global scalability report for handling 100M+ active users."
+                ],
+                guide: [
+                    "Step 1: Implement the base Redlock algorithm for distributed resource locking.",
+                    "Step 2: Build the immutable event store with support for snapshots.",
+                    "Step 3: Develop the read-side projections for the CQRS pattern.",
+                    "Step 4: Simulate network partitions and verify the system's behavior (CAP Theorem).",
+                    "Step 5: Implement an automated recovery and reconciliation flow.",
+                    "Step 6: Perform a final scale-testing and infrastructure cost analysis."
+                ],
+                hints: [
+                    "Distributed locks are tricky: always use TTLs (Time-To-Live) to avoid deadlocks.",
+                    "Event Sourcing provides a perfect audit trail; use it to your advantage.",
+                    "When in doubt, prioritize Consistency over Availability for financial or critical data."
+                ],
+                testCases: [{ name: "Liveness", verify: "System recovers after node failure" }, { name: "Consistency", verify: "Linearizable reads for locked resources" }],
+            }
         }
     ]
 };

@@ -73,7 +73,7 @@ export const dataScienceContent = {
                         { question: "What is a 'Series' in Pandas?", options: JSON.stringify(["A 1D labeled array.", "A type of chart.", "A database connection.", "A 3D object."]), correctAnswer: "A 1D labeled array.", explanation: "A DataFrame is essentially a collection of Series objects (columns).", order: 9 },
                         { question: "How do you drop a column named 'temp'?", options: JSON.stringify(["df.remove('temp')", "df.drop('temp', axis=1)", "df.delete('temp')", "del df['temp']"]), correctAnswer: "df.drop('temp', axis=1)", explanation: "axis=1 specifies that we are dropping a column, not a row.", order: 10 },
                         { question: "What does 'df.isnull().sum()' show?", options: JSON.stringify(["Total number of rows.", "Count of missing values in each column.", "The sum of all numbers.", "An error report."]), correctAnswer: "Count of missing values in each column.", explanation: "Highly useful for initial data quality assessment.", order: 11 },
-                        { question: "How do you rename a column 'old_name' to 'new_name'?", options: JSON.stringify(["df.rename(columns={'old_name': 'new_name'})", "df.change_name()", "df.name = 'new'", "pd.rename()"]), correctAnswer: "df.rename(columns={'old_name': 'new_name'})", explanation: "The rename method uses a dictionary to map old names to new ones.", order: 12 },
+                        { question: "How do you rename a column 'old_name' to 'new_name'?", options: JSON.stringify(["df.rename(columns={'old_name': 'new_name'})", "df.rename_name()", "df.name = 'new'", "pd.rename()"]), correctAnswer: "df.rename(columns={'old_name': 'new_name'})", explanation: "The rename method uses a dictionary to map old names to new ones.", order: 12 },
                         { question: "What is 'Melting' a DataFrame?", options: JSON.stringify(["Deleting data.", "Unpivoting a DataFrame from wide format to long format.", "Combining tables.", "Sorting rows."]), correctAnswer: "Unpivoting a DataFrame from wide format to long format.", explanation: "Melting is common for preparing data for visualization libraries.", order: 13 },
                         { question: "How do you merge two DataFrames on a common column?", options: JSON.stringify(["df1 + df2", "pd.merge(df1, df2, on='key')", "df1.join(df2)", "pd.combine()"]), correctAnswer: "pd.merge(df1, df2, on='key')", explanation: "Merge functions like SQL JOINs.", order: 14 },
                         { question: "Purpose of 'df.T'?", options: JSON.stringify(["Total.", "Transpose (swaps rows and columns).", "Technical data.", "Time-series."]), correctAnswer: "Transpose (swaps rows and columns).", explanation: "T is an attribute that returns the transposed DataFrame.", order: 15 }
@@ -102,7 +102,33 @@ export const dataScienceContent = {
                         order: 2
                     }
                 }
-            ]
+            ],
+            finalProject: {
+                title: "MarketPulse - Real-time Consumer Intelligence",
+                description: "Build a high-performance data processing engine that analyzes consumer behavior in real-time. This project integrates advanced NumPy vectorization for high-throughput calculation and Pandas for complex data orchestration.",
+                requirements: [
+                    "Implement a vectorized engine to calculate consumer sentiment indices in under 10ms.",
+                    "Perform automated data cleaning on a 1GB+ dataset with 99.9% accuracy.",
+                    "Build a multi-dimensional pivot table system for regional market analysis.",
+                    "Detect and handle outliers in real-time purchase streams using Z-score logic.",
+                    "Generate automated executive summaries using Pandas-to-PDF orchestration.",
+                    "Achieve significant performance gains (50x+) by replacing all loops with vectorization."
+                ],
+                guide: [
+                    "Step 1: Design the data ingestion layer using NumPy for raw numerical throughput.",
+                    "Step 2: Develop the 'MarketPulse' cleaning pipeline to handle missing/noisy records.",
+                    "Step 3: Build the core vectorized calculation engine for market metrics.",
+                    "Step 4: Implement complex cross-joins and merge logic for multi-source data.",
+                    "Step 5: Develop the automated reporting layer using Pandas styler and export tools.",
+                    "Step 6: Perform a full benchmark comparison between primitive and vectorized logic."
+                ],
+                hints: [
+                    "Use 'np.einsum' or 'np.tensordot' for the most advanced linear algebra operations.",
+                    "Pandas 'query' and 'eval' can often be faster for very large DataFrames.",
+                    "Avoid 'df.apply' for numerical operations; always use native vectorized functions."
+                ],
+                testCases: [{ name: "Throughput", verify: "Processes 1M+ records in under 500ms" }, { name: "Accuracy", verify: "Indices match gold-standard statistical baseline" }],
+            }
         },
         {
             id: "ds-l2",
@@ -142,7 +168,33 @@ export const dataScienceContent = {
                         order: 2
                     }
                 }
-            ]
+            ],
+            finalProject: {
+                title: "LendWise - AI Risk Orchestration",
+                description: "Architect and deploy a high-stakes credit risk assessment model. This project focuses on sophisticated feature engineering, imbalance handling, and model interpretability for enterprise lending.",
+                requirements: [
+                    "Implement a pipeline to handle extreme class imbalance using SMOTE and Cost-Sensitive learning.",
+                    "Develop a custom feature engineering suite that extracts temporal spending patterns.",
+                    "Build a voting ensemble (Random Forest, XGBoost, CatBoost) for maximum robustness.",
+                    "Achieve an ROC-AUC score of >0.92 on a blinded test set.",
+                    "Implement 'SHAP' or 'LIME' for model interpretability and regulatory compliance.",
+                    "Automate the hyperparameter search using Bayesian Optimization (Optuna/Hyperopt)."
+                ],
+                guide: [
+                    "Step 1: Perform deep exploratory data analysis (EDA) to find the 'signal' in the noise.",
+                    "Step 2: Build the preprocessing pipeline with automated scaling and encoders.",
+                    "Step 3: Implement the imbalance strategy and evaluate its impact on Precision-Recall.",
+                    "Step 4: Train and stack multiple gradient-boosted trees for the lending ensemble.",
+                    "Step 5: Conduct the interpretability audit to explain 'Why' the model rejects specific loans.",
+                    "Step 6: Final evaluation: Perform 'Stress Testing' on the model with edge-case scenarios."
+                ],
+                hints: [
+                    "In financial risk, the 'False Negative' cost is usually 10x higher than a 'False Positive'.",
+                    "Use 'ColumnTransformer' in Scikit-Learn to keep your pipeline clean and serializable.",
+                    "Always validate on a 'Time-Split' rather than a random split for financial data."
+                ],
+                testCases: [{ name: "Recall Score", verify: "Fraud detection recall > 85%" }, { name: "Fairness Audit", verify: "Model parity score > 90% across demographics" }],
+            }
         },
         {
             id: "ds-l3",
@@ -182,7 +234,33 @@ export const dataScienceContent = {
                         order: 2
                     }
                 }
-            ]
+            ],
+            finalProject: {
+                title: "VisionCore - Industrial Quality Control AI",
+                description: "Design and implement a computer vision system that detects manufacturing defects at scale. This project combines sophisticated CNN architectures with high-performance model optimization.",
+                requirements: [
+                    "Develop a custom CNN optimized for low-latency inference (MobileNet/EfficientNet).",
+                    "Implement a data augmentation pipeline that simulates industrial lighting/noise.",
+                    "Build a 'Transfer Learning' workflow using pre-trained ImageNet weights.",
+                    "Achieve an F1-score of >0.95 on the industrial defect dataset.",
+                    "Quantize the model for edge-device deployment using TensorFlow Lite.",
+                    "Implement 'Grad-CAM' to visualize which part of the image triggered a 'Defect' alert."
+                ],
+                guide: [
+                    "Step 1: Curate the defect dataset and implement strict quality-assurance labeling.",
+                    "Step 2: Architect the 'VisionCore' network with a focus on spatial attention.",
+                    "Step 3: Train the model using mixed-precision to accelerate convergence.",
+                    "Step 4: Execute the 'Grad-CAM' audit to verify the model is looking at the defect, not the background.",
+                    "Step 5: Perform post-training quantization and measure the latency-accuracy trade-off.",
+                    "Step 6: Final deployment: Simulate a real-time video stream for defect flagging."
+                ],
+                hints: [
+                    "Class imbalance is huge in manufacturing (99% perfect products); use focal loss.",
+                    "Learning rate schedulers (like 'ReduceLROnPlateau') are vital for CNN stability.",
+                    "Always visualize your augmentations to ensure they remain 'realistic' for the domain."
+                ],
+                testCases: [{ name: "Inference Latency", verify: "<50ms per frame on CPU" }, { name: "Alert Precision", verify: "False Alarm rate < 1%" }],
+            }
         },
         {
             id: "ds-l4",
@@ -205,7 +283,33 @@ export const dataScienceContent = {
                         order: 1
                     }
                 }
-            ]
+            ],
+            finalProject: {
+                title: "Global-Node - Autonomous AI Infrastructure",
+                description: "Architect a self-healing ML-Ops infrastructure that manages hundreds of models in production. Focus on automated lifecycle management, drift-based retraining, and high-availability serving.",
+                requirements: [
+                    "Design a multi-region model registry using MLflow or DVC.",
+                    "Implement a 'Feature Store' to ensure training-serving consistency.",
+                    "Build a 'Shadow Deployment' system for safe canary testing of new models.",
+                    "Implement automated 'Model Drift' detection with Prometheus and Grafana alerts.",
+                    "Design a Kubernetes-based serving layer that handles 10,000+ RPS.",
+                    "Develop a strategic AI roadmap for enterprise-wide model governance."
+                ],
+                guide: [
+                    "Step 1: Set up the centralized MLOps control plane for model orchestration.",
+                    "Step 2: Implement the 'Feature Store' using Redis or specialized offline/online layers.",
+                    "Step 3: Develop the automated CI/CD/CT (Continuous Training) pipeline.",
+                    "Step 4: Architect the 'Shadow' and 'A/B' testing logic for production gates.",
+                    "Step 5: Build the observability dashboard for data and concept drift.",
+                    "Step 6: Final demonstration: Auto-retrain a model and deploy it without human intervention."
+                ],
+                hints: [
+                    "Monitoring 'Data Drift' is often more important than monitoring the model once deployed.",
+                    "A 'Feature Store' solves the number one cause of production ML bugs: train-serve skew.",
+                    "Infrastructure as Code (Terraform) should manage your ML resources as well as your servers."
+                ],
+                testCases: [{ name: "Retraining Trigger", verify: "Pipeline starts automatically when drift > threshold" }, { name: "Serving Stability", verify: "99.9% uptime during model hot-swap" }],
+            }
         }
     ]
 };

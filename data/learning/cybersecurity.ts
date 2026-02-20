@@ -102,7 +102,33 @@ export const cyberSecurityContent = {
                         order: 2
                     }
                 }
-            ]
+            ],
+            finalProject: {
+                title: "Sentinel - Global Infrastructure Hardening",
+                description: "Build a comprehensive security baseline for a global-scale server infrastructure. This project integrates advanced network protocol analysis, automated Linux hardening, and multi-tenant firewall orchestration.",
+                requirements: [
+                    "Implement a 50-point Linux hardening baseline automated via Bash.",
+                    "Analyze and filter malicious traffic patterns in a multi-region network capture.",
+                    "Configure strict Firewall (UFW/Iptables) rules for a 3-tier application.",
+                    "Implement automated log rotation and integrity checking for system logs.",
+                    "Perform a comparative analysis of network protocol overhead and security trade-offs.",
+                    "Document a disaster recovery plan for a compromised gateway node."
+                ],
+                guide: [
+                    "Step 1: Design a hardened network map including DMZ and internal segments.",
+                    "Step 2: Develop the 'Sentinel' hardening script to automate system security.",
+                    "Step 3: Conduct deep packet inspection to identify C2 (Command & Control) traffic.",
+                    "Step 4: Orchestrate firewall rules across a distributed set of simulated nodes.",
+                    "Step 5: Implement 'AIDE' or 'Tripwire' for file system integrity monitoring.",
+                    "Step 6: Final audit: Verify the infrastructure against the CIS Benchmarks."
+                ],
+                hints: [
+                    "Use 'Nmap' with the '--script' flag to verify your hardening results.",
+                    "Leverage 'Apt-get' logic to automatically remove unnecessary services.",
+                    "Remember that 'Default Deny' is the core principle of a secure firewall."
+                ],
+                testCases: [{ name: "Hardening Score", verify: "CIS Compliance > 90%" }, { name: "Network Isolation", verify: "DMZ cannot access DB segment directly" }],
+            }
         },
         {
             id: "cs-l2",
@@ -142,7 +168,33 @@ export const cyberSecurityContent = {
                         order: 2
                     }
                 }
-            ]
+            ],
+            finalProject: {
+                title: "Crypto-Guard - Enterprise Security Suite",
+                description: "Design and implement a security suite that protects enterprise web applications. Focus on defending against OWASP Top 10 vulnerabilities and managing cryptographic assets at scale.",
+                requirements: [
+                    "Develop a custom Python library for secure AES-256-GCM encryption.",
+                    "Build a vulnerability scanner that identifies SQLi and XSS in simulated environments.",
+                    "Implement a secure hashing service with unique salts and pepper logic.",
+                    "Design a digital signature system for verifying internal document integrity.",
+                    "Perform a security audit on a simulated Broken Authentication scenario.",
+                    "Generate a cryptographic key management policy for an enterprise."
+                ],
+                guide: [
+                    "Step 1: Architect the 'Crypto-Guard' library with a focus on ease-of-use and safety.",
+                    "Step 2: Build the web vulnerability probes for common OWASP categories.",
+                    "Step 3: Implement the secure hashing orchestration with argon2 or bcrypt.",
+                    "Step 4: Develop the CLI-based crypto tool for message signing and verification.",
+                    "Step 5: Audit the 'Broken Auth' lab and implement a Multi-Factor (MFA) logic.",
+                    "Step 6: Conduct a final security review and performance benchmark of the crypto logic."
+                ],
+                hints: [
+                    "Never roll your own crypto: use standard libraries as the foundation.",
+                    "Use parameterized queries in your scanner scripts to simulate 'Secure Coding'.",
+                    "Remember that Hashing is NOT Encryption; use the right tool for the job."
+                ],
+                testCases: [{ name: "Crypto Integrity", verify: "Signatures successfully verify authentic records" }, { name: "Audit Effectiveness", verify: "All high-severity web flaws detected" }],
+            }
         },
         {
             id: "cs-l3",
@@ -182,7 +234,33 @@ export const cyberSecurityContent = {
                         order: 2
                     }
                 }
-            ]
+            ],
+            finalProject: {
+                title: "Red-Zero - Advanced Threat Simulation",
+                description: "Execute a full-cycle red team operation against a simulated enterprise network. Focus on sophisticated reconnaissance, exploitation chains, and post-incident forensic analysis.",
+                requirements: [
+                    "Conduct multi-stage reconnaissance using automated OSINT and scanning tools.",
+                    "Develop an exploitation chain that bypasses simulated network defenses.",
+                    "Implement a central log correlation engine (SIEM) to detect the red team activity.",
+                    "Perform a forensic memory analysis to extract artifacts from a compromised host.",
+                    "Generate a high-impact 'Executive Security Brief' detailing the attack path.",
+                    "Create a remediation playbook for the identified vulnerabilities."
+                ],
+                guide: [
+                    "Step 1: Execute the initial reconnaissance phase and map the target attack surface.",
+                    "Step 2: Build the exploitation path using simulated vulnerabilities in the lab.",
+                    "Step 3: Orchestrate the centralized logging stack to monitor the attack in real-time.",
+                    "Step 4: Conduct a forensic audit of the compromised nodes using Volatility or similar tools.",
+                    "Step 5: Synthesize the findings into a professional red-team report.",
+                    "Step 6: Defend the remediations in a simulated 'Blue Team' review session."
+                ],
+                hints: [
+                    "Focus on the 'Why' behind each exploit: what misconfiguration enabled the access?",
+                    "Use 'ELK' or 'Graylog' for the centralized log correlation task.",
+                    "A good forensic report shows the timeline of events from the first entry to the flag."
+                ],
+                testCases: [{ name: "Attack Chain", verify: "Successful path from Recon to Flag" }, { name: "Detection Accuracy", verify: "SIEM alerts match 90%+ of red team actions" }],
+            }
         },
         {
             id: "cs-l4",
@@ -205,7 +283,33 @@ export const cyberSecurityContent = {
                         order: 1
                     }
                 }
-            ]
+            ],
+            finalProject: {
+                title: "Omniscience - Zero-Trust Enterprise Ecosystem",
+                description: "Architect a complete, multi-layered security ecosystem for a global enterprise. Focus on Zero-Trust principles, automated DevSecOps pipelines, and strategic risk management.",
+                requirements: [
+                    "Design a Zero-Trust identity and access management (IAM) framework.",
+                    "Implement a secure CI/CD pipeline with automated security gating (Shift Left).",
+                    "Architect a multi-cloud 3-tier environment using Infrastructure as Code (Terraform).",
+                    "Conduct a comprehensive enterprise risk assessment and mitigation matrix.",
+                    "Design a global security observability and incident response orchestration layer.",
+                    "Perform a final cost-security optimization report for the entire ecosystem."
+                ],
+                guide: [
+                    "Step 1: Define the Zero-Trust architecture and identity perimeters.",
+                    "Step 2: Build the 'Omniscience' CI/CD pipeline with SAST/DAST integrations.",
+                    "Step 3: Deploy the secure 3-tier environment using Terraform modules.",
+                    "Step 4: Develop the strategic risk matrix for the simulated enterprise.",
+                    "Step 5: Integrate the global observability stack with automated response triggers.",
+                    "Step 6: Present the final architectural vision to a simulated 'C-Suite' panel."
+                ],
+                hints: [
+                    "Least Privilege is not enough; think about 'Just-In-Time' access.",
+                    "Automation is key: a pipeline is only as secure as its weakest manual step.",
+                    "Balance security with business agility; a perfect but unusable system is a failure."
+                ],
+                testCases: [{ name: "Zero-Trust Integrity", verify: "Internal lateral movement is blocked by default" }, { name: "Pipeline Security", verify: "Vulnerable code is automatically rejected" }],
+            }
         }
     ]
 };

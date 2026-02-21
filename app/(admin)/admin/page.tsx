@@ -83,14 +83,7 @@ export default async function AdminDashboardPage() {
                             <ArrowRight size={18} className={styles.linkIconPrimary} />
                         </Link>
                         <Link href="/admin/users" className={styles.linkItem}>
-                            <div className={styles.linkRow}>
-                                <span className={styles.linkText}>User Role Management</span>
-                                {!isSuper && (
-                                    <span title="Limited Access">
-                                        <Shield size={14} className={styles.restrictedIcon} />
-                                    </span>
-                                )}
-                            </div>
+                            <span className={styles.linkText}>{isSuper ? 'User Role Management' : 'User Directory (Read Only)'}</span>
                             <ArrowRight size={18} className={styles.linkIcon} />
                         </Link>
                     </div>

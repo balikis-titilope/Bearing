@@ -92,7 +92,7 @@ export default async function AdminUsersPage() {
                             <th>Active Path</th>
                             <th>Activity</th>
                             <th>Role</th>
-                            <th style={{ textAlign: 'right' }}>Actions</th>
+                            {isSuperAdmin && <th style={{ textAlign: 'right' }}>Actions</th>}
                         </tr>
                     </thead>
                     <tbody>
@@ -146,36 +146,29 @@ export default async function AdminUsersPage() {
                                             {user.role}
                                         </span>
                                     </td>
-                                    <td>
-                                        <div className={styles.actions}>
-                                            {isSuperAdmin ? (
-                                                <>
-                                                    {user.role !== "SUPER_ADMIN" && (
-                                                        <form action={async () => {
-                                                            "use server";
-                                                            const nextRole = user.role === "USER" ? "ADMIN" : "USER";
-                                                            await updateUserRole(user.id, nextRole as UserRole);
-                                                        }}>
-                                                            <button className={`${styles.actionBtn} ${styles.actionBtnRole}`} title="Toggle Admin Role">
-                                                                <Shield className={styles.actionIcon} />
-                                                            </button>
-                                                        </form>
-                                                    )}
-                                                    {user.role !== "SUPER_ADMIN" && (
-                                                        <DeleteUserButton
-                                                            userId={user.id}
-                                                            userName={user.name || user.email || "this user"}
-                                                        />
-                                                    )}
-                                                </>
-                                            ) : (
-                                                <div className={styles.readOnly} title="Super Admin access required for modifications">
-                                                    <Lock className={styles.lockIcon} />
-                                                    <span>Read Only</span>
-                                                </div>
-                                            )}
-                                        </div>
-                                    </td>
+                                    {isSuperAdmin && (
+                                        <td>
+                                            <div className={styles.actions}>
+                                                {user.role !== "SUPER_ADMIN" && (
+                                                    <form action={async () => {
+                                                        "use server";
+                                                        const nextRole = user.role === "USER" ? "ADMIN" : "USER";
+                                                        await updateUserRole(user.id, nextRole as UserRole);
+                                                    }}>
+                                                        <button className={`${styles.actionBtn} ${styles.actionBtnRole}`} title="Toggle Admin Role">
+                                                            <Shield className={styles.actionIcon} />
+                                                        </button>
+                                                    </form>
+                                                )}
+                                                {user.role !== "SUPER_ADMIN" && (
+                                                    <DeleteUserButton
+                                                        userId={user.id}
+                                                        userName={user.name || user.email || "this user"}
+                                                    />
+                                                )}
+                                            </div>
+                                        </td>
+                                    )}
                                 </tr>
                             );
                         })}

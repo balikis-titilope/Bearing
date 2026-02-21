@@ -59,34 +59,32 @@ export function DashboardContent() {
                             Continue your learning journey and track your progress.
                         </p>
                     </div>
-                    {isSuperAdmin && (
-                        <Link href="/admin" className="no-underline">
-                            <Button className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white border-none">
-                                <ShieldAlert size={18} />
-                                <span>Open Admin Hub</span>
-                            </Button>
-                        </Link>
-                    )}
                 </div>
             </div>
 
             {/* Admin Context Card */}
             {hasAdminAccess && (
-                <Card className={`${styles.activityCard} mb-8 border-indigo-200 dark:border-indigo-900 bg-indigo-50/30 dark:bg-indigo-950/20`}>
-                    <div className="flex items-center gap-4">
-                        <div className="p-3 bg-indigo-100 dark:bg-indigo-900/50 rounded-xl">
-                            <ShieldAlert className="h-6 w-6 text-indigo-600 dark:text-indigo-400" />
-                        </div>
-                        <div>
-                            <h2 className="text-lg font-bold text-slate-900 dark:text-white">Administrator Access</h2>
-                            <p className="text-sm text-slate-500 dark:text-slate-400">
-                                You are logged in as a {session?.user?.role}. {isSuperAdmin ? 'You can manage users, paths, and platform content.' : 'You have observer access to platform metrics and content.'}
-                            </p>
+                <Card className={`${styles.activityCard} mb-8 border-indigo-100 dark:border-indigo-900/50 bg-indigo-50/20 dark:bg-indigo-950/10`}>
+                    <div className="flex items-center justify-between gap-6">
+                        <div className="flex items-center gap-4">
+                            <div className="p-2.5 bg-indigo-100/50 dark:bg-indigo-900/30 rounded-xl">
+                                <ShieldAlert className="h-5 w-5 text-indigo-600 dark:text-indigo-400" />
+                            </div>
+                            <div>
+                                <h2 className="text-base font-bold text-slate-900 dark:text-white">
+                                    Logged in as {session?.user?.role === 'SUPER_ADMIN' ? 'Super Administrator' : 'Platform Administrator'}
+                                </h2>
+                                <p className="text-sm text-slate-500 dark:text-slate-400">
+                                    {isSuperAdmin
+                                        ? 'Full access to system management, user permissions, and curriculum auditing.'
+                                        : 'Observer access to platform metrics and student progress data.'}
+                                </p>
+                            </div>
                         </div>
                         {isSuperAdmin && (
-                            <Link href="/admin" className="ml-auto no-underline">
-                                <Button variant="outline" size="sm" className="border-indigo-200 text-indigo-600 hover:bg-indigo-100">
-                                    Go to Admin Hub
+                            <Link href="/admin" className="no-underline">
+                                <Button variant="primary" size="sm" className="bg-indigo-600 hover:bg-indigo-700 whitespace-nowrap">
+                                    Launch Admin Hub
                                 </Button>
                             </Link>
                         )}

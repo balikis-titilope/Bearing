@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 import { auth } from '@/auth';
+import { evaluateProject } from '@/lib/autograder';
 
 export async function POST(request: Request) {
   try {
@@ -43,7 +44,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Project not found' }, { status: 404 });
     }
 
-    // Create or update submission
+    // 1. Create Initial Submission
     const submission = await db.projectSubmission.upsert({
       where: {
         enrollmentId_projectId: {
@@ -69,7 +70,65 @@ export async function POST(request: Request) {
       },
     });
 
-    return NextResponse.json({ success: true, submission });
+    // 2. Trigger Automated Evaluation
+    const evaluation = await evaluateProject(submission.id);
+
+    // 3. Update Submission with Results
+    const updatedSubmission = await db.projectSubmission.update({
+      where: { id: submission.id },
+      data: {
+        status: evaluation.passed ? 'PASSED' : 'FAILED',
+        score: evaluation.score,
+        feedback: evaluation.feedback.join('\n'),
+        testResults: JSON.stringify(evaluation.details)
+      }
+    });
+
+    // 4. Promotion logic for Placement FAST-TRACK (Only if passed autograder)
+    if (enrollment.status === 'ASSESSING' && evaluation.passed) {
+      const claimedLevelHeader = enrollment.claimedLevel || 2;
+
+      // Find the target level we are promoting them to
+      const nextLevel = await db.level.findFirst({
+        where: {
+          careerPathId: enrollment.careerPathId,
+          order: claimedLevelHeader
+        }
+      });
+
+      if (nextLevel) {
+        // Promote enrollment
+        await db.enrollment.update({
+          where: { id: enrollmentId },
+          data: {
+            status: 'ACTIVE',
+            currentLevelId: nextLevel.id,
+            assessmentStatus: 'COMPLETED'
+          }
+        });
+
+        // Initialize skill progress for the NEW level (Level 2)
+        const skills = await db.skill.findMany({
+          where: { levelId: nextLevel.id },
+        });
+
+        // Using createMany for convenience, but skipping duplicates just in case
+        await db.skillProgress.createMany({
+          data: skills.map((skill) => ({
+            enrollmentId: enrollment.id,
+            skillId: skill.id,
+            status: 'NOT_STARTED',
+          })),
+          skipDuplicates: true
+        });
+      }
+    }
+
+    return NextResponse.json({
+      success: true,
+      submission: updatedSubmission,
+      promoted: enrollment.status === 'ASSESSING' && evaluation.passed
+    });
   } catch (error) {
     console.error('Project submission error:', error);
     return NextResponse.json(

@@ -76,7 +76,7 @@
 .stepNumber {
     width: 2rem;
     height: 2rem;
-    background: #3b82f6;
+    background: var(--primary);
     color: white;
     border-radius: 50%;
     display: flex;
@@ -85,7 +85,7 @@
     font-weight: 800;
     flex-shrink: 0;
     font-size: 0.875rem;
-    box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
+    box-shadow: 0 0 15px var(--primary-soft);
 }
 
 .stepText {
@@ -180,8 +180,8 @@
 }
 
 .submitCard {
-    background: linear-gradient(to bottom right, rgba(59, 130, 246, 0.1), rgba(16, 185, 129, 0.1));
-    border: 1px solid rgba(59, 130, 246, 0.2);
+    background: linear-gradient(to bottom right, var(--primary-soft), rgba(16, 185, 129, 0.1));
+    border: 1px solid var(--primary-light);
     padding: 2.5rem;
     border-radius: 1.5rem;
     display: flex;
@@ -201,6 +201,145 @@
     max-width: 500px;
 }
 
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.statusBanner {
+    margin-bottom: 3rem;
+    padding: 2rem;
+    border-radius: 1.25rem;
+    border: 1px solid var(--border);
+    animation: slideDown 0.5s ease;
+    background: var(--surface, rgba(255, 255, 255, 0.02));
+}
+
+.statusBanner.passed {
+    border-color: #10b981;
+    background: rgba(16, 185, 129, 0.05);
+}
+
+.statusBanner.failed {
+    border-color: #ef4444;
+    background: rgba(239, 68, 68, 0.05);
+}
+
+.statusBanner.pending {
+    border-color: #f59e0b;
+    background: rgba(245, 158, 11, 0.05);
+}
+
+.statusHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.statusLabel {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.statusBanner.passed .statusLabel {
+    color: #10b981;
+}
+
+.statusBanner.failed .statusLabel {
+    color: #ef4444;
+}
+
+.statusBanner.pending .statusLabel {
+    color: #f59e0b;
+}
+
+.statusScore {
+    font-size: 0.9rem;
+    color: var(--muted-foreground);
+    background: var(--background);
+    padding: 0.4rem 0.8rem;
+    border-radius: 2rem;
+    border: 1px solid var(--border);
+}
+
+.statusScore strong {
+    color: var(--foreground);
+    font-size: 1.1rem;
+}
+
+.statusFeedback {
+    background: var(--background);
+    border-radius: 0.75rem;
+    padding: 1.25rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid var(--border);
+}
+
+.statusFeedback h4 {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--muted-foreground);
+    margin-bottom: 1rem;
+}
+
+.statusFeedback ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.statusFeedback li {
+    font-size: 0.95rem;
+    color: var(--foreground);
+    opacity: 0.9;
+    padding-left: 1.25rem;
+    position: relative;
+}
+
+.statusFeedback li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: var(--primary);
+}
+
+.statusMeta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.85rem;
+    color: var(--muted-foreground);
+}
+
+.retryLink {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+    transition: opacity 0.2s;
+}
+
+.retryLink:hover {
+    opacity: 0.8;
+}
+
 @media (max-width: 768px) {
     .submitCard {
         flex-direction: column;
@@ -210,5 +349,17 @@
 
     .submitCard p {
         margin-bottom: 1.5rem;
+    }
+
+    .statusHeader {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .statusMeta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
     }
 }

@@ -2,6 +2,7 @@ import React from 'react';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { db } from '@/lib/db';
+import { auth } from '@/auth';
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Button } from '@/components/ui/Button';
@@ -12,7 +13,12 @@ import {
     ExternalLink,
     CheckCircle2,
     HelpCircle,
-    Play
+    Play,
+    CheckCircle,
+    XCircle,
+    Clock,
+    AlertCircle,
+    RotateCcw
 } from 'lucide-react';
 import styles from './page.module.css';
 
@@ -24,6 +30,9 @@ interface ProjectGuidePageProps {
 
 export default async function ProjectGuidePage({ params }: ProjectGuidePageProps) {
     const { id } = await params;
+    const session = await auth();
+    const userId = session?.user?.id;
+
     const project = await db.project.findUnique({
         where: { id },
         include: {
@@ -39,6 +48,16 @@ export default async function ProjectGuidePage({ params }: ProjectGuidePageProps
     if (!project) {
         notFound();
     }
+
+    // Fetch submission if user is logged in
+    const submission = userId ? await db.projectSubmission.findFirst({
+        where: {
+            projectId: id,
+            enrollment: {
+                userId: userId
+            }
+        }
+    }) : null;
 
     const safeParse = (data: any, fallback: any = []) => {
         if (!data) return fallback;
@@ -65,6 +84,9 @@ export default async function ProjectGuidePage({ params }: ProjectGuidePageProps
     const stuckLinks = safeParse(project.stuckLinks);
     const requirements = safeParse(project.requirements);
 
+    const isPassed = submission?.status === 'PASSED';
+    const isFailed = submission?.status === 'FAILED';
+
     return (
         <>
             <Navbar />
@@ -81,8 +103,8 @@ export default async function ProjectGuidePage({ params }: ProjectGuidePageProps
                     {/* Header */}
                     <header className={styles.header}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
-                            <span style={{ color: '#3b82f6', fontWeight: 600, fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                                Mini Project
+                            <span style={{ color: 'var(--primary)', fontWeight: 800, fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontFamily: 'var(--font-heading)' }}>
+                                {project.isMiniProject ? 'Mini Project' : 'Final Project'}
                             </span>
                             <span style={{ color: '#3f3f46' }}>•</span>
                             <span style={{ color: '#71717a', fontSize: '0.8rem' }}>
@@ -93,10 +115,48 @@ export default async function ProjectGuidePage({ params }: ProjectGuidePageProps
                         <p className={styles.description}>{project.description}</p>
                     </header>
 
+                    {/* Autograder Status Banner (If submission exists) */}
+                    {submission && (
+                        <div className={`${styles.statusBanner} ${isPassed ? styles.passed : isFailed ? styles.failed : styles.pending}`}>
+                            <div className={styles.statusHeader}>
+                                <div className={styles.statusLabel}>
+                                    {isPassed ? <CheckCircle size={20} /> : isFailed ? <XCircle size={20} /> : <Clock size={20} />}
+                                    <span>
+                                        {isPassed ? 'Verification Passed' : isFailed ? 'Verification Failed' : 'Under Review'}
+                                    </span>
+                                </div>
+                                {submission.score !== null && (
+                                    <div className={styles.statusScore}>
+                                        Score: <strong>{submission.score}%</strong>
+                                    </div>
+                                )}
+                            </div>
+
+                            {submission.feedback && (
+                                <div className={styles.statusFeedback}>
+                                    <h4>Automated Evaluation Report:</h4>
+                                    <ul>
+                                        {submission.feedback.split('\n').map((line, i) => (
+                                            <li key={i}>{line}</li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            )}
+
+                            <div className={styles.statusMeta}>
+                                <span>Checked on {new Date(submission.submittedAt).toLocaleString()}</span>
+                                <Link href={`/paths/${project.level.careerPath.slug}/learn/project/${project.id}`} className={styles.retryLink}>
+                                    {isPassed ? 'View Details' : 'Improve & Resubmit'}
+                                    <ExternalLink size={14} />
+                                </Link>
+                            </div>
+                        </div>
+                    )}
+
                     {/* Core Guide */}
                     <section className={styles.section}>
                         <h2 className={styles.sectionTitle}>
-                            <MapPin size={24} color="#3b82f6" />
+                            <MapPin size={24} color="var(--primary)" />
                             Step-by-Step Implementation Guide
                         </h2>
                         <div className={styles.guideList}>

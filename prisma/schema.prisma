@@ -365,6 +365,7 @@ model User {
   weeklyHours    Int?      @default(10)
   streakCount    Int       @default(0)
   lastActivityAt DateTime?
+  lastPathSwitchAt DateTime?
 
   // Relations
   accounts     Account[]

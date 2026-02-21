@@ -1,7 +1,9 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
-import { Compass, BookOpen, Trophy, Flame } from 'lucide-react';
+import { Compass, BookOpen, Trophy, Flame, RefreshCcw } from 'lucide-react';
+import { UnenrollModal } from './UnenrollModal';
 import styles from './LearningHeader.module.css';
 
 interface LearningHeaderProps {
@@ -11,6 +13,7 @@ interface LearningHeaderProps {
 }
 
 export function LearningHeader({ path, currentLevel, enrollment }: LearningHeaderProps) {
+  const [isUnenrollModalOpen, setIsUnenrollModalOpen] = useState(false);
   const totalSkills = path.levels.reduce((acc: number, level: any) => acc + level.skills.length, 0);
   const completedSkills = enrollment.skillProgress?.filter((p: any) => p.status === 'COMPLETED').length || 0;
   const progressPercentage = totalSkills > 0 ? Math.round((completedSkills / totalSkills) * 100) : 0;
@@ -18,11 +21,21 @@ export function LearningHeader({ path, currentLevel, enrollment }: LearningHeade
   return (
     <div className={styles.header}>
       <div className={styles.headerTop}>
-        <Link href={`/paths/${path.slug}`} className={styles.backLink}>
-          <Compass size={20} />
-          <span>{path.title}</span>
-        </Link>
-        
+        <div className={styles.topContent}>
+          <Link href={`/paths/${path.slug}`} className={styles.backLink}>
+            <Compass size={20} />
+            <span>{path.title}</span>
+          </Link>
+
+          <button
+            className={styles.pivotBtn}
+            onClick={() => setIsUnenrollModalOpen(true)}
+          >
+            <RefreshCcw size={16} />
+            <span>Switch Path</span>
+          </button>
+        </div>
+
         <div className={styles.stats}>
           <div className={styles.stat}>
             <Flame size={18} className={styles.statIcon} />
@@ -48,8 +61,8 @@ export function LearningHeader({ path, currentLevel, enrollment }: LearningHeade
             <span>Your Progress</span>
           </div>
           <div className={styles.progressBar}>
-            <div 
-              className={styles.progressFill} 
+            <div
+              className={styles.progressFill}
               style={{ width: `${progressPercentage}%` }}
             />
           </div>
@@ -59,6 +72,13 @@ export function LearningHeader({ path, currentLevel, enrollment }: LearningHeade
           </div>
         </div>
       </div>
+
+      <UnenrollModal
+        isOpen={isUnenrollModalOpen}
+        onClose={() => setIsUnenrollModalOpen(false)}
+        enrollment={enrollment}
+        path={path}
+      />
     </div>
   );
 }

@@ -31,10 +31,10 @@ export const PathsHero: React.FC<PathsHeroProps> = ({
 
             <div className={`${styles.container} container hero-content`}>
                 <div className={styles.content}>
-                    <h1 className="reveal" data-delay="1">
+                    <h1 data-delay="1">
                         Career Paths
                     </h1>
-                    <p className={`${styles.description} reveal`} data-delay="2">
+                    <p className={styles.description} data-delay="2">
                         Choose your journey. Each path is carefully crafted with real-world skills and projects to take you from where you are to where you want to be.
                     </p>
 

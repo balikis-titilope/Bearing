@@ -61,8 +61,15 @@
   align-items: center;
   gap: 0.5rem;
   min-width: 80px;
-  opacity: 0.5;
   position: relative;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.3s ease;
+}
+
+.progressLevel.locked {
+  opacity: 0.3;
+  filter: grayscale(1);
 }
 
 .progressLevel.current {
@@ -118,8 +125,86 @@
   color: white;
 }
 
+.challengeBanner {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 2.5rem;
+  margin-bottom: 3rem;
+  box-shadow: var(--shadow-xl);
+  border-left: 6px solid var(--primary);
+  animation: slideIn 0.5s ease;
+}
+
+.challengeContent {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.challengeIcon {
+  width: 80px;
+  height: 80px;
+  background: var(--primary-soft);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary);
+  flex-shrink: 0;
+}
+
+.challengeText h1 {
+  font-size: 2rem;
+  font-weight: 850;
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.03em;
+  font-family: var(--font-heading);
+}
+
+.challengeText p {
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.challengeAlert {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem;
+  background: rgba(var(--primary-rgb), 0.05);
+  border-radius: 12px;
+  color: var(--primary);
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @media (max-width: 768px) {
   .skillsGrid {
     grid-template-columns: 1fr;
+  }
+
+  .challengeContent {
+    flex-direction: column;
+    text-align: center;
+    gap: 1.5rem;
+  }
+
+  .challengeBanner {
+    padding: 2rem 1.5rem;
   }
 }

@@ -147,51 +147,143 @@
   border-top: 1px solid var(--border);
 }
 
-/* Status */
+/* Status Card & Autograder UI */
 .statusCard {
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 1rem;
-  padding: 2rem;
+  border-radius: 1.5rem;
+  padding: 3.5rem 2rem;
   text-align: center;
+  box-shadow: var(--shadow-xl);
+  animation: slideUp 0.6s ease;
+}
+
+.statusCard.passed {
+  border-color: #22c55e;
+  background: linear-gradient(180deg, rgba(34, 197, 94, 0.05) 0%, transparent 100%);
+}
+
+.statusCard.failed {
+  border-color: #ef4444;
+  background: linear-gradient(180deg, rgba(239, 68, 68, 0.05) 0%, transparent 100%);
 }
 
 .statusIcon {
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
+  width: 90px;
+  height: 90px;
+  border-radius: 24px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 auto 1rem;
-  font-size: 2rem;
+  margin: 0 auto 1.5rem;
+  transition: transform 0.3s ease;
+}
+
+.statusCard:hover .statusIcon {
+  transform: scale(1.1) rotate(5deg);
 }
 
 .statusCard h2 {
-  font-size: 1.5rem;
-  font-weight: 700;
-  margin-bottom: 0.5rem;
+  font-size: 2.25rem;
+  font-weight: 850;
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.03em;
+  font-family: var(--font-heading);
 }
 
-.statusCard p {
+.statusDescription {
+  font-size: 1.15rem;
   color: var(--text-muted);
+  max-width: 600px;
+  margin: 0 auto 2.5rem;
+  line-height: 1.6;
+}
+
+.feedbackSection {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 2rem;
+  margin: 0 auto 2.5rem;
+  text-align: left;
+  max-width: 700px;
+}
+
+.scoreHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 1.25rem;
   margin-bottom: 1.5rem;
+}
+
+.scoreLabel {
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+}
+
+.scoreValue {
+  font-size: 2rem;
+  font-weight: 900;
+  color: var(--primary);
+  font-family: var(--font-heading);
+}
+
+.feedbackContent h4 {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+
+.feedbackContent ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.feedbackContent li {
+  padding: 1rem;
+  background: var(--background);
+  border-radius: 10px;
+  font-size: 0.95rem;
+  color: var(--text);
+  border-left: 4px solid var(--primary);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.feedbackContent li::before {
+  content: "•";
+  color: var(--primary);
+  font-size: 1.5rem;
 }
 
 .submissionDetails {
-  text-align: left;
+  max-width: 700px;
+  margin: 2rem auto;
+  padding: 1.5rem;
   background: var(--background);
-  padding: 1rem;
-  border-radius: 0.5rem;
-  margin-bottom: 1.5rem;
+  border-radius: 12px;
+  text-align: left;
 }
 
 .submissionDetails p {
   display: flex;
   justify-content: space-between;
-  padding: 0.5rem 0;
+  align-items: center;
+  padding: 0.75rem 0;
   margin: 0;
   border-bottom: 1px solid var(--border);
+  font-size: 0.95rem;
 }
 
 .submissionDetails p:last-child {
@@ -200,11 +292,40 @@
 
 .submissionDetails span:first-child {
   font-weight: 600;
+  color: var(--text-muted);
 }
 
 .submissionDetails a {
   color: var(--primary);
+  font-weight: 600;
+  text-decoration: none;
   display: flex;
   align-items: center;
-  gap: 0.25rem;
+  gap: 0.4rem;
+}
+
+.retryActions {
+  margin-top: 3rem;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .statusCard {
+    padding: 2.5rem 1.25rem;
+  }
+
+  .statusCard h2 {
+    font-size: 1.75rem;
+  }
 }

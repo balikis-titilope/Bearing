@@ -9,7 +9,8 @@
     overflow: hidden;
     padding: 0;
     background: radial-gradient(circle at 10% 20%, var(--primary-soft) 0%, var(--background) 90%);
-    margin-bottom: -1px; /* Connect seamlessly with next section */
+    margin-bottom: -1px;
+    /* Connect seamlessly with next section */
 }
 
 .ambientOverlay {
@@ -313,15 +314,18 @@
 }
 
 @keyframes float {
-    0%, 100% {
+
+    0%,
+    100% {
         transform: translateY(0);
     }
+
     50% {
         transform: translateY(-10px);
     }
 }
 
-/* Removing stats and backgroundDecor from Hero module - keeping it clean as in Pathly */
+/* Removing stats and backgroundDecor from Hero module - keeping it clean as in Bearing */
 
 @media (max-width: 1024px) {
     .hero {
@@ -376,7 +380,7 @@
         gap: 1rem;
     }
 
-    .actions > * {
+    .actions>* {
         width: 100%;
     }
 

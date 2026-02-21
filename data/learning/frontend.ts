@@ -163,7 +163,11 @@ export const frontendContent = {
                         { title: "Git from the Bottom Up", type: "ARTICLE", url: "https://jwiegley.github.io/git-from-the-bottom-up/", duration: 60, order: 2 }
                     ],
                     questions: [
-                        { question: "What type of Git object stores file content?", options: JSON.stringify(["Commit", "Tree", "Blob", "Tag"]), correctAnswer: "Blob", explanation: "A 'blob' stores the content of a single file.", order: 1 }
+                        { question: "What type of Git object stores file content?", options: JSON.stringify(["Commit", "Tree", "Blob", "Tag"]), correctAnswer: "Blob", explanation: "A 'blob' stores the content of a single file.", order: 1 },
+                        { question: "What does the 'Tree' object in Git represent?", options: JSON.stringify(["Individual file content", "A directory structure (filenames and permissions)", "Information about a author", "A branch pointer"]), correctAnswer: "A directory structure (filenames and permissions)", explanation: "Trees map to directories/folders in your project.", order: 2 },
+                        { question: "Which Git command is used to move the HEAD pointer and optionally update the working directory?", options: JSON.stringify(["git stage", "git checkout", "git push", "git init"]), correctAnswer: "git checkout", explanation: "Checkout is used to switch branches or restore working tree files.", order: 3 },
+                        { question: "What is the purpose of the 'Index' (or Staging Area) in Git?", options: JSON.stringify(["To store remote credentials", "A temporary layer where you format the next commit", "To cache DNS lookups", "To store deleted files"]), correctAnswer: "A temporary layer where you format the next commit", explanation: "The index allows you to carefully craft your commits.", order: 4 },
+                        { question: "In Git internals, what is a 'Commit' object?", options: JSON.stringify(["A snapshot of the project at a point in time, with metadata", "A list of all users in the repo", "A type of merge strategy", "A specific line of code"]), correctAnswer: "A snapshot of the project at a point in time, with metadata", explanation: "Commits link a tree to its author, date, and parent commits.", order: 5 }
                     ],
                     miniProject: {
                         title: "The Git Reconstructer",
@@ -180,7 +184,11 @@ export const frontendContent = {
                         { title: "Josh Comeau: Guide to CSS Animations", type: "ARTICLE", url: "https://www.joshwcomeau.com/css/animations/", duration: 45, order: 1 }
                     ],
                     questions: [
-                        { question: "What does 'will-change: transform' do?", options: JSON.stringify(["It changes the transform immediately.", "It hints to the browser to promote the element to its own layer for GPU acceleration.", "It prevents the element from moving.", "It is deprecated."]), correctAnswer: "It hints to the browser to promote the element to its own layer for GPU acceleration.", explanation: "Using will-change allows the browser to optimize for impending changes.", order: 1 }
+                        { question: "What does 'will-change: transform' do?", options: JSON.stringify(["It changes the transform immediately.", "It hints to the browser to promote the element to its own layer for GPU acceleration.", "It prevents the element from moving.", "It is deprecated."]), correctAnswer: "It hints to the browser to promote the element to its own layer for GPU acceleration.", explanation: "Using will-change allows the browser to optimize for impending changes.", order: 1 },
+                        { question: "Which CSS property is most efficient for animations because it skips layout and paint phases?", options: JSON.stringify(["width", "margin-left", "transform", "padding"]), correctAnswer: "transform", explanation: "Transforms and Opacity can be handled entirely by the GPU.", order: 2 },
+                        { question: "What is the purpose of a 'cubic-bezier' function in animations?", options: JSON.stringify(["To define the color of the animation", "To define a custom timing function (acceleration curve)", "To rotate an element in 3D", "To repeat an animation indefinitely"]), correctAnswer: "To define a custom timing function (acceleration curve)", explanation: "Cubic-bezier allows for sophisticated, non-linear motion.", order: 3 },
+                        { question: "If you want an animation to keep its final state after finishing, which property do you use?", options: JSON.stringify(["animation-fill-mode: forwards", "animation-iteration-count: infinite", "animation-stay: true", "transition-behavior: end"]), correctAnswer: "animation-fill-mode: forwards", explanation: "Forwards fill mode applies the last keyframe's styles after completion.", order: 4 },
+                        { question: "What is 'Jank' in the context of web animations?", options: JSON.stringify(["A new CSS framework", "Visual stuttering caused by the browser dropping frames", "A type of gradient", "A security vulnerability"]), correctAnswer: "Visual stuttering caused by the browser dropping frames", explanation: "Jank happens when the main thread is too busy to maintain 60FPS.", order: 5 }
                     ],
                     miniProject: {
                         title: "The Physics-Based Loader",
@@ -197,7 +205,11 @@ export const frontendContent = {
                         { title: "Web.dev: Critical Rendering Path", type: "DOCUMENTATION", url: "https://web.dev/critical-rendering-path/", duration: 50, order: 1 }
                     ],
                     questions: [
-                        { question: "What is the 'CSSOM'?", options: JSON.stringify(["CSS Object Model.", "CSS Optimized Memory.", "CSS Overlay Maker.", "A JavaScript library."]), correctAnswer: "CSS Object Model.", explanation: "The CSSOM is the tree structure of styles that the browser combines with the DOM.", order: 1 }
+                        { question: "What is the 'CSSOM'?", options: JSON.stringify(["CSS Object Model.", "CSS Optimized Memory.", "CSS Overlay Maker.", "A JavaScript library."]), correctAnswer: "CSS Object Model.", explanation: "The CSSOM is the tree structure of styles that the browser combines with the DOM.", order: 1 },
+                        { question: "What is the 'Critical Rendering Path'?", options: JSON.stringify(["A path in a park.", "The sequence of steps the browser takes to convert HTML, CSS, and JS into pixels on the screen.", "A security protocol.", "A way to compress images."]), correctAnswer: "The sequence of steps the browser takes to convert HTML, CSS, and JS into pixels on the screen.", explanation: "Optimizing the CRP is key to fast first-paints.", order: 2 },
+                        { question: "During which phase does the browser calculate the exact geometry (position/size) of each element?", options: JSON.stringify(["Painting", "Compositing", "Layout (or Reflow)", "Constructing the DOM"]), correctAnswer: "Layout (or Reflow)", explanation: "Layout determines the 'where' and 'how big' for every node.", order: 3 },
+                        { question: "Why is 'Compositing' the most efficient part of rendering?", options: JSON.stringify(["It deletes unused CSS.", "It runs on the GPU and only combines pre-painted layers.", "It makes the HTML shorter.", "It happens after the user leaves the page."]), correctAnswer: "It runs on the GPU and only combines pre-painted layers.", explanation: "Moving layers around (transforms) avoids expensive layout/paint work.", order: 4 },
+                        { question: "Which event fires after the DOM is fully loaded but before images and stylesheets are necessarily finished?", options: JSON.stringify(["window.onload", "DOMContentLoaded", "onreadystatechange", "beforeunload"]), correctAnswer: "DOMContentLoaded", explanation: "DOMContentLoaded indicates the HTML is parsed and the DOM is ready.", order: 5 }
                     ],
                     miniProject: {
                         title: "The Rendering Auditor",
@@ -214,7 +226,11 @@ export const frontendContent = {
                         { title: "OWASP: Frontend Security Cheat Sheet", type: "DOCUMENTATION", url: "https://cheatsheetseries.owasp.org/cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.html", duration: 60, order: 1 }
                     ],
                     questions: [
-                        { question: "What is the primary purpose of a CSP?", options: JSON.stringify(["To speed up the site.", "To restrict the sources from which scripts and other resources can be loaded.", "To style the page.", "To manage user logins."]), correctAnswer: "To restrict the sources from which scripts and other resources can be loaded.", explanation: "CSP is a vital defense-in-depth against XSS.", order: 1 }
+                        { question: "What is the primary purpose of a CSP?", options: JSON.stringify(["To speed up the site.", "To restrict the sources from which scripts and other resources can be loaded.", "To style the page.", "To manage user logins."]), correctAnswer: "To restrict the sources from which scripts and other resources can be loaded.", explanation: "CSP is a vital defense-in-depth against XSS.", order: 1 },
+                        { question: "What does 'XSS' stand for?", options: JSON.stringify(["Extremely Secure Scripting", "Cross-Site Scripting", "XML Security System", "X-linked Style Sheet"]), correctAnswer: "Cross-Site Scripting", explanation: "XSS involves injecting malicious scripts into trusted websites.", order: 2 },
+                        { question: "Which browser policy prevents scripts on one origin from accessing data on another origin?", options: JSON.stringify(["Cross-Origin Policy", "Same-Origin Policy (SOP)", "Content Security Policy", "Strict Transport Security"]), correctAnswer: "Same-Origin Policy (SOP)", explanation: "SOP is the cornerstone of web security.", order: 3 },
+                        { question: "What is an 'HttpOnly' cookie?", options: JSON.stringify(["A cookie that only works on HTTP (not HTTPS)", "A cookie that cannot be accessed by JavaScript via document.cookie", "A cookie that is deleted after 1 hour", "A cookie used for styling purposes"]), correctAnswer: "A cookie that cannot be accessed by JavaScript via document.cookie", explanation: "HttpOnly cookies mitigate the impact of XSS attacks by protecting session tokens.", order: 4 },
+                        { question: "What is 'Clickjacking'?", options: JSON.stringify(["Stealing a user's mouse", "Tricking a user into clicking something different from what they perceive", "A performance optimization technique", "A way to increase ad revenue"]), correctAnswer: "Tricking a user into clicking something different from what they perceive", explanation: "Usually done via transparent iframes over legitimate content.", order: 5 }
                     ],
                     miniProject: {
                         title: "The Secure Vault Shell",
@@ -231,7 +247,11 @@ export const frontendContent = {
                         { title: "Google: Core Web Vitals Guide", type: "DOCUMENTATION", url: "https://web.dev/vitals/", duration: 30, order: 1 }
                     ],
                     questions: [
-                        { question: "What does 'CLS' stand for?", options: JSON.stringify(["Critical Layout Start.", "Cumulative Layout Shift.", "Common Layout Style.", "Color Level Scale."]), correctAnswer: "Cumulative Layout Shift.", explanation: "CLS measures visual stability of a page.", order: 1 }
+                        { question: "What does 'CLS' stand for?", options: JSON.stringify(["Critical Layout Start.", "Cumulative Layout Shift.", "Common Layout Style.", "Color Level Scale."]), correctAnswer: "Cumulative Layout Shift.", explanation: "CLS measures visual stability of a page.", order: 1 },
+                        { question: "What does 'LCP' measure?", options: JSON.stringify(["Latency of Cloud Providers", "Largest Contentful Paint (Loading speed)", "Line Count Priority", "Layout Cycle Period"]), correctAnswer: "Largest Contentful Paint (Loading speed)", explanation: "LCP marks the point in the page load timeline when the main content has likely loaded.", order: 2 },
+                        { question: "Which metric measures the time from when a user first interacts with a page to the time when the browser is actually able to respond?", options: JSON.stringify(["LCP", "FID (First Input Delay)", "CLS", "TTFB"]), correctAnswer: "FID (First Input Delay)", explanation: "FID is a measure of responsiveness.", order: 3 },
+                        { question: "What is a major cause of high Cumulative Layout Shift (CLS)?", options: JSON.stringify(["Complex JavaScript loops", "Images without dimensions (width/height attributes)", "Slow server response", "Too many CSS files"]), correctAnswer: "Images without dimensions (width/height attributes)", explanation: "Giving image placeholders fixed sizes prevents layout jumps when the image finally loads.", order: 4 },
+                        { question: "What is 'Tree Shaking' in modern build tools?", options: JSON.stringify(["A way to organize folders", "Removing dead (unused) code from the final bundle", "A type of animation", "Caching images"]), correctAnswer: "Removing dead (unused) code from the final bundle", explanation: "It helps reduce the payload size for the user.", order: 5 }
                     ],
                     miniProject: {
                         title: "The Lighthouse 100 Run",
@@ -248,7 +268,11 @@ export const frontendContent = {
                         { title: "MDN: Container Queries", type: "DOCUMENTATION", url: "https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Container_Queries", duration: 40, order: 1 }
                     ],
                     questions: [
-                        { question: "What is a 'Container Query'?", options: JSON.stringify(["A query for media size.", "A query that styles an element based on the size of its parent container, not the viewport.", "A database query.", "A flexbox property."]), correctAnswer: "A query that styles an element based on the size of its parent container, not the viewport.", explanation: "Container queries enable truly modular responsive components.", order: 1 }
+                        { question: "What is a 'Container Query'?", options: JSON.stringify(["A query for media size.", "A query that styles an element based on the size of its parent container, not the viewport.", "A database query.", "A flexbox property."]), correctAnswer: "A query that styles an element based on the size of its parent container, not the viewport.", explanation: "Container queries enable truly modular responsive components.", order: 1 },
+                        { question: "What does 'clamp(1rem, 5vw, 2.5rem)' allow you to do?", options: JSON.stringify(["Hide an element", "Set fluid typography with a minimum and maximum safe bound", "Lock the font size to 5vw only", "Rotate an element"]), correctAnswer: "Set fluid typography with a minimum and maximum safe bound", explanation: "Clamp is essential for responsive design without excessive media queries.", order: 2 },
+                        { question: "Which property is needed on a parent for its children to use Container Queries?", options: JSON.stringify(["container-type", "display: container", "grid-container: true", "contain: layout"]), correctAnswer: "container-type", explanation: "Usually set to 'size' or 'inline-size' to establish a container context.", order: 3 },
+                        { question: "What is the benefit of 'Mobile First' design?", options: JSON.stringify(["It's easier to code.", "It ensures core content and functionality work on the most constrained devices first.", "It allows you to skip CSS for desktop.", "It makes the site faster for Everyone."]), correctAnswer: "It ensures core content and functionality work on the most constrained devices first.", explanation: "Layering enhancements on top of a solid mobile foundation leads to better UX.", order: 4 },
+                        { question: "What does the 'viewport' meta tag with 'width=device-width' do?", options: JSON.stringify(["Makes the page look like an app.", "Tells the browser to set the width of the page to match the screen width of the device.", "Zooms in to 200% by default.", "Nothing, it is deprecated."]), correctAnswer: "Tells the browser to set the width of the page to match the screen width of the device.", explanation: "Vital for preventing desktop-sized rendering on small mobile screens.", order: 5 }
                     ],
                     miniProject: {
                         title: "The Fluid Component System",
@@ -265,7 +289,11 @@ export const frontendContent = {
                         { title: "MDN: Intersection Observer API", type: "DOCUMENTATION", url: "https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API", duration: 35, order: 1 }
                     ],
                     questions: [
-                        { question: "What is the primary use case for Intersection Observer?", options: JSON.stringify(["Calculating math.", "Detecting when an element enters or leaves the browser viewport.", "Styling text.", "Connecting to a database."]), correctAnswer: "Detecting when an element enters or leaves the browser viewport.", explanation: "It's essential for performant lazy-loading and scroll-based triggers.", order: 1 }
+                        { question: "What is the primary use case for Intersection Observer?", options: JSON.stringify(["Calculating math.", "Detecting when an element enters or leaves the browser viewport.", "Styling text.", "Connecting to a database."]), correctAnswer: "Detecting when an element enters or leaves the browser viewport.", explanation: "It's essential for performant lazy-loading and scroll-based triggers.", order: 1 },
+                        { question: "What is a major advantage of 'IndexedDB' over 'localStorage'?", options: JSON.stringify(["It is easier to use.", "It allows for storing much larger amounts of structured data and is asynchronous.", "It is faster for small strings.", "It works in IE6."]), correctAnswer: "It allows for storing much larger amounts of structured data and is asynchronous.", explanation: "IndexedDB is a full-featured transactional database in the browser.", order: 2 },
+                        { question: "Which API would you use to listen for changes to an element's dimensions?", options: JSON.stringify(["Resize Observer", "Mutation Observer", "Intersection Observer", "Window.onresize"]), correctAnswer: "Resize Observer", explanation: "Resize Observer is more efficient than listening to window resize events for individual components.", order: 3 },
+                        { question: "What is the 'Mutation Observer' used for?", options: JSON.stringify(["Watching for changes in the DOM tree", "Watching for changes in CSS", "Detecting network failures", "Monitoring keyboard input"]), correctAnswer: "Watching for changes in the DOM tree", explanation: "Useful for third-party scripts or complex dynamic UIs.", order: 4 },
+                        { question: "What is the difference between 'localStorage' and 'sessionStorage'?", options: JSON.stringify(["One is faster.", "sessionStorage is cleared when the page session ends (tab closed); localStorage persists.", "localStorage is only for numbers.", "sessionStorage is public; localStorage is private."]), correctAnswer: "sessionStorage is cleared when the page session ends (tab closed); localStorage persists.", explanation: "Storage duration is the key difference.", order: 5 }
                     ],
                     miniProject: {
                         title: "The Progressive Image Loader",
@@ -299,7 +327,12 @@ export const frontendContent = {
                     "Follow the BEM (Block Element Modifier) convention for clean, scalable CSS.",
                     "Ensure all decorative images have empty alt attributes (alt='') to avoid noise for screen readers."
                 ],
-                testCases: [{ name: "Semantic Correctness", verify: "Manual landmark check" }, { name: "A11y Score", verify: "100/100 Lighthouse" }],
+                testCases: [
+                    { name: "File Structure", verify: "Check for index.html and style.css in root" },
+                    { name: "Semantic Architecture", verify: "Detect 5+ HTML5 landmark tags (main, nav, aside, footer, section)" },
+                    { name: "A11y Validation", verify: "Verify presence of 'alt' attributes on all images" },
+                    { name: "Performance Infrastructure", verify: "Check for CSS Variable usage for design tokens" }
+                ],
             }
         },
         {
@@ -314,7 +347,11 @@ export const frontendContent = {
                         { title: "React Docs: Optimizing Performance", type: "DOCUMENTATION", url: "https://react.dev/learn/render-and-commit", duration: 45, order: 1 }
                     ],
                     questions: [
-                        { question: "When should you use 'useMemo'?", options: JSON.stringify(["Every time.", "Only for expensive calculations to prevent re-computation on every render.", "To memorize text.", "For API calls."]), correctAnswer: "Only for expensive calculations to prevent re-computation on every render.", explanation: "Overuse can actually hurt performance.", order: 1 }
+                        { question: "When should you use 'useMemo'?", options: JSON.stringify(["Every time.", "Only for expensive calculations to prevent re-computation on every render.", "To memorize text.", "For API calls."]), correctAnswer: "Only for expensive calculations to prevent re-computation on every render.", explanation: "Overuse can actually hurt performance.", order: 1 },
+                        { question: "What is the primary difference between 'useMemo' and 'useCallback'?", options: JSON.stringify(["useMemo is for objects; useCallback is for strings", "useMemo returns a memoized value; useCallback returns a memoized function", "useCallback is faster", "There is no difference"]), correctAnswer: "useMemo returns a memoized value; useCallback returns a memoized function", explanation: "UseCallback is essentially shorthand for useMemo(() => fn, [deps]).", order: 2 },
+                        { question: "What does 'React.memo' do?", options: JSON.stringify(["It saves the component to the database", "Prevents a component from re-rendering if its props haven't changed", "It speeds up the entire application", "It is used for state management"]), correctAnswer: "Prevents a component from re-rendering if its props haven't changed", explanation: "It performs a shallow comparison of props.", order: 3 },
+                        { question: "When using dynamic imports (React.lazy), what component should you wrap the lazy component in?", options: JSON.stringify(["<ErrorBoundary>", "<Suspense>", "<Loading>", "<div>"]), correctAnswer: "<Suspense>", explanation: "Suspense allows you to provide a fallback while the chunk is loading.", order: 4 },
+                        { question: "In React's reconciliation process, why is the 'key' attribute important for lists?", options: JSON.stringify(["To style the elements", "To help React identify which items have changed, been added, or removed", "To set the ID in the database", "To sort the items alphabetically"]), correctAnswer: "To help React identify which items have changed, been added, or removed", explanation: "Keys should be stable, predictable, and unique among siblings.", order: 5 }
                     ],
                     miniProject: {
                         title: "Performance Dashboard",
@@ -331,7 +368,11 @@ export const frontendContent = {
                         { title: "TypeScript Handbook", type: "DOCUMENTATION", url: "https://www.typescriptlang.org/docs/handbook/intro.html", duration: 60, order: 1 }
                     ],
                     questions: [
-                        { question: "What is the 'Partial<T>' utility type?", options: JSON.stringify(["Removes all types.", "Constructs a type with all properties of T set to optional.", "Makes all properties required.", "Splits a type in half."]), correctAnswer: "Constructs a type with all properties of T set to optional.", explanation: "Useful for update objects.", order: 1 }
+                        { question: "What is the 'Partial<T>' utility type?", options: JSON.stringify(["Removes all types.", "Constructs a type with all properties of T set to optional.", "Makes all properties required.", "Splits a type in half."]), correctAnswer: "Constructs a type with all properties of T set to optional.", explanation: "Useful for update objects.", order: 1 },
+                        { question: "Which TypeScript feature allows a type to be defined based on a parameter type, enabling reusable components?", options: JSON.stringify(["Interfaces", "Generics", "Enums", "Any"]), correctAnswer: "Generics", explanation: "Generics provide a way to create reusable components that work over a variety of types.", order: 2 },
+                        { question: "What is the difference between an 'interface' and a 'type' alias in TypeScript?", options: JSON.stringify(["No difference", "Interfaces can be extended/merged; types are more flexible for unions/intersections", "Types are only for numbers", "Interfaces are deprecated"]), correctAnswer: "Interfaces can be extended/merged; types are more flexible for unions/intersections", explanation: "Both are powerful, but they have subtle differences in extension and merging.", order: 3 },
+                        { question: "What does the 'readonly' modifier do in TypeScript?", options: JSON.stringify(["Makes a property visible only on screen", "Prevents a property from being reassigned after initialization", "Speeds up the build", "Deletes the property"]), correctAnswer: "Prevents a property from being reassigned after initialization", explanation: "It ensures immutability at the type level.", order: 4 },
+                        { question: "What is 'Type Narrowing'?", options: JSON.stringify(["Reducing the font size", "The process of refining a more general type to a more specific type using runtime checks", "Removing types from a file", "A bug in the compiler"]), correctAnswer: "The process of refining a more general type to a more specific type using runtime checks", explanation: "Narrowing happens via type guards (e.g., typeof, instanceof).", order: 5 }
                     ],
                     miniProject: {
                         title: "Strictly Typed Form Library",
@@ -348,7 +389,11 @@ export const frontendContent = {
                         { title: "Zustand: Working with state", type: "DOCUMENTATION", url: "https://docs.pmnd.rs/zustand/getting-started/introduction", duration: 30, order: 1 }
                     ],
                     questions: [
-                        { question: "What is an 'Action' in Redux?", options: JSON.stringify(["A function call.", "A plain object describing what happened.", "A database entry.", "A CSS class."]), correctAnswer: "A plain object describing what happened.", explanation: "Actions are the only way to trigger state changes in Redux.", order: 1 }
+                        { question: "What is an 'Action' in Redux?", options: JSON.stringify(["A function call.", "A plain object describing what happened.", "A database entry.", "A CSS class."]), correctAnswer: "A plain object describing what happened.", explanation: "Actions are the only way to trigger state changes in Redux.", order: 1 },
+                        { question: "What is a 'Reducer' in the context of state management?", options: JSON.stringify(["A helper for CSS", "A pure function that takes the current state and an action, and returns the next state", "A tool for compressing data", "A type of middleware"]), correctAnswer: "A pure function that takes the current state and an action, and returns the next state", explanation: "Reducers must be pure and never mutate the state directly.", order: 2 },
+                        { question: "In Zustand, how do you prevent unnecessary re-renders when accessing the store?", options: JSON.stringify(["You can't", "By using a selector function to pick only the state you need", "By putting everything in a single component", "By using Redux instead"]), correctAnswer: "By using a selector function to pick only the state you need", explanation: "Selectors ensure your component only re-renders when the specific selected state changes.", order: 3 },
+                        { question: "What is 'Derived State'?", options: JSON.stringify(["State that is stored in the database", "State that is calculated from other pieces of state", "The initial state of an app", "State used only for CSS"]), correctAnswer: "State that is calculated from other pieces of state", explanation: "Calculating derived state on the fly (or memoizing it) prevents sync issues.", order: 4 },
+                        { question: "What is 'Prop Drilling'?", options: JSON.stringify(["A way to build tables", "The process of passing data through multiple levels of components that don't need it", "A hardware maintenance technique", "A type of API"]), correctAnswer: "The process of passing data through multiple levels of components that don't need it", explanation: "State management libraries or Context API help solve prop drilling.", order: 5 }
                     ],
                     miniProject: {
                         title: "The Multi-Store Sync",
@@ -365,7 +410,11 @@ export const frontendContent = {
                         { title: "React: Server Components Guide", type: "DOCUMENTATION", url: "https://react.dev/reference/react/use-server", duration: 55, order: 1 }
                     ],
                     questions: [
-                        { question: "Can a Server Component import a Client Component?", options: JSON.stringify(["Yes.", "No.", "Only if it is a list.", "Only on mobile."]), correctAnswer: "Yes.", explanation: "Server components can render client components, but not vice-versa directly.", order: 1 }
+                        { question: "Can a Server Component import a Client Component?", options: JSON.stringify(["Yes.", "No.", "Only if it is a list.", "Only on mobile."]), correctAnswer: "Yes.", explanation: "Server components can render client components, but not vice-versa directly.", order: 1 },
+                        { question: "What is a primary benefit of React Server Components (RSC)?", options: JSON.stringify(["They make CSS faster", "They reduce the bundle size sent to the client as they stay on the server", "They allow you to use 'window' on the server", "They replace the database"]), correctAnswer: "They reduce the bundle size sent to the client as they stay on the server", explanation: "Only the rendered result (and client-side parts) are sent to the browser.", order: 2 },
+                        { question: "Where do Server Components execute?", options: JSON.stringify(["In the browser", "On the server (during build or request time)", "In a Web Worker", "On the user's GPU"]), correctAnswer: "On the server (during build or request time)", explanation: "Server components run in a server environment, allowing direct DB access.", order: 3 },
+                        { question: "What directive is used to mark a file as a 'Client Component'?", options: JSON.stringify(["'use server'", "'use client'", "'import client'", "'client side only'"]), correctAnswer: "'use client'", explanation: "The 'use client' directive is the boundary between server and client code.", order: 4 },
+                        { question: "Can you use hooks like 'useState' or 'useEffect' in a Server Component?", options: JSON.stringify(["Yes", "No", "Only 'useState'", "Only 'useEffect'"]), correctAnswer: "No", explanation: "Hooks rely on client-side state and life-cycles, which don't exist in Server Components.", order: 5 }
                     ],
                     miniProject: {
                         title: "The Streaming Catalog",
@@ -377,68 +426,84 @@ export const frontendContent = {
                 {
                     id: "fe-l2-skill-patterns",
                     title: "Component Design Patterns",
-                    description: "Master Atomic Design, Compound Components, and Render Props. Learn how to build flexible, reusable UI systems used at scale.",
+                    description: "Build flexible components. Render Props, Compound Components, HOCs, and Controlled vs Uncontrolled components.",
                     resources: [
-                        { title: "Atomic Design by Brad Frost", type: "BOOK_SUMMARY", url: "https://atomicdesign.bradfrost.com/", duration: 60, order: 1 }
+                        { title: "React Patterns", type: "DOCUMENTATION", url: "https://reactpatterns.com/", duration: 40, order: 1 }
                     ],
                     questions: [
-                        { question: "What is the 'Organism' in Atomic Design?", options: JSON.stringify(["A single button.", "A complex, distinct section of an interface consisting of molecules/atoms.", "The entire page.", "A CSS file."]), correctAnswer: "A complex, distinct section of an interface consisting of molecules/atoms.", explanation: "Organisms form the functional sections of a UI.", order: 1 }
+                        { question: "What is a 'Compound Component' pattern?", options: JSON.stringify(["Using many components in one file", "A pattern where multiple components work together by sharing state implicitly (e.g., Select and Option)", "A component that uses Redux", "A component that is very large"]), correctAnswer: "A pattern where multiple components work together by sharing state implicitly (e.g., Select and Option)", explanation: "Compound components provide a clean API for complex components.", order: 1 },
+                        { question: "Which pattern uses a function as a prop to let the parent decide how to render a part of the component?", options: JSON.stringify(["HOC (Higher Order Component)", "Render Props", "Hooks", "Context"]), correctAnswer: "Render Props", explanation: "Render props are highly flexible for sharing logic.", order: 2 },
+                        { question: "What is a 'Higher Order Component' (HOC)?", options: JSON.stringify(["A component that is at the top of the tree", "A function that takes a component and returns a new component with enhanced functionality", "A component that uses many hooks", "A class-based component"]), correctAnswer: "A function that takes a component and returns a new component with enhanced functionality", explanation: "HOCs are a common way to reuse component logic.", order: 3 },
+                        { question: "What is the difference between a 'Controlled' and 'Uncontrolled' input?", options: JSON.stringify(["Controlled uses state for value; Uncontrolled uses DOM refs", "Controlled is faster", "Uncontrolled is better for SEO", "There is no difference"]), correctAnswer: "Controlled uses state for value; Uncontrolled uses DOM refs", explanation: "Controlled components are generally preferred in React for form handling.", order: 4 },
+                        { question: "In the 'Slot' pattern, what is the primary goal?", options: JSON.stringify(["To store data", "To allow users to pass custom components or elements into predefined areas of a component", "To increase performance", "To use more CSS"]), correctAnswer: "To allow users to pass custom components or elements into predefined areas of a component", explanation: "Slots (or composition) help in making components highly reusable without long prop lists.", order: 5 }
                     ],
                     miniProject: {
-                        title: "The Atomic UI Kit",
-                        description: "Design a consistent UI kit starting from atoms (typography, buttons) up to templates.",
-                        requirements: JSON.stringify(["Follow Atomic Design principles.", "Build in Storybook.", "Maintain strict prop types."]),
+                        title: "The Ultimate UI Component",
+                        description: "Design a generic 'Data Table' component that supports sorting, filtering, and custom row rendering via compound components and render props.",
+                        requirements: JSON.stringify(["Use Compound Components for Header/Body/Footer.", "Provide a Render Prop for custom cells.", "Maintain internal sorting state."]),
                         order: 5
                     }
                 },
                 {
                     id: "fe-l2-skill-adv-testing",
-                    title: "Sophisticated Web Testing",
-                    description: "Move beyond unit tests. Master Mock Service Worker (MSW), Visual Regression testing, and Integration suites with React Testing Library.",
+                    title: "Advanced Testing Strategies",
+                    description: "Go beyond unit tests. Master Integration Testing with RTL, E2E with Playwright, and Mocking complex APIs.",
                     resources: [
-                        { title: "MSW: Introduction", type: "DOCUMENTATION", url: "https://mswjs.io/docs/", duration: 40, order: 1 }
+                        { title: "Testing Library Recipes", type: "DOCUMENTATION", url: "https://testing-library.com/docs/recipes/", duration: 45, order: 1 }
                     ],
                     questions: [
-                        { question: "What does MSW do?", options: JSON.stringify(["Speeds up the computer.", "Intercepts network requests at the network level for testing.", "Tests CSS colors.", "Deploy code."]), correctAnswer: "Intercepts network requests at the network level for testing.", explanation: "MSW allows for realistic API mocking without changing application code.", order: 1 }
+                        { question: "What should you prioritize testing according to the 'Testing Library' philosophy?", options: JSON.stringify(["Implementation details", "User behavior and interactions", "Function internal variables", "CSS selector names"]), correctAnswer: "User behavior and interactions", explanation: "The more your tests resemble the way your software is used, the more confidence they can give you.", order: 1 },
+                        { question: "In 'React Testing Library', what is the helper function used to wait for an element to appear?", options: JSON.stringify(["wait()", "waitFor()", "expect()", "queryByText()"]), correctAnswer: "waitFor()", explanation: "waitFor allows you to handle asynchronous changes in the UI.", order: 2 },
+                        { question: "What is 'Mocking' in the context of testing?", options: JSON.stringify(["Laughing at bad code", "Replacing a real dependency (like an API call) with a controlled fake version", "Writing code very fast", "A type of performance test"]), correctAnswer: "Replacing a real dependency (like an API call) with a controlled fake version", explanation: "Mocking allows you to isolate the unit under test.", order: 3 },
+                        { question: "Which query type in RTL should you use if you expect an element to NOT be in the document?", options: JSON.stringify(["getBy...", "getAllBy...", "queryBy...", "findBy..."]), correctAnswer: "queryBy...", explanation: "queryBy returns null if no match is found, whereas getBy throws an error.", order: 4 },
+                        { question: "What is an E2E (End-to-End) test?", options: JSON.stringify(["Testing a single function", "Testing the entire application flow from the user's perspective, including backend/DB", "Testing the end of a file", "A test that never finishes"]), correctAnswer: "Testing the entire application flow from the user's perspective, including backend/DB", explanation: "E2E tests provide the highest level of confidence.", order: 5 }
                     ],
                     miniProject: {
-                        title: "The Zero-Flake Test Suite",
-                        description: "Build a fully tested checkout flow with 100% integration coverage using MSW to mock the payment gateway.",
-                        requirements: JSON.stringify(["Zero real API calls.", "Test error states (timeout, decline).", "Visual snapshot verify."]),
+                        title: "The Bulletproof Checkout",
+                        description: "Write a comprehensive test suite for a multi-step checkout form, including API mocks and validation checks.",
+                        requirements: JSON.stringify(["Achieve 90% branch coverage.", "Mock global fetch calls.", "Implement a Playwright E2E flow."]),
                         order: 6
                     }
                 },
                 {
                     id: "fe-l2-skill-build",
-                    title: "Modern Build Systems & Bundling",
-                    description: "Understand Vite, Rollup, and Webpack. Learn how treeshaking works, how to optimize build times, and how to handle polyfills for old browsers.",
+                    title: "Build Systems & Tooling",
+                    description: "Understand Vite, Webpack, and Turborepo. Learn how to optimize your build for production.",
                     resources: [
-                        { title: "Vite: Why Vite?", type: "DOCUMENTATION", url: "https://vitejs.dev/guide/why.html", duration: 30, order: 1 }
+                        { title: "Vite Guide: Why Vite?", type: "DOCUMENTATION", url: "https://vitejs.dev/guide/why.html", duration: 30, order: 1 }
                     ],
                     questions: [
-                        { question: "What is 'Tree Shaking'?", options: JSON.stringify(["Deleting files.", "Removing dead (unused) code from the final bundle.", "Compressing images.", "A brand of JS framework."]), correctAnswer: "Removing dead (unused) code from the final bundle.", explanation: "It relies on ES modules to identify used exports.", order: 1 }
+                        { question: "Why is Vite faster than Webpack during development?", options: JSON.stringify(["It uses a better logo.", "It leverages Native ES Modules in the browser to avoid bundling everything upfront.", "It deletes unused files.", "It runs only on high-end CPUs."]), correctAnswer: "It leverages Native ES Modules in the browser to avoid bundling everything upfront.", explanation: "Native ESM allows Vite to serve code instantly without a full bundle step.", order: 1 },
+                        { question: "What is 'HMR'?", options: JSON.stringify(["Hot Module Replacement.", "High Memory Requirement.", "Header Meta Registry.", "A new CSS property."]), correctAnswer: "Hot Module Replacement.", explanation: "HMR allows updating modules in a running application without a full reload.", order: 2 },
+                        { question: "What is 'Polyfilling'?", options: JSON.stringify(["Filling a pool.", "Providing modern functionality on older browsers that do not natively support it.", "A type of code compression.", "A security feature."]), correctAnswer: "Providing modern functionality on older browsers that do not natively support it.", explanation: "Polyfills bridge the gap for legacy environments.", order: 3 },
+                        { question: "What is the primary role of a 'Minifier' in a build pipeline?", options: JSON.stringify(["To make the screen smaller", "To reduce the file size of JS/CSS by removing whitespace and renaming variables", "To find bugs", "To add comments"]), correctAnswer: "To reduce the file size of JS/CSS by removing whitespace and renaming variables", explanation: "Minification reduces the download time for the end user.", order: 4 },
+                        { question: "In a monorepo tool like Turborepo, what is 'Remote Caching'?", options: JSON.stringify(["Caching images in the cloud", "Sharing build artifacts across different machines/developers to avoid redundant work", "A way to speed up the internet", "A type of database"]), correctAnswer: "Sharing build artifacts across different machines/developers to avoid redundant work", explanation: "Remote caching significantly speeds up CI/CD pipelines.", order: 5 }
                     ],
                     miniProject: {
-                        title: "The Optimized Bundle Auditor",
-                        description: "Take a bloated React app and reduce its bundle size by 60% through code splitting and tree-shaking optimizations.",
-                        requirements: JSON.stringify(["Implement Dynamic Imports.", "Analyze vendor chunks.", "Optimize peer dependencies."]),
+                        title: "The Custom Build Pipeline",
+                        description: "Configure a custom Vite plugin that automatically generates a 'Sitemap' based on your React routes during the build process.",
+                        requirements: JSON.stringify(["Hook into the buildEnd lifecycle.", "Parse dynamic routes.", "Output a valid sitemap.xml."]),
                         order: 7
                     }
                 },
                 {
                     id: "fe-l2-skill-pwa",
-                    title: "PWA & Native Capabilities",
-                    description: "Turn your web app into a Progressive Web App. Master Service Workers, precaching, and the Web Manifest.",
+                    title: "Progressive Web Apps (PWA)",
+                    description: "Learn Service Workers, manifest files, and offline-first strategies.",
                     resources: [
-                        { title: "Web.dev: PWA Course", type: "DOCUMENTATION", url: "https://web.dev/learn/pwa/", duration: 80, order: 1 }
+                        { title: "MDN: Service Worker API", type: "DOCUMENTATION", url: "https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API", duration: 50, order: 1 }
                     ],
                     questions: [
-                        { question: "What is a 'Service Worker'?", options: JSON.stringify(["A personal assistant.", "A background script that acts as a proxy between the app and the network.", "A cloud server.", "A database."]), correctAnswer: "A background script that acts as a proxy between the app and the network.", explanation: "It enables offline functionality and push notifications.", order: 1 }
+                        { question: "What is a 'Service Worker'?", options: JSON.stringify(["A helper for the UI thread.", "A script that runs in the background, separate from the web page, enabling features like offline support and push notifications.", "A type of API.", "A person who fixes servers."]), correctAnswer: "A script that runs in the background, separate from the web page, enabling features like offline support and push notifications.", explanation: "Service Workers act as a proxy between the browser and the network.", order: 1 },
+                        { question: "Where is the Service Worker installed?", options: JSON.stringify(["In the browser but outside the context of a single page", "On the server", "On the user's hard drive", "In a meta tag"]), correctAnswer: "In the browser but outside the context of a single page", explanation: "This allows it to persist even when the tab is closed.", order: 2 },
+                        { question: "What is the purpose of the 'webmanifest' file?", options: JSON.stringify(["To style the app", "To provide metadata about the PWA (name, icons, start URL) so it can be installed on a device", "To store user passwords", "To speed up JavaScript"]), correctAnswer: "To provide metadata about the PWA (name, icons, start URL) so it can be installed on a device", explanation: "The manifest makes the web app feel 'native'.", order: 3 },
+                        { question: "What is the 'Stale-While-Revalidate' caching strategy?", options: JSON.stringify(["Never use cache", "Return cached content immediately while fetching an update in the background", "Wait for the network before showing anything", "Deleting the cache every hour"]), correctAnswer: "Return cached content immediately while fetching an update in the background", explanation: "This strategy balances speed and freshness.", order: 4 },
+                        { question: "Can a Service Worker access the DOM directly?", options: JSON.stringify(["Yes", "No", "Only if it is a list", "Only on mobile"]), correctAnswer: "No", explanation: "Service Workers communicate with the page via the 'postMessage' API and cannot touch the DOM.", order: 5 }
                     ],
                     miniProject: {
-                        title: "The Offline-First Memo App",
-                        description: "Build a notes application that works perfectly without an internet connection and syncs when back online.",
-                        requirements: JSON.stringify(["Register a Service Worker.", "Implement precaching for static assets.", "Use IndexedDB for local data persistence."]),
+                        title: "The Offline-First Memo",
+                        description: "Create a note-taking app that works entirely offline, using Service Workers for assets and IndexedDB for data persistence.",
+                        requirements: JSON.stringify(["Handle 'Offline' status in UI.", "Sync data when connection is restored.", "Achieve a perfect PWA score in Lighthouse."]),
                         order: 8
                     }
                 }
@@ -477,12 +542,17 @@ export const frontendContent = {
                 {
                     id: "fe-l3-skill-testing",
                     title: "Frontend Testing Strategy",
-                    description: "Unit, Integration, and E2E testing with Vitest and Playwright.",
+                    description: "Unit, Integration, and E2E testing with Vitest and Playwright. Master the art of writing resilient tests that don't break with every UI change.",
                     resources: [
-                        { title: "Testing Library Docs", type: "DOCUMENTATION", url: "https://testing-library.com/docs/react-testing-library/intro/", duration: 50, order: 1 }
+                        { title: "Testing Library Docs", type: "DOCUMENTATION", url: "https://testing-library.com/docs/react-testing-library/intro/", duration: 50, order: 1 },
+                        { title: "Kent C. Dodds: Testing Implementation Details", type: "ARTICLE", url: "https://kentcdodds.com/blog/testing-implementation-details", duration: 25, order: 2 }
                     ],
                     questions: [
-                        { question: "What is the philosophy of React Testing Library?", options: JSON.stringify(["Test implementation details.", "test the software the way the user uses it.", "Test only Redux.", "Snapshot everything."]), correctAnswer: "test the software the way the user uses it.", explanation: "Avoid testing state/props directly; test interactions.", order: 1 }
+                        { question: "What is the philosophy of React Testing Library?", options: JSON.stringify(["Test implementation details.", "test the software the way the user uses it.", "Test only Redux.", "Snapshot everything."]), correctAnswer: "test the software the way the user uses it.", explanation: "Avoid testing state/props directly; test interactions.", order: 1 },
+                        { question: "What is an 'Integration Test' in the context of a frontend app?", options: JSON.stringify(["Testing a single function in isolation", "Testing how multiple components or systems work together to achieve a user goal", "Checking the color of a button", "A test that runs only on the server"]), correctAnswer: "Testing how multiple components or systems work together to achieve a user goal", explanation: "Integration tests verify the collaboration between units.", order: 2 },
+                        { question: "Why is 'findBy' preferred over 'getBy' for elements that appear asynchronously?", options: JSON.stringify(["It's faster", "Matches are based on CSS selectors only", "It returns a promise and retries until the element appears or timeouts", "It doesn't require an await"]), correctAnswer: "It returns a promise and retries until the element appears or timeouts", explanation: "findBy is built for asynchronous DOM changes.", order: 3 },
+                        { question: "In E2E testing, what is 'Flakiness'?", options: JSON.stringify(["When a test passes and fails inconsistently without changes to the code", "A type of slow test", "A test that is written in JavaScript", "When the CSS doesn't load"]), correctAnswer: "When a test passes and fails inconsistently without changes to the code", explanation: "Flakiness is often caused by race conditions or network dependency.", order: 4 },
+                        { question: "What is 'Mocking' in a test suite?", options: JSON.stringify(["Deleting the code", "Replacing a real dependency (like an API call) with a controlled version for testing", "Making fun of the developer", "A faster way to run tests"]), correctAnswer: "Replacing a real dependency (like an API call) with a controlled version for testing", explanation: "Mocking isolating the unit under test from external side effects.", order: 5 }
                     ],
                     miniProject: {
                         title: "Test-Driven Component System",
@@ -492,122 +562,171 @@ export const frontendContent = {
                     }
                 },
                 {
-                    id: "fe-l3-skill-arch",
-                    title: "Frontend Architecture",
-                    description: "Design scalable frontend systems. State machines, Compound Components, and Module Federation.",
+                    id: "fe-l3-skill-ds",
+                    title: "Expert Design Systems & Tokenization",
+                    description: "Build a multi-brand UI system. Master Design Tokens, Style Dictionary, and Headless UI architecture.",
                     resources: [
-                        { title: "Patterns.dev", type: "ARTICLE", url: "https://www.patterns.dev/", duration: 90, order: 1 }
+                        { title: "Design Tokens W3C Community Group", type: "DOCUMENTATION", url: "https://www.w3.org/community/design-tokens/", duration: 45, order: 1 }
                     ],
                     questions: [
-                        { question: "What is the 'Compound Component' pattern?", options: JSON.stringify(["A component that costs pounds.", "A pattern where components share state implicitly to form a complete UI unit (e.g., Select, Select.Item).", "Using Redux.", "Two components in one file."]), correctAnswer: "A pattern where components share state implicitly to form a complete UI unit (e.g., Select, Select.Item).", explanation: "It provides a flexible API for users.", order: 1 }
+                        { question: "What is the primary benefit of 'Design Tokens'?", options: JSON.stringify(["They make the UI look better", "They create a single source of truth for design values (colors, spacing) that can be synced across platforms (Web, iOS, Android)", "They replace CSS", "They are for icons only"]), correctAnswer: "They create a single source of truth for design values (colors, spacing) that can be synced across platforms (Web, iOS, Android)", explanation: "Design tokens enable platform-agnostic design systems.", order: 1 },
+                        { question: "What does 'Style Dictionary' do?", options: JSON.stringify(["It's a dictionary for CSS terms", "An build system that transforms design tokens into platform-specific files (CSS, JSON, XML)", "A tool for fixing typos in code", "A CSS framework"]), correctAnswer: "An build system that transforms design tokens into platform-specific files (CSS, JSON, XML)", explanation: "Style Dictionary automates the distribution of design tokens.", order: 2 },
+                        { question: "What is a 'Headless UI' component?", options: JSON.stringify(["A component with no logic", "A component that provides logic and state but has no default styles, leaving the appearance to the developer", "A component that doesn't render anything", "A component for the header section"]), correctAnswer: "A component that provides logic and state but has no default styles, leaving the appearance to the developer", explanation: "Headless UI (like Reach UI or Radix) allows for maximum styling flexibility with built-in accessibility.", order: 3 },
+                        { question: "What is the 'Semantic' level of a design token?", options: JSON.stringify(["The raw hex value", "A token that describes the *intent* or *context* (e.g., 'action-color-primary') rather than its value", "The font-family name", "The pixel size"]), correctAnswer: "A token that describes the *intent* or *context* (e.g., 'action-color-primary') rather than its value", explanation: "Semantic tokens allow you to change the underlying theme without changing the code usage.", order: 4 },
+                        { question: "In a Design System, what is 'Visual Regression Testing'?", options: JSON.stringify(["Testing for functional bugs", "Automatically comparing screenshots of components to detect unexpected visual changes", "Testing for color blindness", "A way to speed up rendering"]), correctAnswer: "Automatically comparing screenshots of components to detect unexpected visual changes", explanation: "It ensures a consistent visual interface across updates.", order: 5 }
                     ],
                     miniProject: {
-                        title: "Micro-Frontend Shell",
-                        description: "Create a host application that dynamically loads a remote product widget using Webpack Module Federation.",
-                        requirements: JSON.stringify(["Setup Host app.", "Setup Remote app.", "Share dependencies (React) to avoid duplication."]),
+                        title: "The Tokenized Engine",
+                        description: "Build a theme switcher that consumes JSON tokens and generates a dynamic CSS variable system for a multi-tenant application.",
+                        requirements: JSON.stringify(["Implement Dark/Light/High-Contrast.", "Automatic CSS variable generation.", "Support for fluid spacing tokens."]),
+                        order: 1
+                    }
+                },
+                {
+                    id: "fe-l3-skill-micro",
+                    title: "Micro-frontends at Scale",
+                    description: "Learn to split a monolith. Master Module Federation, iframe isolation, and shared dependency management.",
+                    resources: [
+                        { title: "Webpack Module Federation", type: "DOCUMENTATION", url: "https://webpack.js.org/concepts/module-federation/", duration: 60, order: 1 }
+                    ],
+                    questions: [
+                        { question: "What is 'Module Federation'?", options: JSON.stringify(["A new government for frontend", "A Webpack 5 feature allowing multiple builds to share code and dependencies at runtime", "A way to combine CSS files", "A type of database"]), correctAnswer: "A Webpack 5 feature allowing multiple builds to share code and dependencies at runtime", explanation: "Module federation is the gold standard for modern micro-frontends.", order: 1 },
+                        { question: "What is a 'Host' in a Module Federation setup?", options: JSON.stringify(["The server running the app", "The primary application that consumes remote modules", "The user's computer", "A type of API"]), correctAnswer: "The primary application that consumes remote modules", explanation: "The Host coordinates the loading of Remote modules.", order: 2 },
+                        { question: "What is the 'Shell' pattern in Micro-frontends?", options: JSON.stringify(["A command-line tool", "An orchestrator application that provides the outer frame (navigation, auth) for multiple sub-apps", "A type of CSS reset", "A security layer"]), correctAnswer: "An orchestrator application that provides the outer frame (navigation, auth) for multiple sub-apps", explanation: "The Shell (or Host) manages the shared context for micro-apps.", order: 3 },
+                        { question: "How can you prevent CSS collisions between different micro-apps?", options: JSON.stringify(["Use global CSS only", "Use Shadow DOM or CSS-in-JS with unique prefixes", "Don't use CSS", "Use only IDs"]), correctAnswer: "Use Shadow DOM or CSS-in-JS with unique prefixes", explanation: "Isolation is a major challenge in micro-frontends.", order: 4 },
+                        { question: "What is 'Runtime Integration' in micro-frontends?", options: JSON.stringify(["Combining code during build time", "Loading and integrating sub-apps in the user's browser while the app is running", "A way to speed up the CPU", "A type of network protocol"]), correctAnswer: "Loading and integrating sub-apps in the user's browser while the app is running", explanation: "Runtime integration allows independent deployments without rebuilds.", order: 5 }
+                    ],
+                    miniProject: {
+                        title: "The Federated Portfolio",
+                        description: "Build a portfolio shell that dynamically loads different projects from separate repositories using Module Federation.",
+                        requirements: JSON.stringify(["Implement a shared Navbar.", "Handle loading failures gracefully.", "Share React/ReactDOM dependencies."]),
                         order: 2
                     }
                 },
                 {
-                    id: "fe-l3-skill-design-systems",
-                    title: "Design Systems Engineering",
-                    description: "Design at scale. Master CSS-in-JS (Stitches/Emotion), Radix UI primitives, and Design Tokens. Learn how to maintain consistency across hundreds of apps.",
+                    id: "fe-l3-skill-webgl",
+                    title: "High Performance Web Graphics",
+                    description: "Master Three.js and the GPU. Build immersive 3D experiences and custom shaders to wow your users.",
                     resources: [
-                        { title: "Design Systems Repo", type: "ARTICLE", url: "https://designsystemsrepo.com/design-systems-articles/", duration: 45, order: 1 }
+                        { title: "Three.js Journey", type: "COURSE_OVERVIEW", url: "https://threejs-journey.com/", duration: 120, order: 1 }
                     ],
                     questions: [
-                        { question: "What are 'Design Tokens'?", options: JSON.stringify(["Currency used by designers.", "Agnostic variables (color, spacing) that store design decisions.", "CSS classes.", "Images."]), correctAnswer: "Agnostic variables (color, spacing) that store design decisions.", explanation: "Tokens allow for multi-platform design consistency.", order: 1 }
+                        { question: "What is a 'Shader' in WebGL?", options: JSON.stringify(["A tool for making things dark", "A program that runs on the GPU to calculate light and color for pixels", "A type of 3D model", "An image format"]), correctAnswer: "A program that runs on the GPU to calculate light and color for pixels", explanation: "Shaders (GLSL) are the core of high-performance graphics.", order: 1 },
+                        { question: "What language are WebGL shaders written in?", options: JSON.stringify(["JavaScript", "Python", "GLSL (OpenGL Shading Language)", "C#"]), correctAnswer: "GLSL (OpenGL Shading Language)", explanation: "GLSL is a C-like language specialized for parallel vector operations.", order: 2 },
+                        { question: "In Three.js, what are the three basic elements needed to see anything?", options: JSON.stringify(["Scene, Camera, Renderer", "Model, Light, Texture", "Div, Canvas, Script", "HTML, CSS, JS"]), correctAnswer: "Scene, Camera, Renderer", explanation: "These form the minimum foundation for a Three.js application.", order: 3 },
+                        { question: "What is 'Raycasting' typically used for in 3D web apps?", options: JSON.stringify(["Changing background colors", "Detecting mouse clicks or intersections with 3D objects", "Loading images faster", "Calculating shadows only"]), correctAnswer: "Detecting mouse clicks or intersections with 3D objects", explanation: "Raycasting is essential for interactivity in 3D scenes.", order: 4 },
+                        { question: "What is the purpose of the 'RequestAnimationFrame' loop?", options: JSON.stringify(["To pause the app", "To run animations at a smooth, browser-synced frame rate (usually 60fps)", "To refresh the page", "To download files in the background"]), correctAnswer: "To run animations at a smooth, browser-synced frame rate (usually 60fps)", explanation: "It's much more efficient than setInterval for animations.", order: 5 }
                     ],
                     miniProject: {
-                        title: "The Tokenized Library",
-                        description: "Build a set of 5 components that derive all styles from a central JSON token file.",
-                        requirements: JSON.stringify(["No hardcoded colors/px.", "Support Light/Dark themes.", "Export tokens for both CSS and JS consumption."]),
+                        title: "The Interactive 3D Showcase",
+                        description: "Create a 3D product landing page where users can rotate and change colors of a 3D model in real-time.",
+                        requirements: JSON.stringify(["Implement custom GLSL post-processing.", "Optimize for mobile GPUs.", "Use physically-based rendering (PBR)."]),
                         order: 3
                     }
                 },
                 {
-                    id: "fe-l3-skill-webgl",
-                    title: "Advanced WebGL & 3D (Three.js)",
-                    description: "Bring the 3rd dimension to the web. Master Three.js, React Three Fiber, and shader programming for high-impact visual experiences.",
+                    id: "fe-l3-skill-security-adv",
+                    title: "Advanced Web Security & Cryptography",
+                    description: "Go beyond XSS. Master JWT security, OAuth flows, and browser-side cryptography with the Web Crypto API.",
                     resources: [
-                        { title: "Three.js Journey (Bruno Simon)", type: "COURSE", url: "https://threejs-journey.com/", duration: 240, order: 1 }
+                        { title: "IETF: JSON Web Token Best Practices", type: "DOCUMENTATION", url: "https://datatracker.ietf.org/doc/html/rfc8725", duration: 50, order: 1 }
                     ],
                     questions: [
-                        { question: "What is a 'Shader'?", options: JSON.stringify(["A way to hide elements.", "A program that runs on the GPU to calculate pixel colors or vertices.", "A type of CSS filter.", "A hardware component."]), correctAnswer: "A program that runs on the GPU to calculate pixel colors or vertices.", explanation: "Shaders are essential for custom 3D effects.", order: 1 }
+                        { question: "What is a 'Side-Channel Attack'?", options: JSON.stringify(["An attack from the side of the screen", "An attack based on information gained from the implementation (e.g., timing, power usage) rather than the algorithm itself", "A type of phishing", "Stealing a user's mouse"]), correctAnswer: "An attack based on information gained from the implementation (e.g., timing, power usage) rather than the algorithm itself", explanation: "Side-channels are often overlooked but highly dangerous.", order: 1 },
+                        { question: "Why should you never store sensitive tokens in LocalStorage?", options: JSON.stringify(["It's too slow", "It is accessible by any script running on the page, making it vulnerable to XSS", "It's limited to 5MB", "It expires after 1 second"]), correctAnswer: "It is accessible by any script running on the page, making it vulnerable to XSS", explanation: "Use HttpOnly, Secure, SameSite=Strict cookies for sensitive tokens.", order: 2 },
+                        { question: "What does the 'Subresource Integrity' (SRI) attribute do?", options: JSON.stringify(["Speeds up the site", "Ensures that a resource (like a script) fetched from a CDN hasn't been tampered with by verifying its hash", "Styles the app", "Connects to a database"]), correctAnswer: "Ensures that a resource (like a script) fetched from a CDN hasn't been tampered with by verifying its hash", explanation: "SRI prevents supply-chain attacks via compromised CDNs.", order: 3 },
+                        { question: "What is the 'PKCE' (Proof Key for Code Exchange) extension in OAuth used for?", options: JSON.stringify(["To encrypt the password", "To prevent authorization code injection attacks, especially on public clients like SPAs", "To make the login faster", "To store user profile pictures"]), correctAnswer: "To prevent authorization code injection attacks, especially on public clients like SPAs", explanation: "PKCE is mandatory for modern frontend auth flows.", order: 4 },
+                        { question: "What is 'CSRF'?", options: JSON.stringify(["Cross-Site Request Forgery", "Critical Site Response Failure", "Complex System Root Filter", "A new JS framework"]), correctAnswer: "Cross-Site Request Forgery", explanation: "Cross-Site Request Forgery tricks a logged-in user into performing unwanted actions on a different site.", order: 5 }
                     ],
                     miniProject: {
-                        title: "The Interactive 3D Hero",
-                        description: "Build a 3D aterrizaje section with a custom-shaded background that responds to mouse movement.",
-                        requirements: JSON.stringify(["Implementation in R3F.", "Custom GLSL fragment shader.", "Optimized for mobile (low vertex count)."]),
-                        order: 4
-                    }
-                },
-                {
-                    id: "fe-l3-skill-global",
-                    title: "Global Engineering & i18n",
-                    description: "Build for the world. Master internationalization (i18n), Right-to-Left (RTL) layouts, and cultural sensitivity in UI design.",
-                    resources: [
-                        { title: "MDN: Localization", type: "DOCUMENTATION", url: "https://developer.mozilla.org/en-US/docs/Mozilla/Localization", duration: 30, order: 1 }
-                    ],
-                    questions: [
-                        { question: "Why use 'logical properties' like 'margin-inline-start' instead of 'margin-left'?", options: JSON.stringify(["It's shorter.", "It automatically adapts to text direction (LTR vs RTL).", "It's newer.", "It supports old IE versions."]), correctAnswer: "It automatically adapts to text direction (LTR vs RTL).", explanation: "Logical properties are the standard for multi-directional layouts.", order: 1 }
-                    ],
-                    miniProject: {
-                        title: "The Globalized Dashboard",
-                        description: "Take a dashboard and implement full support for 3 languages, including RTL (Arabic/Hebrew) mirroring.",
-                        requirements: JSON.stringify(["Use zero hardcoded strings.", "Mirror layouts correctly for RTL.", "Implement currency/date formatting."],),
+                        title: "The Secure Messenger Shell",
+                        description: "Build a messaging interface that uses the Web Crypto API to implement end-to-end encryption in the browser.",
+                        requirements: JSON.stringify(["Use AES-GCM for encryption.", "Implement public/private key exchange.", "Zero plain-text storage."]),
                         order: 5
                     }
                 },
                 {
-                    id: "fe-l3-skill-infra",
-                    title: "Frontend Infrastructure & Edge",
-                    description: "Learn how frontends are delivered. Master Edge Functions, A/B testing at the CDN level, and automated deploy previews.",
+                    id: "fe-l3-skill-arch",
+                    title: "Expert Frontend Systems Design",
+                    description: "Design scalable frontend systems. Master State machines, Clean Architecture, and Module Federation.",
+                    resources: [
+                        { title: "Frontend Architecture: A Modern Approach", type: "ARTICLE", url: "https://www.smashingmagazine.com/2019/12/frontend-architecture-modern-approach/", duration: 40, order: 1 }
+                    ],
+                    questions: [
+                        { question: "What is the 'Clean Architecture' approach in Frontend?", options: JSON.stringify(["Using only CSS.", "Organizing code into layers with clear boundaries, separating business logic from UI and external dependencies.", "Deleting unused components.", "Writing all code in one file."]), correctAnswer: "Organizing code into layers with clear boundaries, separating business logic from UI and external dependencies.", explanation: "Layered architecture makes the app easier to test and maintain.", order: 1 },
+                        { question: "What is a 'State Machine' and why use it for complex UI components?", options: JSON.stringify(["A helper for CSS", "A mathematical model of computation that defines explicit states and transitions, preventing impossible UI states", "A way to speed up the CPU", "A type of database"]), correctAnswer: "A mathematical model of computation that defines explicit states and transitions, preventing impossible UI states", explanation: "State machines (like XState) bring predictability to complex flows.", order: 2 },
+                        { question: "What is 'Dependency Inversion' in the context of frontend?", options: JSON.stringify(["importing files in reverse", "Depending on abstractions (interfaces) rather than concrete implementations", "A type of CSS animation", "Deleting node_modules"]), correctAnswer: "Depending on abstractions (interfaces) rather than concrete implementations", explanation: "This allows you to swap out implementations (e.g., API services) without breaking the UI.", order: 3 },
+                        { question: "What is the primary goal of the 'Micro-Frontend' architecture?", options: JSON.stringify(["To make the app smaller", "To allow multiple teams to work independently on different parts of a large application, deploying them separately", "To use micro-services only", "To reduce the number of images"]), correctAnswer: "To allow multiple teams to work independently on different parts of a large application, deploying them separately", explanation: "Scale is the primary driver for micro-frontends.", order: 4 },
+                        { question: "In a large React app, what is the benefit of 'Feature-Sliced Design' (FSD)?", options: JSON.stringify(["It makes the build faster", "A standardized architectural pattern that organizes code by business value and functional layers (Processes, Pages, Features, Entities, Shared)", "It replaces Redux", "It is used for styling only"]), correctAnswer: "A standardized architectural pattern that organizes code by business value and functional layers (Processes, Pages, Features, Entities, Shared)", explanation: "FSD provides a clear mental model for where code should live.", order: 5 }
+                    ],
+                    miniProject: {
+                        title: "The Enterprise Shell",
+                        description: "Architect a large-scale enterprise application using Feature-Sliced Design principles and XState for the authentication flow.",
+                        requirements: JSON.stringify(["Implement a protected route system.", "Use Finite State Machines for login/logout.", "Maintain high degree of decoupling between layers."]),
+                        order: 6
+                    }
+                },
+                {
+                    id: "fe-l3-skill-dx",
+                    title: "Advanced Developer Experience (DX)",
+                    description: "Build tools for other developers. Master AST transformations, custom ESLint rules, and Storybook orchestration.",
+                    resources: [
+                        { title: "AST Explorer", type: "TOOL", url: "https://astexplorer.net/", duration: 30, order: 1 }
+                    ],
+                    questions: [
+                        { question: "What is an 'Abstract Syntax Tree' (AST)?", options: JSON.stringify(["A tree in a park", "A tree-like representation of the structure of source code used by compilers and linters", "A way to organize CSS", "A type of 3D model"]), correctAnswer: "A tree-like representation of the structure of source code used by compilers and linters", explanation: "Linters (ESLint) and Transpilers (Babel) use ASTs to understand and manipulate code.", order: 1 },
+                        { question: "What is the benefit of 'Codemods'?", options: JSON.stringify(["They change the background color", "Automated scripts that transform codebases at scale, useful for large-scale refactorings or library migrations", "They speed up the internet", "They compress images"]), correctAnswer: "Automated scripts that transform codebases at scale, useful for large-scale refactorings or library migrations", explanation: "Codemods (using jscodeshift) automate tedious manual migrations.", order: 2 },
+                        { question: "What does 'Storybook' provide in a development workflow?", options: JSON.stringify(["A place to write stories", "A sandbox for developing UI components in isolation, enabling faster iteration and documentation", "A way to deploy apps", "A database"]), correctAnswer: "A sandbox for developing UI components in isolation, enabling faster iteration and documentation", explanation: "Storybook is essential for building robust component libraries.", order: 3 },
+                        { question: "Why should you create custom ESLint rules for a large team?", options: JSON.stringify(["To annoy other developers", "To enforce project-specific conventions and prevent common internal anti-patterns that standard rules miss", "To make the build slower", "To change the font size"]), correctAnswer: "To enforce project-specific conventions and prevent common internal anti-patterns that standard rules miss", explanation: "Custom rules automate the 'code review' of project-specific standards.", order: 4 },
+                        { question: "What is 'Snapshot Testing' in a component library?", options: JSON.stringify(["Taking a photo of the developer", "Capturing the rendered output of a component and comparing it over time to detect unexpected changes", "A type of performance test", "A way to save data"]), correctAnswer: "Capturing the rendered output of a component and comparing it over time to detect unexpected changes", explanation: "Snapshots catch unintended markup regressions.", order: 5 }
+                    ],
+                    miniProject: {
+                        title: "The DX Transformer",
+                        description: "Create a custom Babel plugin (or ESLint rule) that automatically marks components with a specific 'data-testid' based on their variable name.",
+                        requirements: JSON.stringify(["Deep dive into AST nodes.", "Handle edge cases in naming.", "Include automated tests for the plugin."]),
+                        order: 7
+                    }
+                },
+                {
+                    id: "fe-l3-skill-i18n",
+                    title: "Global-Scale Internationalization",
+                    description: "Go beyond simple translations. Master ICU MessageFormat, RTL layout direction, and pluralization at scale.",
+                    resources: [
+                        { title: "Format.js ICU MessageFormat Guide", type: "DOCUMENTATION", url: "https://formatjs.io/docs/intl-messageformat/", duration: 35, order: 1 }
+                    ],
+                    questions: [
+                        { question: "What is the difference between Internationalization (i18n) and Localization (l10n)?", options: JSON.stringify(["They are the same", "i18n is the design/engineering to support many languages; l10n is the actual adaptation for a specific locale", "i18n is for CSS; l10n is for JS", "i18n is only for numbers"]), correctAnswer: "i18n is the design/engineering to support many languages; l10n is the actual adaptation for a specific locale", explanation: "i18n enables the application to be localized.", order: 1 },
+                        { question: "What does the 'dir=rtl' attribute do in HTML?", options: JSON.stringify(["Renames the page", "Flips the layout direction for languages like Arabic or Hebrew", "Draws a line", "Speeds up loading in the Middle East"]), correctAnswer: "Flips the layout direction for languages like Arabic or Hebrew", explanation: "RTL support is critical for global accessibility.", order: 2 },
+                        { question: "What is 'ICU MessageFormat'?", options: JSON.stringify(["A type of hard drive", "A syntax for defining complex, plural-safe, and gender-aware translation strings", "A font format", "A type of CSS variable"]), correctAnswer: "A syntax for defining complex, plural-safe, and gender-aware translation strings", explanation: "ICU is the standard for advanced internationalization.", order: 3 },
+                        { question: "What is 'Pseudo-localization' and why use it?", options: JSON.stringify(["Fake translations", "A testing method where strings are replaced with altered characters to test layout durability for longer/shorter languages before real translation", "A way to hide text", "A type of font"]), correctAnswer: "A testing method where strings are replaced with altered characters to test layout durability for longer/shorter languages before real translation", explanation: "Pseudo-loc catches UI issues (like overflows) early.", order: 4 },
+                        { question: "What are 'CLDR' (Common Locale Data Repository) data used for?", options: JSON.stringify(["To store user names", "Standardized patterns for dates, currencies, and plural rules for every language on earth", "To track user location", "A type of image storage"]), correctAnswer: "Standardized patterns for dates, currencies, and plural rules for every language on earth", explanation: "CLDR provides the data that libraries like Intl.RelativeTimeFormat use.", order: 5 }
+                    ],
+                    miniProject: {
+                        title: "The Global Storefront",
+                        description: "Localize a complex e-commerce product page for Arabic (RTL), Japanese, and German locales.",
+                        requirements: JSON.stringify(["Implement full RTL support.", "Use ICU MessageFormat for complex pluralization.", "Dynamic currency and date formatting."]),
+                        order: 8
+                    }
+                },
+                {
+                    id: "fe-l3-skill-edge",
+                    title: "Edge Computing & Serverless Functions",
+                    description: "Deploy code closer to your users. Master Cloudflare Workers, Vercel Edge Functions, and Deno Deploy for ultra-low latency applications.",
                     resources: [
                         { title: "Vercel: Edge Middleware", type: "DOCUMENTATION", url: "https://vercel.com/docs/functions/edge-middleware", duration: 40, order: 1 }
                     ],
                     questions: [
-                        { question: "What is an 'Edge Function'?", options: JSON.stringify(["A function for drawing edges.", "A serverless function that runs at the CDN node nearest to the user.", "A CSS function.", "A browser plugin."]), correctAnswer: "A serverless function that runs at the CDN node nearest to the user.", explanation: "Edge functions reduce latency by running closer to the user.", order: 1 }
+                        { question: "What is an 'Edge Function'?", options: JSON.stringify(["A function for drawing edges.", "A serverless function that runs at the CDN node nearest to the user.", "A CSS function.", "A browser plugin."]), correctAnswer: "A serverless function that runs at the CDN node nearest to the user.", explanation: "Edge functions reduce latency by running closer to the user.", order: 1 },
+                        { question: "What is the main limitation of Edge Functions compared to standard Serverless Functions?", options: JSON.stringify(["They are more expensive", "They run on a restricted runtime (often V8 Isolates) with no access to Node.js APIs like 'fs'", "They don't support JavaScript", "They only work on mobile"]), correctAnswer: "They run on a restricted runtime (often V8 Isolates) with no access to Node.js APIs like 'fs'", explanation: "The restricted runtime allows for near-instant cold starts.", order: 2 },
+                        { question: "What is 'Edge Middleware' primarily used for?", options: JSON.stringify(["Database queries", "Running logic (like Auth or A/B testing) before a request is served, allowing for modifications to headers or redirects", "Styling the page", "Storing images"]), correctAnswer: "Running logic (like Auth or A/B testing) before a request is served, allowing for modifications to headers or redirects", explanation: "Middleware intercepting requests at the edge is powerful for personalization.", order: 3 },
+                        { question: "What is 'Stale-While-Revalidate' (SWR) in a CDN context?", options: JSON.stringify(["Always fetch fresh data", "Serve a cached version while fetching an update in the background for the next request", "Delete the cache", "A type of CSS transition"]), correctAnswer: "Serve a cached version while fetching an update in the background for the next request", explanation: "SWR provides the best of both world: speed and eventual consistency.", order: 4 },
+                        { question: "Why is 'Cold Start' less of an issue on Edge platforms like Cloudflare Workers?", options: JSON.stringify(["Because they are always running", "They use V8 Isolates which start in milliseconds, vs full containers that take seconds", "They use better hardware", "They don't use JavaScript"]), correctAnswer: "They use V8 Isolates which start in milliseconds, vs full containers that take seconds", explanation: "Isolate-based architecture is the key to edge performance.", order: 5 }
                     ],
                     miniProject: {
                         title: "The A/B Edge Splitter",
                         description: "Implement a zero-latency A/B testing system that serves different homepage layouts using Edge Middleware.",
                         requirements: JSON.stringify(["No client-side flickering.", "Server-side cookie assignment.", "Performance tracking at the edge."]),
-                        order: 6
-                    }
-                },
-                {
-                    id: "fe-l3-skill-web-components",
-                    title: "Web Components & Shadow DOM",
-                    description: "Framework-agnostic UI. Master the Custom Elements API, Shadow DOM, and HTML Templates for truly portable components.",
-                    resources: [
-                        { title: "WebComponents.org: Introduction", type: "DOCUMENTATION", url: "https://www.webcomponents.org/introduction", duration: 35, order: 1 }
-                    ],
-                    questions: [
-                        { question: "What is the 'Shadow DOM'?", options: JSON.stringify(["A hidden mode in Chrome.", "A private, encapsulated DOM for a component that is isolated from the main document.", "A type of CSS shadow.", "A database entry."]), correctAnswer: "A private, encapsulated DOM for a component that is isolated from the main document.", explanation: "Shadow DOM prevents style leakage and preserves encapsulation.", order: 1 }
-                    ],
-                    miniProject: {
-                        title: "The Portable Widget",
-                        description: "Build a chat widget as a Web Component that can be dropped into any site (React, Vue, or static HTML) with zero styling conflicts.",
-                        requirements: JSON.stringify(["Use 'customElements.define'.", "Encapsulate styles in Shadow Root.", "Communicate via Custom Events."]),
-                        order: 7
-                    }
-                },
-                {
-                    id: "fe-l3-skill-a11y-audit",
-                    title: "Advanced A11y & Remediation",
-                    description: "Go beyond basic alt tags. Master screen reader testing (NVDA/VoiceOver), keyboard trap remediation, and ARIA patterns for complex widgets.",
-                    resources: [
-                        { title: "A11y Project: Advanced Patterns", type: "DOCUMENTATION", url: "https://www.a11yproject.com/posts/", duration: 60, order: 1 }
-                    ],
-                    questions: [
-                        { question: "What is a 'Keyboard Trap'?", options: JSON.stringify(["A musical instrument.", "A situation where a keyboard user cannot move focus out of an element.", "A way to speed up typing.", "An intentional security feature."]), correctAnswer: "A situation where a keyboard user cannot move focus out of an element.", explanation: "Keyboard traps make applications unusable for many assistive tech users.", order: 1 }
-                    ],
-                    miniProject: {
-                        title: "The Accessibility Overhaul",
-                        description: "Take a 'broken' (inaccessible) modal and menu system and fix it to comply with WCAG 2.1 Level AA.",
-                        requirements: JSON.stringify(["Implement focus trapping.", "Correct ARIA-labeledby usage.", "Pass full manual screen reader audit."]),
-                        order: 8
+                        order: 9
                     }
                 }
             ],
@@ -645,12 +764,16 @@ export const frontendContent = {
                 {
                     id: "fe-l4-skill-infra",
                     title: "Web Performance & Infrastructure",
-                    description: "Edge computing, CDN caching strategies, and Core Web Vitals optimization.",
+                    description: "Edge computing, CDN caching strategies, and Core Web Vitals optimization. Master the infrastructure that powers the modern web.",
                     resources: [
                         { title: "Web Vitals", type: "DOCUMENTATION", url: "https://web.dev/vitals/", duration: 40, order: 1 }
                     ],
                     questions: [
-                        { question: "What is 'LCP'?", options: JSON.stringify(["Low Content Paint.", "Largest Contentful Paint.", "Least Common Paint.", "Loading Content Priority."]), correctAnswer: "Largest Contentful Paint.", explanation: "It measures loading performance of the main content.", order: 1 }
+                        { question: "What is 'LCP'?", options: JSON.stringify(["Low Content Paint.", "Largest Contentful Paint.", "Least Common Paint.", "Loading Content Priority."]), correctAnswer: "Largest Contentful Paint.", explanation: "It measures loading performance of the main content.", order: 1 },
+                        { question: "What is 'FID' (First Input Delay)?", options: JSON.stringify(["The time it takes to download the first byte", "The time from when a user first interacts with a page to the time when the browser is actually able to begin processing event handlers", "The time to first paint", "The size of the HTML bundle"]), correctAnswer: "The time from when a user first interacts with a page to the time when the browser is actually able to begin processing event handlers", explanation: "FID measures responsiveness.", order: 2 },
+                        { question: "What is 'CLS' (Cumulative Layout Shift)?", options: JSON.stringify(["The total number of colors on a page", "A measure of the largest burst of layout shift scores for every unexpected layout shift that occurs during the entire lifespan of a page", "The speed of the scroll", "A type of database migration"]), correctAnswer: "A measure of the largest burst of layout shift scores for every unexpected layout shift that occurs during the entire lifespan of a page", explanation: "CLS measures visual stability.", order: 3 },
+                        { question: "How does 'Brotli' compression differ from 'Gzip'?", options: JSON.stringify(["It is only for images", "It generally provides better compression ratios than Gzip, especially for text-based assets like JS and CSS", "It is slower to decompress", "It is a type of encryption"]), correctAnswer: "It generally provides better compression ratios than Gzip, especially for text-based assets like JS and CSS", explanation: "Brotli is the modern standard for web asset compression.", order: 4 },
+                        { question: "What is 'Critical CSS'?", options: JSON.stringify(["Extra large CSS files", "The minimum set of CSS required to render the above-the-fold content of a page, usually inlined in the HTML", "CSS that is required for accessibility", "Deprecated CSS"]), correctAnswer: "The minimum set of CSS required to render the above-the-fold content of a page, usually inlined in the HTML", explanation: "Critical CSS eliminates render-blocking for initial paint.", order: 5 }
                     ],
                     miniProject: {
                         title: "Global CDN Configuration",
@@ -667,7 +790,11 @@ export const frontendContent = {
                         { title: "Grokking Frontend System Design", type: "ARTICLE", url: "https://www.patterns.dev/posts/system-design/", duration: 90, order: 1 }
                     ],
                     questions: [
-                        { question: "What is a 'Distributed UI'?", options: JSON.stringify(["A UI in a cloud.", "An architecture where different parts of the UI are owned and deployed by different teams.", "A responsive layout.", "A server-side rendered page."]), correctAnswer: "An architecture where different parts of the UI are owned and deployed by different teams.", explanation: "It allows for organizational scaling and independent deployments.", order: 1 }
+                        { question: "What is a 'Distributed UI'?", options: JSON.stringify(["A UI in a cloud.", "An architecture where different parts of the UI are owned and deployed by different teams.", "A responsive layout.", "A server-side rendered page."]), correctAnswer: "An architecture where different parts of the UI are owned and deployed by different teams.", explanation: "It allows for organizational scaling and independent deployments.", order: 1 },
+                        { question: "What is 'Eventual Consistency' in a frontend state management context?", options: JSON.stringify(["The state is always wrong", "A model where the UI updates immediately with a 'best guess' and synchronizes with the server in the background", "A type of error", "Deleting the cache"]), correctAnswer: "A model where the UI updates immediately with a 'best guess' and synchronizes with the server in the background", explanation: "Eventual consistency (Optimistic UI) improves perceived performance.", order: 2 },
+                        { question: "What is the 'Backends-For-Frontends' (BFF) pattern?", options: JSON.stringify(["A backend that is also a frontend", "A design pattern where each frontend (Web, Mobile, etc.) has its own dedicated backend layer to optimize data for its specific needs", "A type of load balancer", "A way to write CSS in Node.js"]), correctAnswer: "A design pattern where each frontend (Web, Mobile, etc.) has its own dedicated backend layer to optimize data for its specific needs", explanation: "BFFs reduce over-fetching and simplify frontend logic.", order: 3 },
+                        { question: "What is 'Server-Side Rendering' (SSR) vs 'Static Site Generation' (SSG)?", options: JSON.stringify(["No difference", "SSR generates HTML on every request; SSG generates HTML at build time", "SSG is only for blogs", "SSR is only for React"]), correctAnswer: "SSR generates HTML on every request; SSG generates HTML at build time", explanation: "The choice between SSR and SSG depends on data volatility.", order: 4 },
+                        { question: "What is 'Isomorphic JavaScript'?", options: JSON.stringify(["JavaScript that only runs on the client", "JavaScript code that can run on both the client (browser) and the server (Node.js)", "A type of encrypted code", "A new JS framework"]), correctAnswer: "JavaScript code that can run on both the client (browser) and the server (Node.js)", explanation: "Isomorphism (or Universal JS) is the basis for modern web frameworks.", order: 5 }
                     ],
                     miniProject: {
                         title: "The Enterprise Blueprint",
@@ -684,7 +811,11 @@ export const frontendContent = {
                         { title: "Monorepo.tools: Comprehensive Guide", type: "DOCUMENTATION", url: "https://monorepo.tools/", duration: 45, order: 1 }
                     ],
                     questions: [
-                        { question: "What is 'Remote Caching' in a monorepo?", options: JSON.stringify(["A cloud backup.", "A system that shares build artifacts across machines to prevent redundant builds.", "A browser cache.", "A database."]), correctAnswer: "A system that shares build artifacts across machines to prevent redundant builds.", explanation: "Remote caching significantly speeds up CI/CD pipelines.", order: 1 }
+                        { question: "What is 'Remote Caching' in a monorepo?", options: JSON.stringify(["A cloud backup.", "A system that shares build artifacts across machines to prevent redundant builds.", "A browser cache.", "A database."]), correctAnswer: "A system that shares build artifacts across machines to prevent redundant builds.", explanation: "Remote caching significantly speeds up CI/CD pipelines.", order: 1 },
+                        { question: "What is the benefit of a Monorepo for a large organization?", options: JSON.stringify(["It makes the code smaller", "Single source of truth, simplified cross-project refactoring, and easier dependency management", "It's faster than Git", "It only works with React"]), correctAnswer: "Single source of truth, simplified cross-project refactoring, and easier dependency management", explanation: "Monorepos improve developer velocity and consistency.", order: 2 },
+                        { question: "What does 'Task Orchestration' mean in a tool like Turborepo?", options: JSON.stringify(["Writing music", "Intelligently running tasks (build, test, lint) in the correct order based on the dependency graph", "Managing user logins", "A type of CSS animation"]), correctAnswer: "Intelligently running tasks (build, test, lint) in the correct order based on the dependency graph", explanation: "Orchestration ensures tasks are executed efficiently and correctly.", order: 3 },
+                        { question: "What is 'Boundary Enforcement' in a monorepo?", options: JSON.stringify(["A firewall", "Restricting which apps can depend on which libraries to prevent circular dependencies and maintain clear architecture", "Locking the computer", "A type of testing"]), correctAnswer: "Restricting which apps can depend on which libraries to prevent circular dependencies and maintain clear architecture", explanation: "Boundaries (using tag-based rules) prevent 'dependency spaghetti'.", order: 4 },
+                        { question: "What is a 'Ghost Dependency'?", options: JSON.stringify(["A dependency that doesn't exist", "A package that is used in code but not explicitly listed in package.json (often accessible via hoisting in node_modules)", "A type of security vulnerability", "A deleted file"]), correctAnswer: "A package that is used in code but not explicitly listed in package.json (often accessible via hoisting in node_modules)", explanation: "Ghost dependencies are dangerous as they can disappear without warning.", order: 5 }
                     ],
                     miniProject: {
                         title: "The Nx Workspace Architect",
@@ -701,7 +832,11 @@ export const frontendContent = {
                         { title: "Pragmatic Engineer: Building Roadmaps", type: "ARTICLE", url: "https://blog.pragmaticengineer.com/product-engineering-roadmaps/", duration: 60, order: 1 }
                     ],
                     questions: [
-                        { question: "What is an 'ADR'?", options: JSON.stringify(["An Advertising report.", "Architecture Decision Record - a document that captures why a decision was made.", "Automatic Deployment Route.", "A type of Bug report."]), correctAnswer: "Architecture Decision Record - a document that captures why a decision was made.", explanation: "ADRs provide critical historical context for architecture evolution.", order: 1 }
+                        { question: "What is an 'ADR'?", options: JSON.stringify(["An Advertising report.", "Architecture Decision Record - a document that captures why a decision was made.", "Automatic Deployment Route.", "A type of Bug report."]), correctAnswer: "Architecture Decision Record - a document that captures why a decision was made.", explanation: "ADRs provide critical historical context for architecture evolution.", order: 1 },
+                        { question: "What is the primary goal of an 'RFC' (Request for Comments)?", options: JSON.stringify(["To approve a vacation", "To solicit feedback and build consensus on a proposed technical change before implementation", "To write a new law", "To report a bug"]), correctAnswer: "To solicit feedback and build consensus on a proposed technical change before implementation", explanation: "RFCs are essential for collaborative architectural design.", order: 2 },
+                        { question: "What is 'Technical Debt' and how should it be managed?", options: JSON.stringify(["Money owed to a bank", "The implied cost of additional rework caused by choosing an easy solution now instead of a better approach that would take longer", "A type of software license", "Deleting old code"]), correctAnswer: "The implied cost of additional rework caused by choosing an easy solution now instead of a better approach that would take longer", explanation: "Debt should be tracked, prioritized, and paid down strategically.", order: 3 },
+                        { question: "What is a 'Blameless Post-mortem'?", options: JSON.stringify(["A way to fire people", "An analysis of a failure that focuses on identifying systemic causes rather than individual mistakes", "A type of funeral", "A fast way to fix bugs"]), correctAnswer: "An analysis of a failure that focuses on identifying systemic causes rather than individual mistakes", explanation: "Blameless cultures encourage honesty and rapid learning from failure.", order: 4 },
+                        { question: "Why is 'Mentorship' important for a Principal Engineer?", options: JSON.stringify(["To do less work", "To scale their impact by leveling up the engineers around them and ensuring long-term team health", "To learn new languages", "To write more code"]), correctAnswer: "To scale their impact by leveling up the engineers around them and ensuring long-term team health", explanation: "Technical leadership is as much about people as it is about code.", order: 5 }
                     ],
                     miniProject: {
                         title: "The Technical Strategy RFC",
@@ -718,7 +853,11 @@ export const frontendContent = {
                         { title: "WebAssembly: Introduction", type: "DOCUMENTATION", url: "https://webassembly.org/getting-started/developers-guide/", duration: 70, order: 1 }
                     ],
                     questions: [
-                        { question: "When is WASM most appropriate?", options: JSON.stringify(["For simple forms.", "For heavy computational tasks like image processing or 3D physics.", "For styling text.", "For SEO."]), correctAnswer: "For heavy computational tasks like image processing or 3D physics.", explanation: "WASM provides near-native execution speed for critical paths.", order: 1 }
+                        { question: "When is WASM most appropriate?", options: JSON.stringify(["For simple forms.", "For heavy computational tasks like image processing or 3D physics.", "For styling text.", "For SEO."]), correctAnswer: "For heavy computational tasks like image processing or 3D physics.", explanation: "WASM provides near-native execution speed for critical paths.", order: 1 },
+                        { question: "What is the 'WebAssembly Text Format' (WAT)?", options: JSON.stringify(["A way to write blogs", "A human-readable representation of the .wasm binary format", "A type of font", "A new CSS property"]), correctAnswer: "A human-readable representation of the .wasm binary format", explanation: "WAT allows developers to inspect and write Wasm more easily.", order: 2 },
+                        { question: "What is a 'Custom React Renderer' used for?", options: JSON.stringify(["To make React faster", "To render React components to a non-DOM target, like a canvas, a terminal, or native mobile APIs", "To change the background color", "To use jQuery with React"]), correctAnswer: "To render React components to a non-DOM target, like a canvas, a terminal, or native mobile APIs", explanation: "Libraries like react-three-fiber or react-native use custom renderers.", order: 3 },
+                        { question: "What is 'Memory Management' like in Wasm?", options: JSON.stringify(["It's automatic (GC)", "Linear, shared-buffer memory that the developer (or compiler) must manage manually", "It uses the browser's heap only", "It doesn't use memory"]), correctAnswer: "Linear, shared-buffer memory that the developer (or compiler) must manage manually", explanation: "Manual memory management is key to Wasm's predictable performance.", order: 4 },
+                        { question: "What is the 'WASI' (WebAssembly System Interface)?", options: JSON.stringify(["A type of keyboard", "A standard for running Wasm outside the browser (e.g., in a server or CLI) with access to OS-like features", "A browser plugin", "A way to style Wasm"]), correctAnswer: "A standard for running Wasm outside the browser (e.g., in a server or CLI) with access to OS-like features", explanation: "WASI enables truly cross-platform, secure binary execution.", order: 5 }
                     ],
                     miniProject: {
                         title: "The Wasm Blur Engine",
@@ -735,7 +874,11 @@ export const frontendContent = {
                         { title: "TC39: The Proposal Process", type: "DOCUMENTATION", url: "https://tc39.es/process-document/", duration: 30, order: 1 }
                     ],
                     questions: [
-                        { question: "What is 'Stage 3' in the TC39 process?", options: JSON.stringify(["Experimental.", "Candidate - specification is complete and reviewed.", "Finished.", "Idea."]), correctAnswer: "Candidate - specification is complete and reviewed.", explanation: "Stage 3 indicates the feature is ready for final testing and implementation.", order: 1 }
+                        { question: "What is 'Stage 3' in the TC39 process?", options: JSON.stringify(["Experimental.", "Candidate - specification is complete and reviewed.", "Finished.", "Idea."]), correctAnswer: "Candidate - specification is complete and reviewed.", explanation: "Stage 3 indicates the feature is ready for final testing and implementation.", order: 1 },
+                        { question: "What is a 'Polyfill' vs a 'Ponyfill'?", options: JSON.stringify(["A polyfill is a toy", "A polyfill patches the global scope; a ponyfill provides the same functionality as a module without touching globals", "They are the same", "One is for CSS"]), correctAnswer: "A polyfill patches the global scope; a ponyfill provides the same functionality as a module without touching globals", explanation: "Ponyfills are often safer for library authors to avoid global conflicts.", order: 2 },
+                        { question: "What is the 'WhatWG'?", options: JSON.stringify(["A group of hackers", "The Web Hypertext Application Technology Working Group - the organization that maintains the HTML and DOM standards", "A type of API", "A search engine"]), correctAnswer: "The Web Hypertext Application Technology Working Group - the organization that maintains the HTML and DOM standards", explanation: "WhatWG works alongside the W3C to evolve the web.", order: 3 },
+                        { question: "What is the purpose of 'Feature Detection'?", options: JSON.stringify(["To find bugs", "Checking if a browser supports a particular API (e.g., 'if (window.Bluetooth)') before using it", "To detect the user's screen size", "To speed up the site"]), correctAnswer: "Checking if a browser supports a particular API (e.g., 'if (window.Bluetooth)') before using it", explanation: "Feature detection is superior to user-agent sniffing for cross-browser support.", order: 4 },
+                        { question: "What is a 'Web Incubator Community Group' (WICG)?", options: JSON.stringify(["A place for chicken", "A group where new web platform features are discussed and incubated before becoming formal standards", "A cloud provider", "A type of browser plugin"]), correctAnswer: "A group where new web platform features are discussed and incubated before becoming formal standards", explanation: "WICG is the entry point for most new web APIs (like WebGPU).", order: 5 }
                     ],
                     miniProject: {
                         title: "The Polyfill Architect",

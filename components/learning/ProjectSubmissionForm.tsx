@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { CheckCircle, Clock, GitBranch, ArrowLeft, ExternalLink } from 'lucide-react';
+import { CheckCircle, Clock, GitBranch, ArrowLeft, ExternalLink, XCircle, AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import styles from './ProjectSubmissionForm.module.css';
 
@@ -70,6 +70,9 @@ export function ProjectSubmissionForm({ project, enrollment, submission }: Proje
 
   // Show submission status if exists
   if (submission && submission.status !== 'NOT_STARTED' && submission.status !== 'IN_PROGRESS') {
+    const isPassed = submission.status === 'PASSED';
+    const isFailed = submission.status === 'FAILED';
+
     return (
       <div className={styles.container}>
         <div className={styles.breadcrumb}>
@@ -77,31 +80,50 @@ export function ProjectSubmissionForm({ project, enrollment, submission }: Proje
             {enrollment.careerPath.title}
           </Link>
           <span>/</span>
-          <span>Project</span>
+          <span>Project Evaluation</span>
         </div>
 
-        <div className={styles.statusCard}>
+        <div className={`${styles.statusCard} ${isPassed ? styles.passed : ''} ${isFailed ? styles.failed : ''}`}>
           <div
             className={styles.statusIcon}
             style={{
-              background: submission.status === 'PASSED' ? 'rgba(34, 197, 94, 0.1)' : 'rgba(245, 158, 11, 0.1)',
-              color: submission.status === 'PASSED' ? '#22c55e' : '#f59e0b'
+              background: isPassed ? 'rgba(34, 197, 94, 0.1)' : isFailed ? 'rgba(239, 68, 68, 0.1)' : 'rgba(245, 158, 11, 0.1)',
+              color: isPassed ? '#22c55e' : isFailed ? '#ef4444' : '#f59e0b'
             }}
           >
-            {submission.status === 'PASSED' ? <CheckCircle size={32} /> : <Clock size={32} />}
+            {isPassed ? <CheckCircle size={40} /> : isFailed ? <XCircle size={40} /> : <Clock size={40} />}
           </div>
 
           <h2>
-            {submission.status === 'PASSED' && 'Project Passed!'}
-            {submission.status === 'SUBMITTED' && 'Under Review'}
-            {submission.status === 'FAILED' && 'Project Needs Revision'}
+            {isPassed && 'Project Passed!'}
+            {submission.status === 'SUBMITTED' && 'Evaluation in Progress'}
+            {isFailed && 'Evaluation Failed'}
           </h2>
 
-          <p>
-            {submission.status === 'PASSED' && 'Congratulations! You have successfully completed this level.'}
-            {submission.status === 'SUBMITTED' && 'Your project is being reviewed. Check back soon!'}
-            {submission.status === 'FAILED' && submission.feedback || 'Please address the feedback and resubmit.'}
+          <p className={styles.statusDescription}>
+            {isPassed && 'Excellent work! Your submission has been automatically verified against all requirements.'}
+            {submission.status === 'SUBMITTED' && 'Our automated system is analyzing your repository. Please wait...'}
+            {isFailed && 'Your project did not meet all the required criteria. Review the feedback below and try again.'}
           </p>
+
+          {(submission.feedback || submission.score) && (
+            <div className={styles.feedbackSection}>
+              <div className={styles.scoreHeader}>
+                <span className={styles.scoreLabel}>Automation Score</span>
+                <span className={styles.scoreValue}>{submission.score || 0}%</span>
+              </div>
+              {submission.feedback && (
+                <div className={styles.feedbackContent}>
+                  <h4>Report Details:</h4>
+                  <ul>
+                    {submission.feedback.split('\n').map((line: string, i: number) => (
+                      <li key={i}>{line}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+          )}
 
           <div className={styles.submissionDetails}>
             <p>
@@ -110,36 +132,30 @@ export function ProjectSubmissionForm({ project, enrollment, submission }: Proje
                 {submission.githubUrl} <ExternalLink size={14} />
               </a>
             </p>
-            {submission.deployedUrl && (
-              <p>
-                <span>Deployed URL</span>
-                <a href={submission.deployedUrl} target="_blank" rel="noopener noreferrer">
-                  {submission.deployedUrl} <ExternalLink size={14} />
-                </a>
-              </p>
-            )}
-            <p>
-              <span>Submitted</span>
-              <span>{new Date(submission.submittedAt).toLocaleDateString()}</span>
-            </p>
             {submission.score && (
               <p>
-                <span>Score</span>
+                <span>Final Verification Score</span>
                 <span>{submission.score}%</span>
               </p>
             )}
+            <p>
+              <span>Evaluation Date</span>
+              <span>{new Date(submission.submittedAt).toLocaleString()}</span>
+            </p>
           </div>
 
-          {submission.status !== 'PASSED' && (
-            <Button
-              variant="primary"
-              onClick={() => window.location.reload()}
-            >
-              Update Submission
-            </Button>
+          {!isPassed && (
+            <div className={styles.retryActions}>
+              <Button
+                variant="primary"
+                onClick={() => window.location.reload()}
+              >
+                Retry Evaluation
+              </Button>
+            </div>
           )}
 
-          {submission.status === 'PASSED' && (
+          {isPassed && (
             <Link href={`/paths/${enrollment.careerPath.slug}/learn`}>
               <Button variant="primary">
                 Continue to Next Level

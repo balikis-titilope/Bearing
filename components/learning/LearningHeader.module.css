@@ -9,20 +9,49 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.topContent {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
 }
 
 .backLink {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  color: var(--text-muted);
+  color: var(--muted-foreground);
   text-decoration: none;
+  font-weight: 500;
   transition: color 0.2s;
 }
 
 .backLink:hover {
   color: var(--primary);
+}
+
+.pivotBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(var(--primary-rgb), 0.05);
+  border: 1px solid var(--primary-light);
+  color: var(--primary);
+  padding: 0.4rem 0.8rem;
+  border-radius: 2rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.pivotBtn:hover {
+  background: var(--primary);
+  color: white;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px var(--primary-soft);
 }
 
 .stats {
@@ -112,7 +141,7 @@
   .headerMain {
     flex-direction: column;
   }
-  
+
   .progressCard {
     width: 100%;
   }

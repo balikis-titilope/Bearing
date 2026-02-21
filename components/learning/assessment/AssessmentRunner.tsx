@@ -137,9 +137,9 @@ export function AssessmentRunner({ questions, onComplete }: AssessmentRunnerProp
                         </div>
 
                         <div className={styles.navigation}>
-                            <Button onClick={handleNext} variant="primary" size="sm" className={styles.nextBtn}>
-                                {currentIndex === questions.length - 1 ? 'Finish' : 'Next Question'}
-                                <ArrowRight size={16} />
+                            <Button onClick={handleNext} variant="primary" size="lg" className={styles.nextBtn}>
+                                {currentIndex === questions.length - 1 ? 'Complete Assessment' : 'Continue'}
+                                <ArrowRight size={18} />
                             </Button>
                         </div>
                     </div>

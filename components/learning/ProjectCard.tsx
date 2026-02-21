@@ -1,6 +1,6 @@
 'use client';
 
-import { CheckCircle, Lock, Trophy, GitBranch } from 'lucide-react';
+import { CheckCircle, Lock, Trophy, GitBranch, XCircle } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import styles from './ProjectCard.module.css';
 
@@ -66,6 +66,12 @@ export function ProjectCard({ project, status, isLocked, slug }: ProjectCardProp
             <div className={styles.passedBadge}>
               <CheckCircle size={16} />
               <span>Passed</span>
+            </div>
+          )}
+          {status === 'FAILED' && (
+            <div className={styles.failedBadge}>
+              <XCircle size={16} />
+              <span>Retry Needed</span>
             </div>
           )}
         </div>

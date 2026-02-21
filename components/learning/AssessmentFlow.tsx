@@ -1,8 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { CheckCircle, XCircle, ArrowRight, AlertCircle } from 'lucide-react';
+import { CheckCircle, XCircle, ArrowRight, AlertCircle, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import styles from './AssessmentFlow.module.css';
 
@@ -19,78 +19,46 @@ interface Question {
   explanation?: string;
 }
 
-const sampleQuestions: Question[] = [
-  {
-    id: 'q1',
-    question: 'What does HTML stand for?',
-    options: [
-      'Hyper Text Markup Language',
-      'High Tech Modern Language',
-      'Hyper Transfer Markup Language',
-      'Home Tool Markup Language'
-    ],
-    correctAnswer: 'Hyper Text Markup Language',
-    explanation: 'HTML stands for Hyper Text Markup Language - the standard markup language for creating web pages.'
-  },
-  {
-    id: 'q2',
-    question: 'Which CSS property is used to create space between elements?',
-    options: ['margin', 'padding', 'spacing', 'gap'],
-    correctAnswer: 'margin',
-    explanation: 'Margin creates space OUTSIDE an element, while padding creates space INSIDE an element.'
-  },
-  {
-    id: 'q3',
-    question: 'What is the correct way to declare a variable in modern JavaScript?',
-    options: [
-      'var name = "John"',
-      'let name = "John"',
-      'variable name = "John"',
-      'int name = "John"'
-    ],
-    correctAnswer: 'let name = "John"',
-    explanation: 'In modern JavaScript, use "let" for variables that can change and "const" for constants. Avoid "var".'
-  },
-  {
-    id: 'q4',
-    question: 'What React hook is used to manage state in functional components?',
-    options: ['useState', 'useEffect', 'useContext', 'useReducer'],
-    correctAnswer: 'useState',
-    explanation: 'useState is the primary hook for managing local state in functional components.'
-  },
-  {
-    id: 'q5',
-    question: 'What is the purpose of the "key" prop in React lists?',
-    options: [
-      'Styling purposes',
-      'Helps React identify changed items',
-      'Accessibility',
-      'Data binding'
-    ],
-    correctAnswer: 'Helps React identify changed items',
-    explanation: 'Keys help React identify which items have changed, been added, or removed for efficient re-rendering.'
-  }
-];
-
 export function AssessmentFlow({ enrollmentId, careerPathSlug }: AssessmentFlowProps) {
   const router = useRouter();
+  const [questions, setQuestions] = useState<Question[]>([]);
+  const [loading, setLoading] = useState(true);
   const [started, setStarted] = useState(false);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [result, setResult] = useState<{ score: number; passed: boolean } | null>(null);
+
+  useEffect(() => {
+    async function fetchQuestions() {
+      try {
+        const res = await fetch(`/api/assessment/questions?slug=${careerPathSlug}`);
+        if (res.ok) {
+          const data = await res.json();
+          // Take a random set or first 5 for placement
+          setQuestions(data.questions.slice(0, 5));
+        }
+      } catch (err) {
+        console.error('Failed to fetch questions:', err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchQuestions();
+  }, [careerPathSlug]);
 
   const handleStart = () => {
     setStarted(true);
   };
 
   const handleAnswer = (answer: string) => {
-    const question = sampleQuestions[currentQuestion];
+    const question = questions[currentQuestion];
     setAnswers(prev => ({ ...prev, [question.id]: answer }));
   };
 
   const handleNext = () => {
-    if (currentQuestion < sampleQuestions.length - 1) {
+    if (currentQuestion < questions.length - 1) {
       setCurrentQuestion(prev => prev + 1);
     }
   };
@@ -101,54 +69,74 @@ export function AssessmentFlow({ enrollmentId, careerPathSlug }: AssessmentFlowP
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    setIsSubmitting(true);
     let correct = 0;
-    sampleQuestions.forEach(q => {
+    questions.forEach(q => {
       if (answers[q.id] === q.correctAnswer) {
         correct++;
       }
     });
-    
-    const score = Math.round((correct / sampleQuestions.length) * 100);
-    const passed = score >= 70;
-    
-    setResult({ score, passed });
-    setSubmitted(true);
+
+    const score = Math.round((correct / questions.length) * 100);
+    const passed = score >= 60; // Slightly lower bar for placement
+
+    try {
+      const res = await fetch('/api/enrollment/assessment', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ enrollmentId, passed, score }),
+      });
+
+      if (res.ok) {
+        setResult({ score, passed });
+        setSubmitted(true);
+      }
+    } catch (err) {
+      console.error('Failed to submit results:', err);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
-  const question = sampleQuestions[currentQuestion];
-  const hasAnswered = !!answers[question.id];
-  const canSubmit = Object.keys(answers).length === sampleQuestions.length;
+  if (loading) {
+    return (
+      <div className={styles.loadingState}>
+        <Loader2 className={styles.spinner} />
+        <p>Preparing your assessment...</p>
+      </div>
+    );
+  }
 
   if (!started) {
     return (
       <div className={styles.card}>
         <div className={styles.header}>
-          <h2>Level Assessment</h2>
-          <p>Take a quick assessment to verify your current skill level</p>
+          <h2>Intermediate Placement Assessment</h2>
+          <p>Prove your skills to unlock the intermediate level immediately.</p>
         </div>
-        
+
         <div className={styles.info}>
           <div className={styles.infoItem}>
-            <CheckCircle size={18} />
-            <span>{sampleQuestions.length} questions</span>
+            <CheckCircle size={18} color="var(--primary)" />
+            <span>{questions.length} core engineering questions</span>
           </div>
           <div className={styles.infoItem}>
-            <CheckCircle size={18} />
-            <span>70% required to pass</span>
+            <CheckCircle size={18} color="var(--primary)" />
+            <span>Passing score: 60%</span>
           </div>
           <div className={styles.infoItem}>
-            <CheckCircle size={18} />
-            <span>Takes ~5 minutes</span>
+            <CheckCircle size={18} color="var(--primary)" />
+            <span>Review past levels anytime if you pass</span>
           </div>
         </div>
 
         <div className={styles.warning}>
-          <AlertCircle size={18} />
-          <span>If you claim a level above your actual skill, you may struggle with the projects.</span>
+          <AlertCircle size={20} />
+          <p>If you don't pass, you'll start from Level 1 to ensure you have all foundations covered.</p>
         </div>
 
-        <Button variant="primary" onClick={handleStart} className={styles.startBtn}>
+        <Button variant="primary" onClick={handleStart} className={styles.startBtn} size="lg">
           Start Assessment
           <ArrowRight size={18} />
         </Button>
@@ -161,41 +149,56 @@ export function AssessmentFlow({ enrollmentId, careerPathSlug }: AssessmentFlowP
       <div className={styles.card}>
         <div className={`${styles.result} ${result.passed ? styles.passed : styles.failed}`}>
           {result.passed ? (
-            <CheckCircle size={48} />
+            <div className={styles.resultIconSuccess}><CheckCircle size={64} /></div>
           ) : (
-            <XCircle size={48} />
+            <div className={styles.resultIconError}><XCircle size={64} /></div>
           )}
-          <h2>{result.passed ? 'Assessment Passed!' : 'Assessment Failed'}</h2>
-          <p className={styles.score}>Score: {result.score}%</p>
-          <p>{result.passed ? 'You can proceed to the next level!' : 'We recommend starting from Level 1 to build a strong foundation.'}</p>
+          <h2>{result.passed ? 'Level 2 Unlocked!' : 'Foundation Suggested'}</h2>
+          <div className={styles.scoreBadge}>{result.score}% Score</div>
+          <p className={styles.resultText}>
+            {result.passed
+              ? 'Great job! You\'ve proven your proficiency. You now have access to Intermediate skills and projects.'
+              : 'You were close, but we recommend mastering the basics in Level 1 first to ensure long-term success.'}
+          </p>
         </div>
-        
-        <Button 
-          variant="primary" 
-          onClick={() => router.push(`/paths/${careerPathSlug}/learn`)}
+
+        <Button
+          variant="primary"
+          onClick={() => {
+            router.refresh();
+            router.push(`/paths/${careerPathSlug}/learn`);
+          }}
           className={styles.resultBtn}
+          size="lg"
         >
-          Continue Learning
+          {result.passed ? 'Enter Intermediate Level' : 'Start from Level 1'}
         </Button>
       </div>
     );
   }
 
+  const question = questions[currentQuestion];
+  const hasAnswered = !!answers[question.id];
+  const canSubmit = Object.keys(answers).length === questions.length;
+
   return (
     <div className={styles.card}>
       <div className={styles.progress}>
-        <span>Question {currentQuestion + 1} of {sampleQuestions.length}</span>
+        <div className={styles.progressHeader}>
+          <span>Question {currentQuestion + 1} of {questions.length}</span>
+          <span className={styles.percentage}>{Math.round(((currentQuestion + 1) / questions.length) * 100)}%</span>
+        </div>
         <div className={styles.progressBar}>
-          <div 
+          <div
             className={styles.progressFill}
-            style={{ width: `${((currentQuestion + 1) / sampleQuestions.length) * 100}%` }}
+            style={{ width: `${((currentQuestion + 1) / questions.length) * 100}%` }}
           />
         </div>
       </div>
 
       <div className={styles.question}>
         <h3>{question.question}</h3>
-        
+
         <div className={styles.options}>
           {question.options.map(option => (
             <button
@@ -203,43 +206,38 @@ export function AssessmentFlow({ enrollmentId, careerPathSlug }: AssessmentFlowP
               className={`${styles.option} ${answers[question.id] === option ? styles.selected : ''}`}
               onClick={() => handleAnswer(option)}
             >
+              <div className={styles.optionCircle} />
               {option}
             </button>
           ))}
         </div>
       </div>
 
-      {hasAnswered && answers[question.id] !== question.correctAnswer && (
-        <div className={styles.explanation}>
-          <AlertCircle size={16} />
-          <span>{question.explanation}</span>
-        </div>
-      )}
-
       <div className={styles.actions}>
-        <Button 
-          variant="outline" 
+        <Button
+          variant="outline"
           onClick={handlePrev}
           disabled={currentQuestion === 0}
         >
           Previous
         </Button>
-        
-        {currentQuestion < sampleQuestions.length - 1 ? (
-          <Button 
-            variant="primary" 
+
+        {currentQuestion < questions.length - 1 ? (
+          <Button
+            variant="primary"
             onClick={handleNext}
             disabled={!hasAnswered}
           >
-            Next
+            Next Question
+            <ArrowRight size={18} />
           </Button>
         ) : (
-          <Button 
-            variant="primary" 
+          <Button
+            variant="primary"
             onClick={handleSubmit}
-            disabled={!canSubmit}
+            disabled={!canSubmit || isSubmitting}
           >
-            Submit Assessment
+            {isSubmitting ? 'Verifying...' : 'Submit Assessment'}
           </Button>
         )}
       </div>

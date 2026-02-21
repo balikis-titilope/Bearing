@@ -6,10 +6,14 @@ import { PathPreview } from "@/components/sections/PathPreview";
 import { Philosophy } from "@/components/sections/Philosophy";
 import { HowItWorks } from "@/components/sections/HowItWorks";
 
-export default function Home() {
+import { auth } from "@/auth";
+
+export default async function Home() {
+  const session = await auth();
+
   return (
     <>
-      <Navbar />
+      <Navbar session={session} />
       <main id="main-content">
         <Hero />
         <Highlight />

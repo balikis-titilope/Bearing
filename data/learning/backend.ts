@@ -108,48 +108,118 @@ export const backendContent = {
                     title: "SQL & PostgreSQL Foundations",
                     description: "Relational data modeling is the backbone of the enterprise. Master recursive queries, indexing strategies, and ACID transactions.",
                     resources: [
-                        { title: "PostgreSQL: Tutorial for Beginners", type: "ARTICLE", url: "https://www.postgresqltutorial.com/", duration: 60, order: 1 },
-                        { title: "Prisma Docs: Core SQL Concepts", type: "DOCUMENTATION", url: "https://www.prisma.io/dataguide/postgresql/core-sql-concepts", duration: 45, order: 2 }
+                        { title: "PostgreSQL: Tutorial for Beginners", type: "ARTICLE", url: "https://www.postgresqltutorial.com/", duration: 60, order: 1 }
                     ],
                     questions: [
-                        { question: "What does ACID stand for in database transactions?", options: JSON.stringify(["Atomicity, Consistency, Isolation, Durability", "Accuracy, Complexity, Integrity, Data", "Auto-increment, Caching, Indexing, Deletion", "None of these"]), correctAnswer: "Atomicity, Consistency, Isolation, Durability", explanation: "ACID ensures that database transactions are processed reliably.", order: 1 },
-                        { question: "What is a 'Primary Key'?", options: JSON.stringify(["A password.", "A unique identifier for each record in a table.", "A way to connect to another table.", "A sorting algorithm."]), correctAnswer: "A unique identifier for each record in a table.", explanation: "Primary keys ensure that every row can be uniquely identified.", order: 2 },
-                        { question: "What is the difference between INNER JOIN and LEFT JOIN?", options: JSON.stringify(["No difference.", "INNER JOIN returns matches in both tables; LEFT JOIN returns all rows from the left table and matches from the right.", "LEFT JOIN is faster.", "INNER JOIN is for numbers only."]), correctAnswer: "INNER JOIN returns matches in both tables; LEFT JOIN returns all rows from the left table and matches from the right.", explanation: "Join types determine how data from multiple tables is combined based on shared keys.", order: 3 },
-                        { question: "What is a 'Database Index'?", options: JSON.stringify(["A table of contents.", "A data structure that improves the speed of data retrieval at the cost of slower writes.", "A backup of the data.", "A type of constraint."]), correctAnswer: "A data structure that improves the speed of data retrieval at the cost of slower writes.", explanation: "Indexes are vital for performance in large datasets.", order: 4 },
-                        { question: "What is 'Normalization'?", options: JSON.stringify(["Converting text to lowercase.", "The process of organizing data to reduce redundancy and improve integrity.", "Compressing the database.", "Deleting old records."]), correctAnswer: "The process of organizing data to reduce redundancy and improve integrity.", explanation: "Normalization involves splitting data into multiple tables and defining relationships.", order: 5 },
-                        { question: "What is the purpose of the 'WHERE' clause?", options: JSON.stringify(["To group data.", "To filter records based on specific conditions.", "To sort the results.", "To limit the number of rows."]), correctAnswer: "To filter records based on specific conditions.", explanation: "WHERE allows you to narrow down the result set.", order: 6 },
-                        { question: "What does 'GROUP BY' do?", options: JSON.stringify(["Sorts the table.", "Aggregates rows that have the same values into summary rows.", "Deletes duplicates.", "Adds a new column."]), correctAnswer: "Aggregates rows that have the same values into summary rows.", explanation: "It is often used with functions like COUNT, SUM, or AVG.", order: 7 },
-                        { question: "What is a 'Foreign Key'?", options: JSON.stringify(["A key from another country.", "A field that links two tables together.", "A backup key.", "A hidden column."]), correctAnswer: "A field that links two tables together.", explanation: "Foreign keys enforce referential integrity between related entities.", order: 8 },
-                        { question: "What is a 'Transaction'?", options: JSON.stringify(["A bank transfer.", "A sequence of operations performed as a single logical unit of work.", "A database backup.", "A query."]), correctAnswer: "A sequence of operations performed as a single logical unit of work.", explanation: "Transactions either succeed completely or fail completely (Atomicity).", order: 9 },
-                        { question: "What is the result of 'SELECT * FROM users'?", options: JSON.stringify(["Deletes all users.", "Retrieves all columns and rows from the users table.", "Updates user data.", "Counts the users."]), correctAnswer: "Retrieves all columns and rows from the users table.", explanation: "The * is a wildcard for 'all columns'.", order: 10 },
-                        { question: "What is the 'HAVING' clause used for?", options: JSON.stringify(["Same as WHERE.", "Filtering groups after an aggregation has been performed.", "Sorting.", "Defining table structure."]), correctAnswer: "Filtering groups after an aggregation has been performed.", explanation: "WHERE filters rows; HAVING filters groups.", order: 11 },
-                        { question: "What is an 'Upsert'?", options: JSON.stringify(["A database error.", "An operation that either Updates an existing record or Inserts a new one if it doesn't exist.", "A fast search.", "A massive delete."]), correctAnswer: "An operation that either Updates an existing record or Inserts a new one if it doesn't exist.", explanation: "In PostgreSQL, this is often done using 'ON CONFLICT'.", order: 12 },
-                        { question: "What is the 'JSONB' type in PostgreSQL?", options: JSON.stringify(["A text format.", "Binary JSON storage that allows for efficient indexing and querying of semi-structured data.", "A type of joint.", "A compression tool."]), correctAnswer: "Binary JSON storage that allows for efficient indexing and querying of semi-structured data.", explanation: "Postgres is famous for its robust handle of JSON data alongside relational data.", order: 13 },
-                        { question: "What is a 'View' in SQL?", options: JSON.stringify(["A physical table.", "A virtual table based on the result-set of an SQL statement.", "A graphical UI.", "A CSS property."]), correctAnswer: "A virtual table based on the result-set of an SQL statement.", explanation: "Views allow you to simplify complex queries and restrict access.", order: 14 },
-                        { question: "What is 'SQL Injection'?", options: JSON.stringify(["A database optimization.", "A security vulnerability where an attacker can execute malicious SQL statements.", "A way to insert data faster.", "A database migration."]), correctAnswer: "A security vulnerability where an attacker can execute malicious SQL statements.", explanation: "Always use parameterized queries or ORMs like Prisma to prevent this.", order: 15 }
+                        { question: "What does ACID stand for?", options: JSON.stringify(["Atomicity, Consistency, Isolation, Durability", "Accuracy, Complexity, Integrity, Data", "Auto-increment, Caching, Indexing, Deletion", "None"]), correctAnswer: "Atomicity, Consistency, Isolation, Durability", explanation: "ACID ensures reliable database transactions.", order: 1 }
                     ],
                     miniProject: {
                         title: "Relational Schema Designer",
-                        description: "Design and implement a relational schema for a complex e-commerce platform including inventory, orders, and user management.",
-                        requirements: JSON.stringify(["Implement 3rd Normal Form (3NF).", "Define one-to-many and many-to-many relationships.", "Write complex JOIN queries to generate sales reports.", "Implement database constraints (unique, check, not null)."]),
-                        guide: JSON.stringify([
-                            "Step 1: Use a tool like DBDiagram.io to map out 'users', 'products', 'orders', and 'order_items'.",
-                            "Step 2: Initialize a PostgreSQL database and create the tables with correct data types.",
-                            "Step 3: Insert sample data into all tables.",
-                            "Step 4: Write a SQL query that calculates the total revenue per product category.",
-                            "Step 5: Write a query that finds the users who haven't made an order in the last 30 days."
-                        ]),
-                        hints: JSON.stringify([
-                            "For many-to-many (e.g., Orders and Products), you need a junction table like 'order_items'.",
-                            "Use 'TIMESTAMP WITH TIME ZONE' for all date fields.",
-                            "Start with small tables and verify relationships before adding more."
-                        ]),
-                        stuckLinks: JSON.stringify([
-                            { title: "Database Normalization Explained", url: "https://www.freecodecamp.org/news/database-normalization-1nf-2nf-3nf-table-examples/" },
-                            { title: "DBDesigner.net (Online Modeler)", url: "https://www.dbdesigner.net/" }
-                        ]),
-                        testCases: JSON.stringify([{ name: "Normalization", verify: "No redundant data across tables" }, { name: "Reporting", verify: "Queries produce correct aggregate data" }]),
+                        description: "Design a relational schema for an e-commerce platform.",
+                        requirements: JSON.stringify(["Implement 3NF.", "Define one-to-many and many-to-many relationships."]),
                         order: 3
+                    }
+                },
+                {
+                    id: "be-l1-skill-networking",
+                    title: "Networking Foundations: TCP/UDP",
+                    description: "Understand the transport layer. Learn the difference between TCP and UDP, the 3-way handshake, and how data moves across the wire.",
+                    resources: [
+                        { title: "Cloudflare: What is TCP?", type: "ARTICLE", url: "https://www.cloudflare.com/learning/network-layer/what-is-tcp/", duration: 30, order: 1 }
+                    ],
+                    questions: [
+                        { question: "What is the primary characteristic of UDP?", options: JSON.stringify(["Connection-oriented.", "Reliable but slow.", "Connectionless and fast, with no guarantee of delivery.", "Used only for web browsing."]), correctAnswer: "Connectionless and fast, with no guarantee of delivery.", explanation: "UDP is ideal for real-time applications like gaming or streaming where speed is prioritized over reliability.", order: 1 }
+                    ],
+                    miniProject: {
+                        title: "The UDP Echo Server",
+                        description: "Build a raw UDP server in Node.js that echoes back messages, measuring latency for each packet.",
+                        requirements: JSON.stringify(["Use the 'dgram' module.", "Handle packet loss gracefully.", "Implement a simple timeout mechanism."]),
+                        order: 4
+                    }
+                },
+                {
+                    id: "be-l1-skill-security-headers",
+                    title: "Backend Security: Headers & CORS",
+                    description: "Master the defense-in-depth headers. HSTS, CSP, X-Frame-Options, and the intricacies of the CORS preflight request.",
+                    resources: [
+                        { title: "MDN: HTTP Security Headers", type: "DOCUMENTATION", url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers#security", duration: 40, order: 1 }
+                    ],
+                    questions: [
+                        { question: "What does 'HSTS' do?", options: JSON.stringify(["Speeds up the site.", "Forces the browser to only communicate with the server over HTTPS.", "Encrypts the database.", "Minifies JavaScript."]), correctAnswer: "Forces the browser to only communicate with the server over HTTPS.", explanation: "HSTS (HTTP Strict Transport Security) protects against protocol downgrade attacks.", order: 1 }
+                    ],
+                    miniProject: {
+                        title: "The Hardened Server Middleware",
+                        description: "Create a reusable Express middleware that applies a 'strict-by-default' security configuration to all responses.",
+                        requirements: JSON.stringify(["Disable 'X-Powered-By'.", "Configure a robust CSP header.", "Implement HSTS with includeSubdomains."]),
+                        order: 5
+                    }
+                },
+                {
+                    id: "be-l1-skill-adv-sql",
+                    title: "Advanced SQL: CTEs & Window Functions",
+                    description: "Beyond simple SELECTs. Master Common Table Expressions (CTEs) and Window Functions like ROW_NUMBER() and RANK() for complex analytics.",
+                    resources: [
+                        { title: "PostgresQBTutorial: CTE Guide", type: "ARTICLE", url: "https://www.postgresqltutorial.com/postgresql-tutorial/postgresql-cte/", duration: 45, order: 1 }
+                    ],
+                    questions: [
+                        { question: "What is a 'CTE'?", options: JSON.stringify(["A type of database.", "A temporary result set that you can reference within another SELECT statement.", "A way to delete data.", "A type of index."]), correctAnswer: "A temporary result set that you can reference within another SELECT statement.", explanation: "CTEs make complex queries more readable and maintainable.", order: 1 }
+                    ],
+                    miniProject: {
+                        title: "The Revenue Analytics Engine",
+                        description: "Write a complex SQL command using CTEs to calculate month-over-month growth for an e-commerce platform.",
+                        requirements: JSON.stringify(["Use multiple joined CTEs.", "Implement a window function to rank top users.", "Optimize with a partial index."]),
+                        order: 6
+                    }
+                },
+                {
+                    id: "be-l1-skill-linux",
+                    title: "Linux & Shell Foundations",
+                    description: "The backend's home. Learn SSH, Bash scripting, process management (ps, kill, top), and the Linux file system hierarchy.",
+                    resources: [
+                        { title: "The Missing Semester: Shell", type: "COURSE", url: "https://missing.csail.mit.edu/2020/shell/", duration: 60, order: 1 }
+                    ],
+                    questions: [
+                        { question: "How do you search for a specific process by name in Linux?", options: JSON.stringify(["dir", "pgrep", "ls", "cd"]), correctAnswer: "pgrep", explanation: "pgrep (and ps aux | grep) are the standard ways to find running processes.", order: 1 }
+                    ],
+                    miniProject: {
+                        title: "The Automated Deployer Script",
+                        description: "Write a Bash script that SSHs into a remote server, pulls the latest code, and restarts the Node.js process using PM2.",
+                        requirements: JSON.stringify(["Handle SSH key authentication.", "Implement error-checking at each step.", "Log the deployment timestamp."]),
+                        order: 7
+                    }
+                },
+                {
+                    id: "be-l1-skill-docs",
+                    title: "API Documentation & OpenAPI",
+                    description: "Communication is key. Master Swagger/OpenAPI 3.0 to document your APIs, allowing for automated client generation and testing.",
+                    resources: [
+                        { title: "OpenAPI Specification", type: "DOCUMENTATION", url: "https://swagger.io/specification/", duration: 40, order: 1 }
+                    ],
+                    questions: [
+                        { question: "What is 'Swagger UI'?", options: JSON.stringify(["An IDE.", "A tool that generates interactive API documentation from an OpenAPI definition.", "A type of database.", "A CSS framework."]), correctAnswer: "A tool that generates interactive API documentation from an OpenAPI definition.", explanation: "Swagger UI allows researchers and frontend devs to test endpoints directly in the browser.", order: 1 }
+                    ],
+                    miniProject: {
+                        title: "The Living API Spec",
+                        description: "Document a complex User API using Swagger annotations directly in your Express code.",
+                        requirements: JSON.stringify(["Define all request/response schemas.", "Document error codes (400, 401, 500).", "Generate a valid JSON/YAML spec file."]),
+                        order: 8
+                    }
+                },
+                {
+                    id: "be-l1-skill-testing",
+                    title: "Backend Testing foundations",
+                    description: "Ensure reliability. Learn how to write unit and integration tests using Jest or Mocha/Chai, and how to mock external dependencies.",
+                    resources: [
+                        { title: "Jest: Documentation", type: "DOCUMENTATION", url: "https://jestjs.io/docs/getting-started", duration: 50, order: 1 }
+                    ],
+                    questions: [
+                        { question: "What is a 'Stub' in testing?", options: JSON.stringify(["A type of error.", "A function that provides canned answers to calls made during the test.", "A real database call.", "A visual bug."]), correctAnswer: "A function that provides canned answers to calls made during the test.", explanation: "Stubs allow you to isolate the piece of code you are testing.", order: 1 }
+                    ],
+                    miniProject: {
+                        title: "The TDD Auth Service",
+                        description: "Build a user authentication service using Test Driven Development, ensuring 100% path coverage.",
+                        requirements: JSON.stringify(["Write tests before implementing logic.", "Mock the database layer.", "Test all edge cases (invalid email, weak password)."]),
+                        order: 9
                     }
                 }
             ],
@@ -185,23 +255,6 @@ export const backendContent = {
             title: "Intermediate Backend Engineer",
             skills: [
                 {
-                    id: "be-l2-skill-micro",
-                    title: "Microservices & Message Queues",
-                    description: "Decouple systems using RabbitMQ/Kafka and microservices architecture.",
-                    resources: [
-                        { title: "Microservices Patterns", type: "BOOK_SUMMARY", url: "https://microservices.io/patterns/index.html", duration: 90, order: 1 }
-                    ],
-                    questions: [
-                        { question: "What is a 'Circuit Breaker'?", options: JSON.stringify(["A fuse.", "A pattern to prevent cascading failures by stopping calls to a failing service.", "A way to break code.", "A server restart."]), correctAnswer: "A pattern to prevent cascading failures by stopping calls to a failing service.", explanation: "It fails fast when a downstream service is down.", order: 1 }
-                    ],
-                    miniProject: {
-                        title: "Async Email Service",
-                        description: "Extract email sending logic into a separate microservice that consumes messages from RabbitMQ.",
-                        requirements: JSON.stringify(["Setup RabbitMQ.", "Producer API pushes email tasks.", "Consumer Worker sends emails (simulated)."]),
-                        order: 1
-                    }
-                },
-                {
                     id: "be-l2-skill-auth",
                     title: "Advanced Auth (OAuth/OIDC)",
                     description: "Implement secure authentication flows using OAuth 2.0 and OpenID Connect.",
@@ -216,6 +269,108 @@ export const backendContent = {
                         description: "Build a mock Identity Provider (IdP) that issues JWTs to a client application.",
                         requirements: JSON.stringify(["Implement Login flow.", "Issue Signed JWTs.", "Validate tokens on the client API."]),
                         order: 2
+                    }
+                },
+                {
+                    id: "be-l2-skill-redis",
+                    title: "Redis & Caching Strategies",
+                    description: "Go beyond simple GET/SET. Master Redis data types (hashes, sets, sorted sets), eviction policies, and cache stampede prevention using distributed locks.",
+                    resources: [
+                        { title: "Redis University: RU101", type: "COURSE", url: "https://university.redis.com/courses/ru101/", duration: 120, order: 1 }
+                    ],
+                    questions: [
+                        { question: "What is a 'Cache Stampede'?", options: JSON.stringify(["When Redis crashes.", "When multiple processes simultaneously try to regenerate a cached value after it expires, overwhelming the database.", "A type of network attack.", "When memory is full."]), correctAnswer: "When multiple processes simultaneously try to regenerate a cached value after it expires, overwhelming the database.", explanation: "Using locks or 'early re-computation' can prevent stampedes.", order: 1 }
+                    ],
+                    miniProject: {
+                        title: "The Intelligent Cache",
+                        description: "Build a caching layer with automated invalidation, TTL jitter, and a Bloom filter to prevent cache penetration.",
+                        requirements: JSON.stringify(["Implement 'Write-through' caching.", "Use Redis Sets for tag-based invalidation.", "Implement TTL Jitter to prevent mass-expiration."]),
+                        order: 3
+                    }
+                },
+                {
+                    id: "be-l2-skill-docker",
+                    title: "Docker & Container Orchestration",
+                    description: "Containerize everything. Master multi-stage builds, Docker Compose for local environments, and the fundamentals of container networking and volumes.",
+                    resources: [
+                        { title: "Docker Docs: Orientation", type: "DOCUMENTATION", url: "https://docs.docker.com/get-started/", duration: 45, order: 1 }
+                    ],
+                    questions: [
+                        { question: "What is the benefit of a 'Multi-stage build'?", options: JSON.stringify(["Faster builds.", "Smaller final images by separating build dependencies from the runtime environment.", "Better security.", "Automatic deployments."]), correctAnswer: "Smaller final images by separating build dependencies from the runtime environment.", explanation: "Multi-stage builds allow you to discard heavy build tools (like compilers) and only keep the production binary/files.", order: 1 }
+                    ],
+                    miniProject: {
+                        title: "The Zero-Config Environment",
+                        description: "Dockerize a complex Node.js + Postgres + Redis application with a focus on fast development cycles using volumes and hot-reloading.",
+                        requirements: JSON.stringify(["Optimized Dockerfile (<100MB).", "Docker Compose with healthchecks.", "Persistent volumes for the database."]),
+                        order: 4
+                    }
+                },
+                {
+                    id: "be-l2-skill-obs",
+                    title: "Observability & Monitoring",
+                    description: "If you can't measure it, you can't manage it. Master Prometheus metrics, Grafana dashboards, and structured logging with OpenTelemetry.",
+                    resources: [
+                        { title: "Prometheus: Getting Started", type: "DOCUMENTATION", url: "https://prometheus.io/docs/introduction/overview/", duration: 40, order: 1 }
+                    ],
+                    questions: [
+                        { question: "What is the 'Golden Signals' of monitoring?", options: JSON.stringify(["Red, Green, Blue.", "Latency, Traffic, Errors, and Saturation.", "CPU, RAM, Disk.", "Users, Sessions, Clicks."]), correctAnswer: "Latency, Traffic, Errors, and Saturation.", explanation: "The four Golden Signals are the foundation of SRE monitoring.", order: 1 }
+                    ],
+                    miniProject: {
+                        title: "The Reliability Dashboard",
+                        description: "Instrument a Node.js app to export Prometheus metrics and design a Grafana dashboard that alerts on high p99 latency.",
+                        requirements: JSON.stringify(["Export custom business metrics.", "Implement an SLI/SLO tracking dashboard.", "Setup automated Slack alerts for 5xx spikes."]),
+                        order: 5
+                    }
+                },
+                {
+                    id: "be-l2-skill-realtime",
+                    title: "Real-time Systems & WebSockets",
+                    description: "Build reactive backends. Master Socket.io, heartbeat mechanisms, and the pub/sub pattern for scaling real-time communication across multiple servers.",
+                    resources: [
+                        { title: "Socket.io: Internal Mechanics", type: "DOCUMENTATION", url: "https://socket.io/docs/v4/how-it-works/", duration: 35, order: 1 }
+                    ],
+                    questions: [
+                        { question: "How do you scale Socket.io across multiple servers?", options: JSON.stringify(["Using more RAM.", "Using a Redis Adapter for pub/sub communication between nodes.", "Using sticky sessions only.", "It's not possible."]), correctAnswer: "Using a Redis Adapter for pub/sub communication between nodes.", explanation: "The Redis Adapter allows events to be broadcasted to clients connected to different server instances.", order: 1 }
+                    ],
+                    miniProject: {
+                        title: "The Distributed Chat Engine",
+                        description: "Build a real-time chat server that maintains state across horizontal scaling using Redis pub/sub.",
+                        requirements: JSON.stringify(["Support multiple chat rooms.", "Implement 'typing' indicators.", "Handle reconnections gracefully."]),
+                        order: 6
+                    }
+                },
+                {
+                    id: "be-l2-skill-cloud",
+                    title: "Cloud-Native Design",
+                    description: "Learn to build for the cloud. Master Serverless functions (AWS Lambda), managed databases (RDS), and Object Storage (S3) fundamentals.",
+                    resources: [
+                        { title: "AWS: Cloud Practitioner Essentials", type: "COURSE", url: "https://explore.skillbuilder.aws/learn/course/external/view/elearning/134/aws-cloud-practitioner-essentials", duration: 180, order: 1 }
+                    ],
+                    questions: [
+                        { question: "What is 'Serverless' computing?", options: JSON.stringify(["There are no servers.", "Computing where the provider manages server allocation and scaling automatically.", "Free hosting.", "Static file hosting."]), correctAnswer: "Computing where the provider manages server allocation and scaling automatically.", explanation: "Serverless allows developers to focus on code without managing the underlying infrastructure.", order: 1 }
+                    ],
+                    miniProject: {
+                        title: "The Cloud-Scale Image API",
+                        description: "Build an API that processes image uploads, stores them in S3, and triggers a Lambda function for thumbnail generation.",
+                        requirements: JSON.stringify(["Use Signed URLs for secure uploads.", "Implement CDN caching with CloudFront.", "Handle async processing events."]),
+                        order: 7
+                    }
+                },
+                {
+                    id: "be-l2-skill-partitioning",
+                    title: "SQL Scaling: Partitioning & Sharding",
+                    description: "Master the limits of Postgres. Learn Table Partitioning (by range/list), and the conceptual foundations of Database Sharding.",
+                    resources: [
+                        { title: "PostgreSQL: Table Partitioning", type: "DOCUMENTATION", url: "https://www.postgresql.org/docs/current/ddl-partitioning.html", duration: 50, order: 1 }
+                    ],
+                    questions: [
+                        { question: "What is 'Range Partitioning' best used for?", options: JSON.stringify(["Random IDs.", "Time-series data (e.g., logs by month).", "Usernames.", "Small tables."]), correctAnswer: "Time-series data (e.g., logs by month).", explanation: "Range partitioning allows for efficient querying and deletion of old time-based data.", order: 1 }
+                    ],
+                    miniProject: {
+                        title: "The Billion-Row Ledger",
+                        description: "Design a partitioned database schema for a financial ledger that can handle 1 billion rows with constant lookup times.",
+                        requirements: JSON.stringify(["Implement range-based partitioning on 'created_at'.", "Write a maintenance script for 'aging out' old partitions.", "Demonstrate query plan improvements."]),
+                        order: 8
                     }
                 }
             ],
@@ -283,6 +438,91 @@ export const backendContent = {
                         requirements: JSON.stringify(["Use Apollo Federation.", "Resolve references across services.", "Query combined data."]),
                         order: 2
                     }
+                },
+                {
+                    id: "be-l3-skill-dist-tx",
+                    title: "Distributed Transactions & Sagas",
+                    description: "Maintain consistency across services. Master the Saga pattern (Choreography vs. Orchestration) and Two-Phase Commit (2PC) fundamentals.",
+                    resources: [
+                        { title: "Microservices.io: Saga Pattern", type: "ARTICLE", url: "https://microservices.io/patterns/data/saga.html", duration: 50, order: 1 }
+                    ],
+                    questions: [
+                        { question: "What is a 'Compensating Transaction' in a Saga?", options: JSON.stringify(["A transaction that pays the developer.", "An operation that undoes the effects of a previous successful step in case of a later failure.", "A backup.", "A retry."]), correctAnswer: "An operation that undoes the effects of a previous successful step in case of a later failure.", explanation: "Sagas use compensating transactions to maintain eventual consistency without long-lived locks.", order: 1 }
+                    ],
+                    miniProject: {
+                        title: "The Reliable Order Flow",
+                        description: "Implement a distributed order processing system where payment, inventory, and shipping are managed via an orchestrated Saga.",
+                        requirements: JSON.stringify(["Implement success and failure (compensation) paths.", "Handle transient network failures with retries.", "Ensure idempotency for all operations."]),
+                        order: 3
+                    }
+                },
+                {
+                    id: "be-l3-skill-perf",
+                    title: "Performance Profiling & Optimization",
+                    description: "Find the bottleneck. Master Node.js profiling, memory leak detection, flamegraphs, and database query plan analysis (EXPLAIN ANALYZE).",
+                    resources: [
+                        { title: "Node.js: Diagnostic Tools", type: "DOCUMENTATION", url: "https://nodejs.org/en/docs/guides/diagnostics-flamegraph/", duration: 60, order: 1 }
+                    ],
+                    questions: [
+                        { question: "What does a 'Flamegraph' help you identify?", options: JSON.stringify(["Browser rendering issues.", "Hot code paths that consume the most CPU time.", "Database index sizes.", "Network latency."]), correctAnswer: "Hot code paths that consume the most CPU time.", explanation: "Flamegraphs provide a visual representation of the call stack and where the CPU is spending time.", order: 1 }
+                    ],
+                    miniProject: {
+                        title: "The Zero-Lag API",
+                        description: "Profile a 'slow' API and use EXPLAIN ANALYZE to identify missing indexes and Node.js profiling to find blocking synchronous code.",
+                        requirements: JSON.stringify(["Reduce response time by 80%.", "Eliminate blocking Event Loop operations.", "Optimize SQL join order."]),
+                        order: 4
+                    }
+                },
+                {
+                    id: "be-l3-skill-iac",
+                    title: "Infrastructure as Code (IaC)",
+                    description: "Stop clicking buttons. Master Terraform or Pulumi to define and deploy cloud infrastructure programmatically and consistently.",
+                    resources: [
+                        { title: "Hashicorp: Terraform Get Started", type: "DOCUMENTATION", url: "https://developer.hashicorp.com/terraform/tutorials/aws-get-started", duration: 70, order: 1 }
+                    ],
+                    questions: [
+                        { question: "What is 'Immutable Infrastructure'?", options: JSON.stringify(["Infrastructure that never changes.", "Replacing failing components with new ones instead of repairing them.", "A type of database.", "Hardcoded config."]), correctAnswer: "Replacing failing components with new ones instead of repairing them.", explanation: "Immutable infrastructure reduces configuration drift and improves reliability.", order: 1 }
+                    ],
+                    miniProject: {
+                        title: "The Repeatable Stack",
+                        description: "Write Terraform scripts to provision a load-balanced web server cluster with an RDS database and S3 bucket on AWS/GCP.",
+                        requirements: JSON.stringify(["Use variables for environment-specific configs.", "Implement remote state storage.", "Setup automated plan/apply in CI/CD."]),
+                        order: 5
+                    }
+                },
+                {
+                    id: "be-l3-skill-audit",
+                    title: "Security, Compliance & Audit",
+                    description: "Build for highly regulated industries. Master audit logging, data encryption at rest (KMS), and PII (Personally Identifiable Information) handling.",
+                    resources: [
+                        { title: "OWASP: Logging Cheat Sheet", type: "DOCUMENTATION", url: "https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html", duration: 40, order: 1 }
+                    ],
+                    questions: [
+                        { question: "Why should you never log PII (Personally Identifiable Information)?", options: JSON.stringify(["It's too much data.", "To comply with regulations like GDPR and prevent data leaks in log files.", "It slows down logs.", "Logs are only for errors."]), correctAnswer: "To comply with regulations like GDPR and prevent data leaks in log files.", explanation: "PII in logs is a major security and compliance risk.", order: 1 }
+                    ],
+                    miniProject: {
+                        title: "The Compliant Data Vault",
+                        description: "Design an API that handles sensitive health data, implementing transparent field-level encryption and a tamper-proof audit trail.",
+                        requirements: JSON.stringify(["Implement AES-256 field encryption.", "Write immutable audit logs to a separate store.", "Implement strict data access controls (RBAC)."]),
+                        order: 6
+                    }
+                },
+                {
+                    id: "be-l3-skill-strategy",
+                    title: "Technical Strategy & Mentorship",
+                    description: "Go beyond the ticket. Learn how to drive technical decisions across teams, write impactful RFCs, and mentor junior engineers effectively.",
+                    resources: [
+                        { title: "StaffEng: Technical Leadership", type: "ARTICLE", url: "https://staffeng.com/guides/technical-leadership", duration: 60, order: 1 }
+                    ],
+                    questions: [
+                        { question: "What is the primary goal of an 'RFC'?", options: JSON.stringify(["To tell people what to do.", "To gather feedback and build consensus on a proposed technical change.", "To document code.", "To report bugs."]), correctAnswer: "To gather feedback and build consensus on a proposed technical change.", explanation: "RFCs (Requests for Comments) ensure that the whole team's perspective is considered before major changes.", order: 1 }
+                    ],
+                    miniProject: {
+                        title: "The Architecture RFC",
+                        description: "Write a high-quality RFC for migrating the company's monolithic backend to a federated microservices architecture.",
+                        requirements: JSON.stringify(["Clear problem statement.", "Detailed technical proposal.", "Migration and rollback strategies."]),
+                        order: 7
+                    }
                 }
             ],
             finalProject: {
@@ -331,6 +571,91 @@ export const backendContent = {
                         description: "Implement a distributed locking mechanism using Redis (Redlock algorithm).",
                         requirements: JSON.stringify(["Prevent race conditions across multiple node instances.", "Handle lock timeouts.", "Ensure safety and liveness."]),
                         order: 1
+                    }
+                },
+                {
+                    id: "be-l4-skill-bigdata",
+                    title: "Data Lake & Warehouse Architecture",
+                    description: "Design systems that handle petabytes. Master the trade-offs between ETL and ELT, columnar storage (Parquet), and distributed query engines (Presto/Trino/BigQuery).",
+                    resources: [
+                        { title: "Databricks: Lakehouse Architecture", type: "ARTICLE", url: "https://www.databricks.com/glossary/lakehouse", duration: 60, order: 1 }
+                    ],
+                    questions: [
+                        { question: "What is the primary advantage of 'Columnar Storage'?", options: JSON.stringify(["Faster writes.", "Efficient compression and extremely fast analytical queries on specific columns.", "Easier to read manually.", "Supports multi-threading."]), correctAnswer: "Efficient compression and extremely fast analytical queries on specific columns.", explanation: "Columnar formats like Parquet are the standard for modern data warehousing.", order: 1 }
+                    ],
+                    miniProject: {
+                        title: "The Data Pipeline Architect",
+                        description: "Design an ELT pipeline that ingests raw JSON logs from S3 into a columnar warehouse, creating optimized materialized views for business reporting.",
+                        requirements: JSON.stringify(["Implement schema evolution handling.", "Optimize for query costs.", "Design for 100TB+ daily ingestion."]),
+                        order: 2
+                    }
+                },
+                {
+                    id: "be-l4-skill-global",
+                    title: "Multi-Region & Global Systems",
+                    description: "Build for the world. Master active-active multi-region deployments, Anycast routing, data sovereignty compliance (GDPR), and cross-region replication latency.",
+                    resources: [
+                        { title: "AWS: Global Infrastructure", type: "DOCUMENTATION", url: "https://aws.amazon.com/about-aws/global-infrastructure/", duration: 40, order: 1 }
+                    ],
+                    questions: [
+                        { question: "What is 'Anycast' routing?", options: JSON.stringify(["Broadcasting to everyone.", "A routing method where multiple servers share the same IP, and the network routes the user to the closest one.", "A type of database indexing.", "A security protocol."]), correctAnswer: "A routing method where multiple servers share the same IP, and the network routes the user to the closest one.", explanation: "Anycast is crucial for building low-latency global CDNs and gateways.", order: 1 }
+                    ],
+                    miniProject: {
+                        title: "The Global Edge Gateway",
+                        description: "Design a multi-region API architecture that routes requests based on user location and replicates session data with <200ms global synchronization.",
+                        requirements: JSON.stringify(["Implement Conflict-Free Replicated Data Types (CRDTs).", "Design a region-aware failover strategy.", "Comply with localized data residency laws."]),
+                        order: 3
+                    }
+                },
+                {
+                    id: "be-l4-skill-leadership",
+                    title: "Staff Engineering Leadership",
+                    description: "Technical leadership at the organizational level. Master cross-team coordination, technical debt management at scale, and defining the long-term technology roadmap.",
+                    resources: [
+                        { title: "The Staff Engineer's Path (Tanya Reilly)", type: "BOOK_SUMMARY", url: "https://noidea.dog/staff-eng-path", duration: 90, order: 1 }
+                    ],
+                    questions: [
+                        { question: "As a Staff Engineer, what is a 'Force Multiplier'?", options: JSON.stringify(["A powerful server.", "Actions that make everyone else on the team or in the org more effective (e.g., standardizing libraries, mentoring).", "A security tool.", "A math term."]), correctAnswer: "Actions that make everyone else on the team or in the org more effective (e.g., standardizing libraries, mentoring).", explanation: "Staff engineers focus on impact that scales beyond their own individual contributions.", order: 1 }
+                    ],
+                    miniProject: {
+                        title: "The Organization Strategy",
+                        description: "Audit the company's 50+ microservices and create a 2-year technical roadmap for standardizing infrastructure and reducing operational overhead.",
+                        requirements: JSON.stringify(["Define 'Tier 1' service standards.", "Outline a plan for platform-level common libraries.", "Propose a training program for upskilling teams."]),
+                        order: 4
+                    }
+                },
+                {
+                    id: "be-l4-skill-finops",
+                    title: "Cloud FinOps & Infrastructure Efficiency",
+                    description: "Efficiency is a feature. Learn to optimize cloud costs at scale, master spot instances, reserved capacity, and designing systems for minimal footprint.",
+                    resources: [
+                        { title: "FinOps Foundation: Introduction", type: "DOCUMENTATION", url: "https://www.finops.org/introduction/what-is-finops/", duration: 50, order: 1 }
+                    ],
+                    questions: [
+                        { question: "What is a 'Spot Instance' in cloud computing?", options: JSON.stringify(["A high-priority server.", "Spare capacity offered at a steep discount, but can be reclaimed by the provider at any time.", "A virtual machine in a specific spot.", "A permanent server."]), correctAnswer: "Spare capacity offered at a steep discount, but can be reclaimed by the provider at any time.", explanation: "Spot instances are ideal for fault-tolerant, stateless background processing.", order: 1 }
+                    ],
+                    miniProject: {
+                        title: "The Zero-Waste Infrastructure",
+                        description: "Analyze a high-cost infrastructure stack and propose a redesign that reduces monthly spend by 50% without compromising p99 latency.",
+                        requirements: JSON.stringify(["Implement intelligent autoscaling based on custom metrics.", "Optimize S3 storage tiers.", "Leverage reserved instances for baseline load."]),
+                        order: 5
+                    }
+                },
+                {
+                    id: "be-l4-skill-evolution",
+                    title: "System Evolution & Technical Debt",
+                    description: "Learn how to evolve legacy systems. Master 'Strangler Fig' pattern, migration strategies without downtime, and technical health metrics.",
+                    resources: [
+                        { title: "Martin Fowler: Strangler Fig Pattern", type: "ARTICLE", url: "https://martinfowler.com/bliki/StranglerFigApplication.html", duration: 45, order: 1 }
+                    ],
+                    questions: [
+                        { question: "What is the 'Strangler Fig' pattern?", options: JSON.stringify(["A type of plant.", "Gradually replacing parts of a legacy system with new services until the old system is completely replaced.", "Deleting all legacy code.", "A encryption method."]), correctAnswer: "Gradually replacing parts of a legacy system with new services until the old system is completely replaced.", explanation: "It allows for incremental migration with minimal risk.", order: 1 }
+                    ],
+                    miniProject: {
+                        title: "The Seamless Migration Plan",
+                        description: "Design a no-downtime migration strategy for replacing a critical monolith database with a new microservices-based sharded architecture.",
+                        requirements: JSON.stringify(["Implement dual-writing during transition.", "Define automated data verification/integrity checks.", "Outline a safe rollback procedure."]),
+                        order: 6
                     }
                 }
             ],

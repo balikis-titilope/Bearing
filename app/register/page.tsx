@@ -203,7 +203,16 @@ function RegisterContent() {
                     <form className={styles.form} onSubmit={handleFormSubmit}>
                         <div className={styles.inputGroup}>
                             <label htmlFor="name">Full Name</label>
-                            <input name="name" type="text" id="name" placeholder="Your full name" className={styles.input} required disabled={isPending} />
+                            <input
+                                name="name"
+                                type="text"
+                                id="name"
+                                placeholder="Your full name"
+                                className={styles.input}
+                                required
+                                disabled={isPending}
+                                defaultValue={isOAuthComplete && session?.user?.name ? session.user.name : undefined}
+                            />
                         </div>
                         <div className={styles.inputGroup}>
                             <label htmlFor="email">Email</label>

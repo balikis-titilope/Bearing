@@ -58,48 +58,101 @@ export const dataScienceContent = {
                     title: "Exploratory Data Analysis (Pandas)",
                     description: "Learn to clean, transform, and analyze tabular data. Master DataFrames, time-series analysis, and grouping.",
                     resources: [
-                        { title: "Pandas: 10 minutes to pandas", type: "DOCUMENTATION", url: "https://pandas.pydata.org/docs/user_guide/10min.html", duration: 20, order: 1 },
-                        { title: "Data Cleaning with Pandas", type: "ARTICLE", url: "https://realpython.com/python-data-cleaning-numpy-pandas/", duration: 45, order: 2 }
+                        { title: "Pandas: 10 minutes to pandas", type: "DOCUMENTATION", url: "https://pandas.pydata.org/docs/user_guide/10min.html", duration: 20, order: 1 }
                     ],
                     questions: [
-                        { question: "What is the main 2D data structure in Pandas?", options: JSON.stringify(["Series", "DataFrame", "Table", "Grid"]), correctAnswer: "DataFrame", explanation: "A DataFrame is a 2D labeled data structure with columns of potentially different types.", order: 1 },
-                        { question: "How do you read a CSV file into a DataFrame?", options: JSON.stringify(["pd.read_file()", "pd.read_csv()", "pd.open_csv()", "pd.load()"]), correctAnswer: "pd.read_csv()", explanation: "read_csv is the most common function used to load tabular data.", order: 2 },
-                        { question: "What does 'df.head()' do?", options: JSON.stringify(["Shows the last 5 rows.", "Shows the first 5 rows.", "Calculates the mean.", "Deletes the header."]), correctAnswer: "Shows the first 5 rows.", explanation: "Head() is vital for a quick peek at the data.", order: 3 },
-                        { question: "Which method is used to handle missing values by filling them with a specific value?", options: JSON.stringify(["dropna()", "fillna()", "replace()", "clean()"]), correctAnswer: "fillna()", explanation: "fillna allows you to replace NaN values with 0, mean, or any other value.", order: 4 },
-                        { question: "What is the difference between 'loc' and 'iloc'?", options: JSON.stringify(["No difference.", "loc uses labels; iloc uses integer positions.", "loc is faster.", "iloc is only for rows."]), correctAnswer: "loc uses labels; iloc uses integer positions.", explanation: "loc is label-based indexing, whereas iloc is integer-location based.", order: 5 },
-                        { question: "How do you filter rows where the 'age' column is greater than 30?", options: JSON.stringify(["df['age'] > 30", "df.filter(30)", "df[df['age'] > 30]", "df.where(30)"]), correctAnswer: "df[df['age'] > 30]", explanation: "This is boolean indexing, creating a mask to filter the DataFrame.", order: 6 },
-                        { question: "What does 'df.describe()' provide?", options: JSON.stringify(["Column names.", "Technical data types.", "Summary statistics (mean, std, min, max).", "A list of strings."]), correctAnswer: "Summary statistics (mean, std, min, max).", explanation: "Describe provides a statistical overview of numerical columns.", order: 7 },
-                        { question: "How do you group data by a specific column and calculate the sum?", options: JSON.stringify(["df.summarize()", "df.groupby('column').sum()", "df.total()", "pd.group()"]), correctAnswer: "df.groupby('column').sum()", explanation: "Groupby is the core of the split-apply-combine pattern in Pandas.", order: 8 },
-                        { question: "What is a 'Series' in Pandas?", options: JSON.stringify(["A 1D labeled array.", "A type of chart.", "A database connection.", "A 3D object."]), correctAnswer: "A 1D labeled array.", explanation: "A DataFrame is essentially a collection of Series objects (columns).", order: 9 },
-                        { question: "How do you drop a column named 'temp'?", options: JSON.stringify(["df.remove('temp')", "df.drop('temp', axis=1)", "df.delete('temp')", "del df['temp']"]), correctAnswer: "df.drop('temp', axis=1)", explanation: "axis=1 specifies that we are dropping a column, not a row.", order: 10 },
-                        { question: "What does 'df.isnull().sum()' show?", options: JSON.stringify(["Total number of rows.", "Count of missing values in each column.", "The sum of all numbers.", "An error report."]), correctAnswer: "Count of missing values in each column.", explanation: "Highly useful for initial data quality assessment.", order: 11 },
-                        { question: "How do you rename a column 'old_name' to 'new_name'?", options: JSON.stringify(["df.rename(columns={'old_name': 'new_name'})", "df.rename_name()", "df.name = 'new'", "pd.rename()"]), correctAnswer: "df.rename(columns={'old_name': 'new_name'})", explanation: "The rename method uses a dictionary to map old names to new ones.", order: 12 },
-                        { question: "What is 'Melting' a DataFrame?", options: JSON.stringify(["Deleting data.", "Unpivoting a DataFrame from wide format to long format.", "Combining tables.", "Sorting rows."]), correctAnswer: "Unpivoting a DataFrame from wide format to long format.", explanation: "Melting is common for preparing data for visualization libraries.", order: 13 },
-                        { question: "How do you merge two DataFrames on a common column?", options: JSON.stringify(["df1 + df2", "pd.merge(df1, df2, on='key')", "df1.join(df2)", "pd.combine()"]), correctAnswer: "pd.merge(df1, df2, on='key')", explanation: "Merge functions like SQL JOINs.", order: 14 },
-                        { question: "Purpose of 'df.T'?", options: JSON.stringify(["Total.", "Transpose (swaps rows and columns).", "Technical data.", "Time-series."]), correctAnswer: "Transpose (swaps rows and columns).", explanation: "T is an attribute that returns the transposed DataFrame.", order: 15 }
+                        { question: "What is the main 2D data structure in Pandas?", options: JSON.stringify(["Series", "DataFrame", "Table", "Grid"]), correctAnswer: "DataFrame", explanation: "A DataFrame is a 2D labeled data structure.", order: 1 }
                     ],
                     miniProject: {
                         title: "The Titanic Survival Analyst",
-                        description: "Analyze the classic Titanic dataset to find predictors of survival using advanced Pandas techniques.",
-                        requirements: JSON.stringify(["Load and clean the dataset (handle missing 'Age').", "Create new features like 'FamilySize'.", "Use pivot tables to analyze survival by Class and Gender.", "Detect and handle outliers in 'Fare'."]),
-                        guide: JSON.stringify([
-                            "Step 1: Download the dataset and load it into a Pandas DataFrame.",
-                            "Step 2: Use 'df.isnull()' to identify columns with missing data.",
-                            "Step 3: Impute missing 'Age' values using the median of each Passenger Class.",
-                            "Step 4: Use 'pd.cut()' to bin 'Age' into categories (Child, Adult, Senior).",
-                            "Step 5: Generate a report showing survival rate per embarkation point."
-                        ]),
-                        hints: JSON.stringify([
-                            "The 'Cabin' column has many missing values; consider dropping it or extracting the Deck letter.",
-                            "Use 'df.groupby' for almost all passenger profile analysis.",
-                            "Check for correlations using 'df.corr()'."
-                        ]),
-                        stuckLinks: JSON.stringify([
-                            { title: "Pandas Cheat Sheet", url: "https://pandas.pydata.org/Pandas_Cheat_Sheet.pdf" },
-                            { title: "Kaggle: Titanic Tutorial", url: "https://www.kaggle.com/c/titanic" }
-                        ]),
-                        testCases: JSON.stringify([{ name: "Data Cleaning", verify: "No Null values in 'Age' column" }, { name: "Feature Engineering", verify: "FamilySize column exists and is accurate" }]),
+                        description: "Analyze the classic Titanic dataset to find predictors of survival.",
+                        requirements: JSON.stringify(["Load and clean the dataset.", "Use pivot tables to analyze survival."]),
                         order: 2
+                    }
+                },
+                {
+                    id: "ds-l1-skill-stats",
+                    title: "Applied Statistics & Hypothesis Testing",
+                    description: "Master the foundations of data-driven decision making. Learn about p-values, confidence intervals, and the Central Limit Theorem.",
+                    resources: [
+                        { title: "Khan Academy: Statistics & Probability", type: "COURSE", url: "https://www.khanacademy.org/math/statistics-probability", duration: 120, order: 1 }
+                    ],
+                    questions: [
+                        { question: "What is a 'p-value'?", options: JSON.stringify(["A price value.", "The probability of obtaining results at least as extreme as the observed results, assuming the null hypothesis is true.", "A type of average.", "A database entry."]), correctAnswer: "The probability of obtaining results at least as extreme as the observed results, assuming the null hypothesis is true.", explanation: "Low p-values (usually < 0.05) suggest the observed effect is unlikely to be due to chance.", order: 1 }
+                    ],
+                    miniProject: {
+                        title: "The A/B Test Validator",
+                        description: "Analyze two sets of user behavior data to determine if a UI change resulted in a statistically significant increase in clicks.",
+                        requirements: JSON.stringify(["Perform a t-test.", "Calculate confidence intervals.", "Visualize the distribution of both groups."]),
+                        order: 3
+                    }
+                },
+                {
+                    id: "ds-l1-skill-cleaning",
+                    title: "Data Cleaning & Imputation at Scale",
+                    description: "Data is messy. Learn advanced strategies for handling missing values, outliers, and inconsistent categorical data at enterprise scale.",
+                    resources: [
+                        { title: "Scikit-Learn: Imputation of missing values", type: "DOCUMENTATION", url: "https://scikit-learn.org/stable/modules/impute.html", duration: 40, order: 1 }
+                    ],
+                    questions: [
+                        { question: "What is 'Iterative Imputer'?", options: JSON.stringify(["Deleting rows.", "A strategy that models each feature with missing values as a function of other features.", "Filling with 0.", "Using random numbers."]), correctAnswer: "A strategy that models each feature with missing values as a function of other features.", explanation: "Iterative imputer is more sophisticated than simple mean/median filling.", order: 1 }
+                    ],
+                    miniProject: {
+                        title: "The Dirty Data Pipeline",
+                        description: "Take a dataset with 30% missing values and implement a multi-stage cleaning pipeline that restores integrity without introducing bias.",
+                        requirements: JSON.stringify(["Use KNN Imputer.", "Analyze the impact of imputation on variance.", "Implement outlier detection using Isolation Forest."]),
+                        order: 4
+                    }
+                },
+                {
+                    id: "ds-l1-skill-sql-ds",
+                    title: "SQL for Data Science",
+                    description: "The data scientist's primary tool. Master complex joins, window functions, and CTEs to extract insights directly from the warehouse.",
+                    resources: [
+                        { title: "Mode: SQL Tutorial", type: "COURSE", url: "https://mode.com/sql-tutorial/", duration: 90, order: 1 }
+                    ],
+                    questions: [
+                        { question: "How is a WINDOW function different from a GROUP BY?", options: JSON.stringify(["It's not.", "WINDOW functions allow access to other rows in the result set without collapsing them into a single summary row.", "GROUP BY is faster.", "WINDOW functions are only for numbers."]), correctAnswer: "WINDOW functions allow access to other rows in the result set without collapsing them into a single summary row.", explanation: "Window functions are vital for time-series and ranking operations.", order: 1 }
+                    ],
+                    miniProject: {
+                        title: "The Warehouse Analyst",
+                        description: "Write a SQL query that calculates the running total of sales and the 7-day moving average for a retail database.",
+                        requirements: JSON.stringify(["Use the OVER() clause.", "Implement a self-join for comparison.", "Optimize query performance using indexes."]),
+                        order: 5
+                    }
+                },
+                {
+                    id: "ds-l1-skill-viz",
+                    title: "Data Visualization & Communication",
+                    description: "Storytelling with data. Learn the principles of effective visualization (Tufte) and how to build interactive charts with Plotly/Seaborn.",
+                    resources: [
+                        { title: "Storytelling with Data (Cole Knaflic)", type: "ARTICLE", url: "https://www.storytellingwithdata.com/blog", duration: 60, order: 1 }
+                    ],
+                    questions: [
+                        { question: "What is 'Data-Ink Ratio'?", options: JSON.stringify(["The price of ink.", "The proportion of ink used to present actual data vs decorations.", "A printer setting.", "A type of chart."]), correctAnswer: "The proportion of ink used to present actual data vs decorations.", explanation: "Tufte argues for maximizing the data-ink ratio for clarity.", order: 1 }
+                    ],
+                    miniProject: {
+                        title: "The Executive Dashboard",
+                        description: "Take a complex analysis and boil it down to 3 high-impact interactive visualizations that tell a clear story.",
+                        requirements: JSON.stringify(["Use Plotly for interactivity.", "Minimize non-data ink.", "Include clear annotations for key insights."]),
+                        order: 6
+                    }
+                },
+                {
+                    id: "ds-l1-skill-py-internals",
+                    title: "Python Internals for Data Science",
+                    description: "Go beyond the basics. Learn about memory management, generators, and decorators to write efficient data processing scripts.",
+                    resources: [
+                        { title: "Real Python: Memory Management", type: "ARTICLE", url: "https://realpython.com/python-memory-management/", duration: 45, order: 1 }
+                    ],
+                    questions: [
+                        { question: "What is a 'Generator' in Python?", options: JSON.stringify(["A battery.", "A function that returns an iterator which yields items one at a time, saving memory.", "A type of class.", "A build tool."]), correctAnswer: "A function that returns an iterator which yields items one at a time, saving memory.", explanation: "Generators are essential for processing large datasets that don't fit in RAM.", order: 1 }
+                    ],
+                    miniProject: {
+                        title: "The Large-File Streamer",
+                        description: "Write a Python script that processes a 10GB CSV file using generators, ensuring memory usage stays under 100MB.",
+                        requirements: JSON.stringify(["Implementation using 'yield'.", "Memory profiling using 'memory_profiler'.", "Perform on-the-fly data aggregation."]),
+                        order: 7
                     }
                 }
             ],
@@ -146,26 +199,111 @@ export const dataScienceContent = {
                     ],
                     miniProject: {
                         title: "House Price Predictor",
-                        description: "Build a regression model to predict housing prices based on features like square footage and location.",
-                        requirements: JSON.stringify(["Train a Linear Regression model.", "Evaluate using RMSE.", "Tune hyperparameters using GridSearch."]),
+                        description: "Build a regression model to predict housing prices.",
+                        requirements: JSON.stringify(["Train a Linear Regression model.", "Evaluate using RMSE."]),
                         order: 1
                     }
                 },
                 {
-                    id: "ds-l2-skill-feat",
-                    title: "Feature Engineering & Selection",
-                    description: "Select the most important variables. Dimensionality reduction (PCA) and Feature scaling.",
+                    id: "ds-l2-skill-ensemble",
+                    title: "Ensemble Methods: XGBoost & LightGBM",
+                    description: "Go beyond simple trees. Master Boosting and Bagging techniques that win Kaggle competitions. Learn about feature importance and early stopping.",
                     resources: [
-                        { title: "Feature Engineering for ML", type: "ARTICLE", url: "https://www.trainindata.com/post/feature-engineering-integration-and-selection", duration: 60, order: 1 }
+                        { title: "XGBoost Documentation", type: "DOCUMENTATION", url: "https://xgboost.readthedocs.io/en/stable/", duration: 60, order: 1 }
                     ],
                     questions: [
-                        { question: "Why do we normalize data?", options: JSON.stringify(["To remove data.", "To ensure all features contribute equally to the distance calculation.", "To make data bigger.", "To encrypt data."]), correctAnswer: "To ensure all features contribute equally to the distance calculation.", explanation: "Algorithms like KNN and SVM are sensitive to the scale of input features.", order: 1 }
+                        { question: "What is 'Gradient Boosting'?", options: JSON.stringify(["A type of coffee.", "An additive model that trains new models to predict the residuals (errors) of previous models.", "A manual process.", "A random search."]), correctAnswer: "An additive model that trains new models to predict the residuals (errors) of previous models.", explanation: "Boosting reduces bias by focusing on previous mistakes.", order: 1 }
                     ],
                     miniProject: {
-                        title: "Credit Card Fraud Detection",
-                        description: "Detect fraudulent transactions in a highly imbalanced dataset.",
-                        requirements: JSON.stringify(["Handle class imbalance (SMOTE).", "Use PCA for visualization.", "Optimize for Recall."]),
+                        title: "The Kaggle Competitor",
+                        description: "Train an XGBoost model on a tabular dataset and optimize the learning rate and tree depth for maximum accuracy.",
+                        requirements: JSON.stringify(["Implement early stopping.", "Visualize feature importance.", "Achieve a Top-10% score on the validation set."]),
                         order: 2
+                    }
+                },
+                {
+                    id: "ds-l2-skill-serve",
+                    title: "Model Serialization & Deployment",
+                    description: "A model is useless if it's not in production. Learn how to serialize models (Pickle/Joblib) and serve them via a high-performance FastAPI server.",
+                    resources: [
+                        { title: "FastAPI: ML Production Guide", type: "ARTICLE", url: "https://fastapi.tiangolo.com/deployment/", duration: 50, order: 1 }
+                    ],
+                    questions: [
+                        { question: "Why use 'Joblib' over 'Pickle' for ML models?", options: JSON.stringify(["It's faster.", "It's more efficient for objects that carry large NumPy arrays.", "It's more secure.", "It's newer."]), correctAnswer: "It's more efficient for objects that carry large NumPy arrays.", explanation: "Joblib is optimized for numerical data structures common in ML.", order: 1 }
+                    ],
+                    miniProject: {
+                        title: "The Prediction Microservice",
+                        description: "Wrap a trained Scikit-learn model in a FastAPI app, including pydantic validation for incoming inference requests.",
+                        requirements: JSON.stringify(["Implement /predict endpoint.", "Include request validation.", "Containerize the app with Docker."]),
+                        order: 3
+                    }
+                },
+                {
+                    id: "ds-l2-skill-tuning",
+                    title: "Hyperparameter Optimization at Scale",
+                    description: "Stop using GridSearch. Master Bayesian optimization and automated tuning libraries like Optuna to find the perfect model parameters in minutes.",
+                    resources: [
+                        { title: "Optuna: Efficient Hyperparameter Tuning", type: "DOCUMENTATION", url: "https://optuna.org/", duration: 40, order: 1 }
+                    ],
+                    questions: [
+                        { question: "What is the advantage of 'Bayesian Optimization' over 'Random Search'?", options: JSON.stringify(["It's easier to write.", "It uses information from previous trials to pick the next set of hyperparameters, finding the optimum faster.", "It doesn't need data.", "It only works for linear models."]), correctAnswer: "It uses information from previous trials to pick the next set of hyperparameters, finding the optimum faster.", explanation: "Bayesian search is far more efficient than brute-force methods.", order: 1 }
+                    ],
+                    miniProject: {
+                        title: "The Optuna Optimizer",
+                        description: "Run an automated hyperparameter sweep for a Random Forest model, optimizing for the F1-score across a 5-fold cross-validation.",
+                        requirements: JSON.stringify(["Define a search space.", "Use Optuna Dashboard for visualization.", "Identify the best trial."]),
+                        order: 4
+                    }
+                },
+                {
+                    id: "ds-l2-skill-timeseries",
+                    title: "Time Series & Forecasting",
+                    description: "Predict the future. Master ARIMA, Exponential Smoothing, and modern libraries like Facebook Prophet for business forecasting.",
+                    resources: [
+                        { title: "Forecasting: Principles and Practice", type: "BOOK_SUMMARY", url: "https://otexts.com/fpp3/", duration: 180, order: 1 }
+                    ],
+                    questions: [
+                        { question: "What is 'Stationarity' in Time Series?", options: JSON.stringify(["Standing still.", "A property where statistical properties (mean, variance) do not change over time.", "A type of growth.", "A seasonal trend."]), correctAnswer: "A property where statistical properties (mean, variance) do not change over time.", explanation: "Many time series models assume stationarity or require it for accurate prediction.", order: 1 }
+                    ],
+                    miniProject: {
+                        title: "The Stock Volatility Radar",
+                        description: "Build a forecasting model for stock prices, accounting for seasonality and trend using Prophet.",
+                        requirements: JSON.stringify(["Handle missing time markers.", "Incorporate holidays/custom events.", "Evaluate using MAE (Mean Absolute Error)."]),
+                        order: 5
+                    }
+                },
+                {
+                    id: "ds-l2-skill-dim",
+                    title: "Dimensionality Reduction: PCA & t-SNE",
+                    description: "Visualize the high-dimensional. Master Principal Component Analysis (PCA) and t-distributed Stochastic Neighbor Embedding (t-SNE) for data compression and exploration.",
+                    resources: [
+                        { title: "StatQuest: PCA Main Ideas", type: "VIDEO", url: "https://www.youtube.com/watch?v=FgakZw6K1QQ", duration: 30, order: 1 }
+                    ],
+                    questions: [
+                        { question: "What does PCA maximize?", options: JSON.stringify(["The error.", "The variance explained by each principal component.", "The number of features.", "The file size."]), correctAnswer: "The variance explained by each principal component.", explanation: "PCA tries to find the axis that retains the most information (variance).", order: 1 }
+                    ],
+                    miniProject: {
+                        title: "The Data Map",
+                        description: "Take a dataset with 50+ features and use PCA to compress it to 3 dimensions for 3D interactive visualization.",
+                        requirements: JSON.stringify(["Explain 'Explained Variance Ratio'.", "Visualize clusters in 3D space.", "Compare results with t-SNE."]),
+                        order: 6
+                    }
+                },
+                {
+                    id: "ds-l2-skill-rec",
+                    title: "Recommender Systems",
+                    description: "The engine of the internet. Learn about Collaborative Filtering, Content-Based Filtering, and Matrix Factorization (SVD).",
+                    resources: [
+                        { title: "Google Developers: Recommender Systems", type: "COURSE", url: "https://developers.google.com/machine-learning/recommendation", duration: 70, order: 1 }
+                    ],
+                    questions: [
+                        { question: "What is the 'Cold Start' problem?", options: JSON.stringify(["When a server is cold.", "The difficulty in recommending items to new users (or recommending new items) due to lack of historical data.", "A type of software bug.", "A network issue."]), correctAnswer: "The difficulty in recommending items to new users (or recommending new items) due to lack of historical data.", explanation: "Hybrid systems are often used to mitigate cold start issues.", order: 1 }
+                    ],
+                    miniProject: {
+                        title: "The Movie Engine",
+                        description: "Implement a collaborative filtering recommender using the MovieLens dataset.",
+                        requirements: JSON.stringify(["Build a user-item matrix.", "Implement Cosine Similarity.", "Generate Top-K recommendations."]),
+                        order: 7
                     }
                 }
             ],
@@ -229,9 +367,94 @@ export const dataScienceContent = {
                     ],
                     miniProject: {
                         title: "Sentiment Analysis Web App",
-                        description: "Build a model to classify movie reviews and deploy it as a simple Streamlit app.",
-                        requirements: JSON.stringify(["Train a text classifier (Naive Bayes or LSTM).", "Build a UI with Streamlit.", "Allow user input."]),
+                        description: "Build a model to classify movie reviews.",
+                        requirements: JSON.stringify(["Train a text classifier.", "Build a UI with Streamlit."]),
                         order: 2
+                    }
+                },
+                {
+                    id: "ds-l3-skill-cv-adv",
+                    title: "Advanced Computer Vision: Object Detection",
+                    description: "Go beyond classification. Master Object Detection (YOLO, Faster R-CNN) and Image Segmentation (U-Net) for complex visual tasks.",
+                    resources: [
+                        { title: "PyImageSearch: Object Detection fundamentals", type: "ARTICLE", url: "https://pyimagesearch.com/category/object-detection/", duration: 70, order: 1 }
+                    ],
+                    questions: [
+                        { question: "What does 'YOLO' stand for in Computer Vision?", options: JSON.stringify(["You Only Live Once.", "You Only Look Once.", "Your Object Locating Optimizer.", "Yellow Object Linear Operator."]), correctAnswer: "You Only Look Once.", explanation: "YOLO is a fast, real-time object detection system that processes the whole image in one pass.", order: 1 }
+                    ],
+                    miniProject: {
+                        title: "The Traffic Sentinel",
+                        description: "Implement a pre-trained YOLO model to detect and count vehicles in a real-time traffic video stream.",
+                        requirements: JSON.stringify(["Implement bounding box visualization.", "Calculate object counts per frame.", "Optimize for real-time inference speed."]),
+                        order: 3
+                    }
+                },
+                {
+                    id: "ds-l3-skill-transformers",
+                    title: "Transformers & Attention Mechanisms",
+                    description: "The heart of modern AI. Master the Attention mechanism, Encoder-Decoder architectures (BERT, GPT), and the 'Attention is All You Need' breakthrough.",
+                    resources: [
+                        { title: "The Illustrated Transformer", type: "ARTICLE", url: "https://jalammar.github.io/illustrated-transformer/", duration: 60, order: 1 }
+                    ],
+                    questions: [
+                        { question: "What is the primary benefit of the 'Attention' mechanism?", options: JSON.stringify(["It makes models smaller.", "It allows the model to focus on specific parts of the input sequence that are most relevant to the current output.", "It removes the need for data.", "It speeds up training only."]), correctAnswer: "It allows the model to focus on specific parts of the input sequence that are most relevant to the current output.", explanation: "Attention allows models to capture long-range dependencies far better than RNNs.", order: 1 }
+                    ],
+                    miniProject: {
+                        title: "The Multilingual Translator",
+                        description: "Fine-tune a pre-trained Transformer model from Hugging Face for a specific domain translation task (e.g., Medical English to Spanish).",
+                        requirements: JSON.stringify(["Use the 'datasets' library for data loading.", "Compute BLEU scores for evaluation.", "Implement a simple inference pipeline."]),
+                        order: 4
+                    }
+                },
+                {
+                    id: "ds-l3-skill-rl",
+                    title: "Reinforcement Learning (RL)",
+                    description: "Learning through interaction. Master Markov Decision Processes, Q-Learning, and Policy Gradients for building autonomous agents.",
+                    resources: [
+                        { title: "OpenAI: Spinning Up in Deep RL", type: "DOCUMENTATION", url: "https://spinningup.openai.com/en/latest/", duration: 120, order: 1 }
+                    ],
+                    questions: [
+                        { question: "In RL, what is the 'Exploration vs. Exploitation' trade-off?", options: JSON.stringify(["Choosing between food and water.", "The balance between trying new actions to find better rewards (exploration) vs. choosing the best-known action (exploitation).", "A security term.", "A database concept."]), correctAnswer: "The balance between trying new actions to find better rewards (exploration) vs. choosing the best-known action (exploitation).", explanation: "An agent must explore to find global optima but exploit to maximize cumulative reward.", order: 1 }
+                    ],
+                    miniProject: {
+                        title: "The Gym Master",
+                        description: "Train a Deep Q-Network (DQN) agent to play a classic Atari game or solve the 'CartPole' environment using OpenAI Gym.",
+                        requirements: JSON.stringify(["Implement the 'Replay Buffer'.", "Use a target network for stability.", "Visualize the reward curve over time."]),
+                        order: 5
+                    }
+                },
+                {
+                    id: "ds-l3-skill-dist-ml",
+                    title: "Distributed Training at Scale",
+                    description: "When one GPU isn't enough. Learn how to train massive models using data parallelism and model parallelism on Kubernetes clusters using Ray or Horovod.",
+                    resources: [
+                        { title: "Ray Train: Scaling Deep Learning", type: "DOCUMENTATION", url: "https://docs.ray.io/en/latest/train/train.html", duration: 80, order: 1 }
+                    ],
+                    questions: [
+                        { question: "What is 'Data Parallelism'?", options: JSON.stringify(["Copying data multiple times.", "Splitting the training data across multiple devices, where each device has a full copy of the model.", "A type of data backup.", "Parallelizing database queries."]), correctAnswer: "Splitting the training data across multiple devices, where each device has a full copy of the model.", explanation: "Data parallelism is the most common way to speed up deep learning training.", order: 1 }
+                    ],
+                    miniProject: {
+                        title: "The Billion-Parameter Trainer",
+                        description: "Set up a distributed training job for a BERT model across multiple virtual GPUs, measuring the speedup and scaling efficiency.",
+                        requirements: JSON.stringify(["Use PyTorch Lightning for distributed logic.", "Achieve linear scaling (near-perfect).", "Handle device failures gracefully."]),
+                        order: 6
+                    }
+                },
+                {
+                    id: "ds-l3-skill-ethics",
+                    title: "AI Ethics & Fairness Audit",
+                    description: "Build responsible AI. Master bias detection metrics, counterfactual explanations, and the ethical implications of automated decision-making.",
+                    resources: [
+                        { title: "Google: Responsible AI Practices", type: "DOCUMENTATION", url: "https://ai.google/responsibility/principles/", duration: 40, order: 1 }
+                    ],
+                    questions: [
+                        { question: "What is 'Selection Bias'?", options: JSON.stringify(["Choosing a wrong model.", "Bias introduced when the sample data is not representative of the target population.", "A color choice.", "A ranking error."]), correctAnswer: "Bias introduced when the sample data is not representative of the target population.", explanation: "Selection bias can lead to models that perform poorly on specific subgroups.", order: 1 }
+                    ],
+                    miniProject: {
+                        title: "The Fairness Audit",
+                        description: "Analyze a financial lending model for discriminatory bias and implement a remediation strategy (e.g., re-weighting) to ensure parity.",
+                        requirements: JSON.stringify(["Calculate 'Equalized Odds' metric.", "Perform a 'Slice Analysis'.", "Document the trade-off between fairness and accuracy."]),
+                        order: 7
                     }
                 }
             ],
@@ -281,6 +504,91 @@ export const dataScienceContent = {
                         description: "Build a reproducible pipeline that covers Data Validation -> Training -> Deployment -> Monitoring.",
                         requirements: JSON.stringify(["Use tools like MLflow or TFX.", "Implement automated retraining triggers.", "Dashboard for monitoring prediction drift."]),
                         order: 1
+                    }
+                },
+                {
+                    id: "ds-l4-skill-platform",
+                    title: "MLOps Platform Engineering",
+                    description: "Build the factory, not just the product. Master Kubeflow, TFX, and Vertex AI for orchestrating massive machine learning workflows at enterprise scale.",
+                    resources: [
+                        { title: "Kubeflow: Introduction", type: "DOCUMENTATION", url: "https://www.kubeflow.org/docs/started/introduction/", duration: 60, order: 1 }
+                    ],
+                    questions: [
+                        { question: "What is a 'Feature Store'?", options: JSON.stringify(["A shop for AI.", "A centralized repository that allows teams to share, discover, and use highly curated features.", "A type of database.", "A version control system."]), correctAnswer: "A centralized repository that allows teams to share, discover, and use highly curated features.", explanation: "Feature stores ensure training-serving consistency and reduce redundant engineering.", order: 1 }
+                    ],
+                    miniProject: {
+                        title: "The Enterprise Feature Store",
+                        description: "Design and implement a simple feature store using Redis for online serving and Parquet files for offline training, ensuring 0ms skew.",
+                        requirements: JSON.stringify(["Implement a unified ingestion API.", "Design for versioned features.", "Demonstrate consistent retrieval between training and inference."]),
+                        order: 2
+                    }
+                },
+                {
+                    id: "ds-l4-skill-llm-adv",
+                    title: "LLM Architecture & Fine-tuning",
+                    description: "Go beyond prompting. Master Retrieval-Augmented Generation (RAG), Parameter-Efficient Fine-Tuning (PEFT, LoRA), and RLHF (Reinforcement Learning from Human Feedback).",
+                    resources: [
+                        { title: "DeepLearning.AI: Finetuning Large Language Models", type: "COURSE", url: "https://www.deeplearning.ai/short-courses/finetuning-large-language-models/", duration: 90, order: 1 }
+                    ],
+                    questions: [
+                        { question: "What is 'LoRA' (Low-Rank Adaptation)?", options: JSON.stringify(["A type of coffee.", "A technique for fine-tuning LLMs by only updating a small subset of parameters (low-rank matrices).", "A ranking algorithm.", "A network protocol."]), correctAnswer: "A technique for fine-tuning LLMs by only updating a small subset of parameters (low-rank matrices).", explanation: "LoRA dramatically reduces the memory and compute needed for fine-tuning large models.", order: 1 }
+                    ],
+                    miniProject: {
+                        title: "The Custom LLM Specialist",
+                        description: "Implement a RAG system using a vector database (Pinecone/Chroma) and fine-tune a Llama-3 model using LoRA for a specific specialized domain.",
+                        requirements: JSON.stringify(["Implement semantic search retrieval.", "Optimize the prompt context window.", "Evaluate the model's factual accuracy vs. base model."]),
+                        order: 3
+                    }
+                },
+                {
+                    id: "ds-l4-skill-strategy",
+                    title: "AI Strategy & Governance",
+                    description: "Lead the AI revolution. Master the strategic selection of AI projects, ROI calculation, and the governance frameworks (Responsible AI) needed at the board level.",
+                    resources: [
+                        { title: "MIT: AI Business Strategy", type: "COURSE", url: "https://executive.mit.edu/course/artificial-intelligence-implications-for-business-strategy/a056f00000XUnX7AAL.html", duration: 180, order: 1 }
+                    ],
+                    questions: [
+                        { question: "What is the 'Build vs Buy' dilemma in AI?", options: JSON.stringify(["Buying groceries.", "Choosing between developing custom models internally vs. using off-the-shelf APIs/SaaS.", "A hardware choice.", "A stock market term."]), correctAnswer: "Choosing between developing custom models internally vs. using off-the-shelf APIs/SaaS.", explanation: "Strategic leaders must balance custom edge (Build) with speed-to-market and cost (Buy).", order: 1 }
+                    ],
+                    miniProject: {
+                        title: "The AI Portfolio Roadmap",
+                        description: "Audit a hypothetical company's operations and design a 3-year AI roadmap, prioritizing projects based on feasibility and business impact.",
+                        requirements: JSON.stringify(["Create a 'Complexity vs Impact' matrix.", "Define success metrics for each phase.", "Outline a resource/hiring plan."]),
+                        order: 4
+                    }
+                },
+                {
+                    id: "ds-l4-skill-gnn",
+                    title: "Graph Neural Networks (GNNs)",
+                    description: "Understand the connections. Master Graph Convolutional Networks (GCNs) for social networks, molecular biology, and fraud detection maps.",
+                    resources: [
+                        { title: "Stanford: CS224W Machine Learning with Graphs", type: "COURSE", url: "http://web.stanford.edu/class/cs224w/", duration: 240, order: 1 }
+                    ],
+                    questions: [
+                        { question: "In a GNN, what is 'Message Passing'?", options: JSON.stringify(["Sending emails.", "The process where nodes exchange information with their neighbors to update their own representations.", "A network protocol.", "A type of database query."]), correctAnswer: "The process where nodes exchange information with their neighbors to update their own representations.", explanation: "Message passing allows GNNs to capture the topology of the graph.", order: 1 }
+                    ],
+                    miniProject: {
+                        title: "The Fraud Map Detective",
+                        description: "Build a GNN to detect fraudulent transactions by modeling accounts and transactions as a heterogeneous graph.",
+                        requirements: JSON.stringify(["Use PyTorch Geometric.", "Implement node classification.", "Visualize the fraud clusters in the graph."]),
+                        order: 5
+                    }
+                },
+                {
+                    id: "ds-l4-skill-leadership-ds",
+                    title: "Technical Leadership in AI",
+                    description: "Go beyond the model. Learn how to manage high-uncertainty R&D teams, bridge the gap between business and research, and drive technical excellence.",
+                    resources: [
+                        { title: "Harvard: Leading in the Age of AI", type: "ARTICLE", url: "https://hbr.org/2023/07/leadership-in-the-age-of-ai", duration: 50, order: 1 }
+                    ],
+                    questions: [
+                        { question: "How do you manage 'Research Risk' in Data Science?", options: JSON.stringify(["Avoiding research.", "Using iterative experimentation gates and time-boxing highly uncertain research phases.", "Only doing simple tasks.", "Ignoring it."]), correctAnswer: "Using iterative experimentation gates and time-boxing highly uncertain research phases.", explanation: "Managing uncertainty is the core challenge of AI leadership.", order: 1 }
+                    ],
+                    miniProject: {
+                        title: "The Research RFC",
+                        description: "Write a technical proposal for a major new AI capability, addressing technical feasibility, data requirements, and risk mitigation.",
+                        requirements: JSON.stringify(["Clear hypothesis.", "Detailed experiment plan.", "Analysis of potential failure modes."]),
+                        order: 6
                     }
                 }
             ],

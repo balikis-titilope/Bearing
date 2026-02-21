@@ -160,48 +160,118 @@ export const frontendContent = {
                     description: "Stop memorizing commands and start understanding Git's object-based architecture. Learn how Git stores data and how to manage complex collaborative workflows.",
                     resources: [
                         { title: "Pro Git: Git Internals", type: "DOCUMENTATION", url: "https://git-scm.com/book/en/v2/Git-Internals-Git-Objects", duration: 40, order: 1 },
-                        { title: "Git from the Bottom Up", type: "ARTICLE", url: "https://jwiegley.github.io/git-from-the-bottom-up/", duration: 60, order: 2 },
-                        { title: "Missing Semester: Version Control", type: "VIDEO", url: "https://www.youtube.com/watch?v=2sjqTHE0zok", duration: 50, order: 3 }
+                        { title: "Git from the Bottom Up", type: "ARTICLE", url: "https://jwiegley.github.io/git-from-the-bottom-up/", duration: 60, order: 2 }
                     ],
                     questions: [
-                        { question: "What type of Git object stores file content?", options: JSON.stringify(["Commit", "Tree", "Blob", "Tag"]), correctAnswer: "Blob", explanation: "A 'blob' stores the content of a single file.", order: 1 },
-                        { question: "What is the result of hashing a Git object?", options: JSON.stringify(["10-digit number", "40-char SHA-1 hash", "Filename", "Password"]), correctAnswer: "40-char SHA-1 hash", explanation: "Git identified data by its SHA-1 hash.", order: 2 },
-                        { question: "Where does Git store data locally?", options: JSON.stringify(["/usr/git", ".github/", ".git/objects/", "git.json"]), correctAnswer: ".git/objects/", explanation: "The object directory stores all blobs, trees, and commits.", order: 3 },
-                        { question: "What does a 'tree' object represent?", options: JSON.stringify(["Backup.", "Directory structure.", "Commit graph.", "Ignore rules."]), correctAnswer: "Directory structure.", explanation: "Trees link filenames to their corresponding blob content.", order: 4 },
-                        { question: "Info contained in a 'commit' object?", options: JSON.stringify(["Name.", "Tree, parent, author, message.", "File content.", "Remote link."]), correctAnswer: "Tree, parent, author, message.", explanation: "Commits link snapshots with metadata.", order: 5 },
-                        { question: "What is 'HEAD'?", options: JSON.stringify(["Main branch.", "Current checkout ref.", "First commit.", "System file."]), correctAnswer: "Current checkout ref.", explanation: "HEAD usually points to the current branch.", order: 6 },
-                        { question: "What does 'git add' do to the object store?", options: JSON.stringify(["Nothing.", "Immediately creates a blob.", "Deletes files.", "Uploads to GitHub."]), correctAnswer: "Immediately creates a blob.", explanation: "Adding hashes the content and stores it as a blob.", order: 7 },
-                        { question: "What is 'detached HEAD'?", options: JSON.stringify(["Corrupted repo.", "HEAD points to commit hash directly.", "No net.", "on main."]), correctAnswer: "HEAD points to commit hash directly.", explanation: "In this state, commits don't belong to any branch.", order: 8 },
-                        { question: "How does Git handle duplicate files?", options: JSON.stringify(["Multiple copies.", "One blob (same hash).", "Error.", "Renames."]), correctAnswer: "One blob (same hash).", explanation: "Content-addressed storage handles duplication efficiently.", order: 9 },
-                        { question: "First 2 characters of a Git hash purpose?", options: JSON.stringify(["Salt.", "Subdirectory to prevent folder bloat.", "Version.", "Key."]), correctAnswer: "Subdirectory to prevent folder bloat.", explanation: "This sharding helps filesystem performance.", order: 10 },
-                        { question: "Fetch vs Pull?", options: JSON.stringify(["No diff.", "Fetch downloads; pull downloads and merges.", "Pull is faster.", "Fetch is for branches."]), correctAnswer: "Fetch downloads; pull downloads and merges.", explanation: "Pull is essentially fetch + merge.", order: 11 },
-                        { question: "What is 'git reflog'?", options: JSON.stringify(["Logout.", "Local history of branch tip updates.", "Server list.", "Debugger."]), correctAnswer: "Local history of branch tip updates.", explanation: "Reflog allows recovering 'lost' commits.", order: 12 },
-                        { question: "What is 'git rebase'?", options: JSON.stringify(["Merge.", "Applying commits on top of another base.", "Deletion.", "Rename."]), correctAnswer: "Applying commits on top of another base.", explanation: "Rebase rewrites history for linearity.", order: 13 },
-                        { question: "Why 'distributed'?", options: JSON.stringify(["Cloud.", "Every clone has full database/history.", "Linux.", "Global."]), correctAnswer: "Every clone has full database/history.", explanation: "Each clone is a full backup.", order: 14 },
-                        { question: "Three-way merge?", options: JSON.stringify(["3 developers.", "Ancestor + 2 tips used to resolve.", "3 minutes.", "3 servers."]), correctAnswer: "Ancestor + 2 tips used to resolve.", explanation: "Standard strategy for non-fast-forward merges.", order: 15 }
+                        { question: "What type of Git object stores file content?", options: JSON.stringify(["Commit", "Tree", "Blob", "Tag"]), correctAnswer: "Blob", explanation: "A 'blob' stores the content of a single file.", order: 1 }
                     ],
                     miniProject: {
                         title: "The Git Reconstructer",
-                        description: "Given a corrupted repository structure (manually simulated), write a script that traverses the object store (.git/objects), identifies dangling blobs, and reconstructs the file tree as it existed at a specific commit.",
-                        requirements: JSON.stringify(["Decompress zlib-compressed Git objects.", "Parse tree objects to find file names and permissions.", "Rebuild a physical directory structure from the object graph.", "Demonstrate deep understanding of SHA-1 hashing and Git's pointer system."]),
-                        guide: JSON.stringify([
-                            "Step 1: Initialize a script that takes a path to a '.git/objects' folder.",
-                            "Step 2: Use a library like 'zlib' (Node.js) to decompress the binary data.",
-                            "Step 3: Read the object header to distinguish between 'blob', 'tree', and 'commit'.",
-                            "Step 4: Recursively follow tree pointers to find file names and their corresponding blob hashes.",
-                            "Step 5: Write the blob content into a new directory structure mimicking the original repo."
-                        ]),
-                        hints: JSON.stringify([
-                            "The first 2 characters of a hash are the folder name, and the remaining 38 are the filename.",
-                            "Look for the 'tree' keyword in the header to find the root directory structure.",
-                            "Use 'fs.mkdirSync' with 'recursive: true' to build the paths."
-                        ]),
-                        stuckLinks: JSON.stringify([
-                            { title: "Git Internals PDF", url: "https://git-scm.com/book/en/v2/Git-Internals-Git-Objects" },
-                            { title: "Node.js Zlib Docs", url: "https://nodejs.org/api/zlib.html" }
-                        ]),
-                        testCases: JSON.stringify([{ name: "Decompression", verify: "Successfully read object headers" }, { name: "Tree Traversal", verify: "Correctly map hashes to file paths" }]),
+                        description: "Traverse the object store (.git/objects) and identify dangling blobs.",
+                        requirements: JSON.stringify(["Parse tree objects.", "Demonstrate SHA-1 understanding."]),
                         order: 4
+                    }
+                },
+                {
+                    id: "fe-l1-skill-css-anim",
+                    title: "Advanced CSS: Animations & Motion",
+                    description: "Beyond simple transitions. Master keyframes, cubic-beziers, and the 'will-change' property to create fluid, hardware-accelerated interfaces.",
+                    resources: [
+                        { title: "Josh Comeau: Guide to CSS Animations", type: "ARTICLE", url: "https://www.joshwcomeau.com/css/animations/", duration: 45, order: 1 }
+                    ],
+                    questions: [
+                        { question: "What does 'will-change: transform' do?", options: JSON.stringify(["It changes the transform immediately.", "It hints to the browser to promote the element to its own layer for GPU acceleration.", "It prevents the element from moving.", "It is deprecated."]), correctAnswer: "It hints to the browser to promote the element to its own layer for GPU acceleration.", explanation: "Using will-change allows the browser to optimize for impending changes.", order: 1 }
+                    ],
+                    miniProject: {
+                        title: "The Physics-Based Loader",
+                        description: "Create a suite of high-performance loading animations using only CSS, optimized for 60fps.",
+                        requirements: JSON.stringify(["Use zero JavaScript.", "Maintain 60fps on mobile.", "Implement a complex multi-stage keyframe animation."]),
+                        order: 5
+                    }
+                },
+                {
+                    id: "fe-l1-skill-browser-arch",
+                    title: "Browser Rendering Architecture",
+                    description: "Understand the Critical Rendering Path. Learn how the browser parses HTML, constructs the CSSOM, and handles the Layout, Paint, and Composite cycles.",
+                    resources: [
+                        { title: "Web.dev: Critical Rendering Path", type: "DOCUMENTATION", url: "https://web.dev/critical-rendering-path/", duration: 50, order: 1 }
+                    ],
+                    questions: [
+                        { question: "What is the 'CSSOM'?", options: JSON.stringify(["CSS Object Model.", "CSS Optimized Memory.", "CSS Overlay Maker.", "A JavaScript library."]), correctAnswer: "CSS Object Model.", explanation: "The CSSOM is the tree structure of styles that the browser combines with the DOM.", order: 1 }
+                    ],
+                    miniProject: {
+                        title: "The Rendering Auditor",
+                        description: "Profile a sample page using Chrome DevTools 'Performance' tab and identify 'Jank' caused by excessive re-paints.",
+                        requirements: JSON.stringify(["Identify layout shifts.", "Optimize a component to skip the Paint phase.", "Document the impact of 'composite-only' properties."]),
+                        order: 6
+                    }
+                },
+                {
+                    id: "fe-l1-skill-security",
+                    title: "Frontend Security Foundations",
+                    description: "Secure your applications from the start. Master Content Security Policy (CSP), Same-Origin Policy (SOP), and common attack vectors like XSS.",
+                    resources: [
+                        { title: "OWASP: Frontend Security Cheat Sheet", type: "DOCUMENTATION", url: "https://cheatsheetseries.owasp.org/cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.html", duration: 60, order: 1 }
+                    ],
+                    questions: [
+                        { question: "What is the primary purpose of a CSP?", options: JSON.stringify(["To speed up the site.", "To restrict the sources from which scripts and other resources can be loaded.", "To style the page.", "To manage user logins."]), correctAnswer: "To restrict the sources from which scripts and other resources can be loaded.", explanation: "CSP is a vital defense-in-depth against XSS.", order: 1 }
+                    ],
+                    miniProject: {
+                        title: "The Secure Vault Shell",
+                        description: "Build a static site that enforces a strict CSP and implements sanitization for all user-provided inputs.",
+                        requirements: JSON.stringify(["Implement a valid CSP header.", "Sanitize HTML using a library like DOMPurify.", "Prevent inline-script execution."]),
+                        order: 7
+                    }
+                },
+                {
+                    id: "fe-l1-skill-vitals",
+                    title: "Performance & Core Web Vitals",
+                    description: "Master the metrics that matter to Google and users. LCP, FID, and CLS. Learn how to optimize images, fonts, and scripts for speed.",
+                    resources: [
+                        { title: "Google: Core Web Vitals Guide", type: "DOCUMENTATION", url: "https://web.dev/vitals/", duration: 30, order: 1 }
+                    ],
+                    questions: [
+                        { question: "What does 'CLS' stand for?", options: JSON.stringify(["Critical Layout Start.", "Cumulative Layout Shift.", "Common Layout Style.", "Color Level Scale."]), correctAnswer: "Cumulative Layout Shift.", explanation: "CLS measures visual stability of a page.", order: 1 }
+                    ],
+                    miniProject: {
+                        title: "The Lighthouse 100 Run",
+                        description: "Take a slow homepage and optimize it until it reaches a perfect 100/100 score in Performance and Best Practices.",
+                        requirements: JSON.stringify(["Implement modern image formats (WebP/AVIF).", "Eliminate render-blocking resources.", "Optimize font loading (font-display: swap)."]),
+                        order: 8
+                    }
+                },
+                {
+                    id: "fe-l1-skill-responsive",
+                    title: "Advanced Responsive Engineering",
+                    description: "Beyond just @media queries. Learn Container Queries, clamp(), and fluid typography to build truly adaptive systems.",
+                    resources: [
+                        { title: "MDN: Container Queries", type: "DOCUMENTATION", url: "https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Container_Queries", duration: 40, order: 1 }
+                    ],
+                    questions: [
+                        { question: "What is a 'Container Query'?", options: JSON.stringify(["A query for media size.", "A query that styles an element based on the size of its parent container, not the viewport.", "A database query.", "A flexbox property."]), correctAnswer: "A query that styles an element based on the size of its parent container, not the viewport.", explanation: "Container queries enable truly modular responsive components.", order: 1 }
+                    ],
+                    miniProject: {
+                        title: "The Fluid Component System",
+                        description: "Build a card component that changes its internal layout based on the width of its container using Container Queries.",
+                        requirements: JSON.stringify(["Use '@container' syntax.", "Implement fluid typography using clamp().", "No viewport-based media queries."]),
+                        order: 9
+                    }
+                },
+                {
+                    id: "fe-l1-skill-web-apis",
+                    title: "Modern Web APIs & Storage",
+                    description: "Leverage the full power of the browser. Master the Intersection Observer for lazy loading, Resize Observer for responsive logic, and Web Storage APIs.",
+                    resources: [
+                        { title: "MDN: Intersection Observer API", type: "DOCUMENTATION", url: "https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API", duration: 35, order: 1 }
+                    ],
+                    questions: [
+                        { question: "What is the primary use case for Intersection Observer?", options: JSON.stringify(["Calculating math.", "Detecting when an element enters or leaves the browser viewport.", "Styling text.", "Connecting to a database."]), correctAnswer: "Detecting when an element enters or leaves the browser viewport.", explanation: "It's essential for performant lazy-loading and scroll-based triggers.", order: 1 }
+                    ],
+                    miniProject: {
+                        title: "The Progressive Image Loader",
+                        description: "Build an image gallery that lazy-loads images only when they appear in the viewport, using a blurred placeholder technique.",
+                        requirements: JSON.stringify(["Use IntersectionObserver.", "Implement a fade-in effect on load.", "Fallback for browsers without the API."]),
+                        order: 10
                     }
                 }
             ],
@@ -269,6 +339,108 @@ export const frontendContent = {
                         requirements: JSON.stringify(["Use Generics for the form state.", "Infer types from Zod.", "Strict null checks enabled."]),
                         order: 2
                     }
+                },
+                {
+                    id: "fe-l2-skill-state",
+                    title: "Advanced State Management",
+                    description: "Go beyond useState. Master the internal mechanics of Redux, Zustand, and Jotai. Understand immutability patterns and store orchestration.",
+                    resources: [
+                        { title: "Zustand: Working with state", type: "DOCUMENTATION", url: "https://docs.pmnd.rs/zustand/getting-started/introduction", duration: 30, order: 1 }
+                    ],
+                    questions: [
+                        { question: "What is an 'Action' in Redux?", options: JSON.stringify(["A function call.", "A plain object describing what happened.", "A database entry.", "A CSS class."]), correctAnswer: "A plain object describing what happened.", explanation: "Actions are the only way to trigger state changes in Redux.", order: 1 }
+                    ],
+                    miniProject: {
+                        title: "The Multi-Store Sync",
+                        description: "Synchronize state across multiple independent stores (e.g., Theme, Auth, and Product) with complex inter-dependencies.",
+                        requirements: JSON.stringify(["Implement middleware for logging.", "Sync state to LocalStorage.", "Prevent race conditions in async updates."]),
+                        order: 3
+                    }
+                },
+                {
+                    id: "fe-l2-skill-rsc",
+                    title: "React Server Components (RSC)",
+                    description: "Learn the biggest shift in React. Understand the difference between server and client components, data fetching at the component level, and the 'use server' directive.",
+                    resources: [
+                        { title: "React: Server Components Guide", type: "DOCUMENTATION", url: "https://react.dev/reference/react/use-server", duration: 55, order: 1 }
+                    ],
+                    questions: [
+                        { question: "Can a Server Component import a Client Component?", options: JSON.stringify(["Yes.", "No.", "Only if it is a list.", "Only on mobile."]), correctAnswer: "Yes.", explanation: "Server components can render client components, but not vice-versa directly.", order: 1 }
+                    ],
+                    miniProject: {
+                        title: "The Streaming Catalog",
+                        description: "Build a product catalog that uses Suspense and RSC to stream content chunk-by-chunk to the client.",
+                        requirements: JSON.stringify(["Implement loading skeletons.", "Use server actions for filtering.", "Optimize for zero-bundle-size on the server."]),
+                        order: 4
+                    }
+                },
+                {
+                    id: "fe-l2-skill-patterns",
+                    title: "Component Design Patterns",
+                    description: "Master Atomic Design, Compound Components, and Render Props. Learn how to build flexible, reusable UI systems used at scale.",
+                    resources: [
+                        { title: "Atomic Design by Brad Frost", type: "BOOK_SUMMARY", url: "https://atomicdesign.bradfrost.com/", duration: 60, order: 1 }
+                    ],
+                    questions: [
+                        { question: "What is the 'Organism' in Atomic Design?", options: JSON.stringify(["A single button.", "A complex, distinct section of an interface consisting of molecules/atoms.", "The entire page.", "A CSS file."]), correctAnswer: "A complex, distinct section of an interface consisting of molecules/atoms.", explanation: "Organisms form the functional sections of a UI.", order: 1 }
+                    ],
+                    miniProject: {
+                        title: "The Atomic UI Kit",
+                        description: "Design a consistent UI kit starting from atoms (typography, buttons) up to templates.",
+                        requirements: JSON.stringify(["Follow Atomic Design principles.", "Build in Storybook.", "Maintain strict prop types."]),
+                        order: 5
+                    }
+                },
+                {
+                    id: "fe-l2-skill-adv-testing",
+                    title: "Sophisticated Web Testing",
+                    description: "Move beyond unit tests. Master Mock Service Worker (MSW), Visual Regression testing, and Integration suites with React Testing Library.",
+                    resources: [
+                        { title: "MSW: Introduction", type: "DOCUMENTATION", url: "https://mswjs.io/docs/", duration: 40, order: 1 }
+                    ],
+                    questions: [
+                        { question: "What does MSW do?", options: JSON.stringify(["Speeds up the computer.", "Intercepts network requests at the network level for testing.", "Tests CSS colors.", "Deploy code."]), correctAnswer: "Intercepts network requests at the network level for testing.", explanation: "MSW allows for realistic API mocking without changing application code.", order: 1 }
+                    ],
+                    miniProject: {
+                        title: "The Zero-Flake Test Suite",
+                        description: "Build a fully tested checkout flow with 100% integration coverage using MSW to mock the payment gateway.",
+                        requirements: JSON.stringify(["Zero real API calls.", "Test error states (timeout, decline).", "Visual snapshot verify."]),
+                        order: 6
+                    }
+                },
+                {
+                    id: "fe-l2-skill-build",
+                    title: "Modern Build Systems & Bundling",
+                    description: "Understand Vite, Rollup, and Webpack. Learn how treeshaking works, how to optimize build times, and how to handle polyfills for old browsers.",
+                    resources: [
+                        { title: "Vite: Why Vite?", type: "DOCUMENTATION", url: "https://vitejs.dev/guide/why.html", duration: 30, order: 1 }
+                    ],
+                    questions: [
+                        { question: "What is 'Tree Shaking'?", options: JSON.stringify(["Deleting files.", "Removing dead (unused) code from the final bundle.", "Compressing images.", "A brand of JS framework."]), correctAnswer: "Removing dead (unused) code from the final bundle.", explanation: "It relies on ES modules to identify used exports.", order: 1 }
+                    ],
+                    miniProject: {
+                        title: "The Optimized Bundle Auditor",
+                        description: "Take a bloated React app and reduce its bundle size by 60% through code splitting and tree-shaking optimizations.",
+                        requirements: JSON.stringify(["Implement Dynamic Imports.", "Analyze vendor chunks.", "Optimize peer dependencies."]),
+                        order: 7
+                    }
+                },
+                {
+                    id: "fe-l2-skill-pwa",
+                    title: "PWA & Native Capabilities",
+                    description: "Turn your web app into a Progressive Web App. Master Service Workers, precaching, and the Web Manifest.",
+                    resources: [
+                        { title: "Web.dev: PWA Course", type: "DOCUMENTATION", url: "https://web.dev/learn/pwa/", duration: 80, order: 1 }
+                    ],
+                    questions: [
+                        { question: "What is a 'Service Worker'?", options: JSON.stringify(["A personal assistant.", "A background script that acts as a proxy between the app and the network.", "A cloud server.", "A database."]), correctAnswer: "A background script that acts as a proxy between the app and the network.", explanation: "It enables offline functionality and push notifications.", order: 1 }
+                    ],
+                    miniProject: {
+                        title: "The Offline-First Memo App",
+                        description: "Build a notes application that works perfectly without an internet connection and syncs when back online.",
+                        requirements: JSON.stringify(["Register a Service Worker.", "Implement precaching for static assets.", "Use IndexedDB for local data persistence."]),
+                        order: 8
+                    }
                 }
             ],
             finalProject: {
@@ -335,6 +507,108 @@ export const frontendContent = {
                         requirements: JSON.stringify(["Setup Host app.", "Setup Remote app.", "Share dependencies (React) to avoid duplication."]),
                         order: 2
                     }
+                },
+                {
+                    id: "fe-l3-skill-design-systems",
+                    title: "Design Systems Engineering",
+                    description: "Design at scale. Master CSS-in-JS (Stitches/Emotion), Radix UI primitives, and Design Tokens. Learn how to maintain consistency across hundreds of apps.",
+                    resources: [
+                        { title: "Design Systems Repo", type: "ARTICLE", url: "https://designsystemsrepo.com/design-systems-articles/", duration: 45, order: 1 }
+                    ],
+                    questions: [
+                        { question: "What are 'Design Tokens'?", options: JSON.stringify(["Currency used by designers.", "Agnostic variables (color, spacing) that store design decisions.", "CSS classes.", "Images."]), correctAnswer: "Agnostic variables (color, spacing) that store design decisions.", explanation: "Tokens allow for multi-platform design consistency.", order: 1 }
+                    ],
+                    miniProject: {
+                        title: "The Tokenized Library",
+                        description: "Build a set of 5 components that derive all styles from a central JSON token file.",
+                        requirements: JSON.stringify(["No hardcoded colors/px.", "Support Light/Dark themes.", "Export tokens for both CSS and JS consumption."]),
+                        order: 3
+                    }
+                },
+                {
+                    id: "fe-l3-skill-webgl",
+                    title: "Advanced WebGL & 3D (Three.js)",
+                    description: "Bring the 3rd dimension to the web. Master Three.js, React Three Fiber, and shader programming for high-impact visual experiences.",
+                    resources: [
+                        { title: "Three.js Journey (Bruno Simon)", type: "COURSE", url: "https://threejs-journey.com/", duration: 240, order: 1 }
+                    ],
+                    questions: [
+                        { question: "What is a 'Shader'?", options: JSON.stringify(["A way to hide elements.", "A program that runs on the GPU to calculate pixel colors or vertices.", "A type of CSS filter.", "A hardware component."]), correctAnswer: "A program that runs on the GPU to calculate pixel colors or vertices.", explanation: "Shaders are essential for custom 3D effects.", order: 1 }
+                    ],
+                    miniProject: {
+                        title: "The Interactive 3D Hero",
+                        description: "Build a 3D aterrizaje section with a custom-shaded background that responds to mouse movement.",
+                        requirements: JSON.stringify(["Implementation in R3F.", "Custom GLSL fragment shader.", "Optimized for mobile (low vertex count)."]),
+                        order: 4
+                    }
+                },
+                {
+                    id: "fe-l3-skill-global",
+                    title: "Global Engineering & i18n",
+                    description: "Build for the world. Master internationalization (i18n), Right-to-Left (RTL) layouts, and cultural sensitivity in UI design.",
+                    resources: [
+                        { title: "MDN: Localization", type: "DOCUMENTATION", url: "https://developer.mozilla.org/en-US/docs/Mozilla/Localization", duration: 30, order: 1 }
+                    ],
+                    questions: [
+                        { question: "Why use 'logical properties' like 'margin-inline-start' instead of 'margin-left'?", options: JSON.stringify(["It's shorter.", "It automatically adapts to text direction (LTR vs RTL).", "It's newer.", "It supports old IE versions."]), correctAnswer: "It automatically adapts to text direction (LTR vs RTL).", explanation: "Logical properties are the standard for multi-directional layouts.", order: 1 }
+                    ],
+                    miniProject: {
+                        title: "The Globalized Dashboard",
+                        description: "Take a dashboard and implement full support for 3 languages, including RTL (Arabic/Hebrew) mirroring.",
+                        requirements: JSON.stringify(["Use zero hardcoded strings.", "Mirror layouts correctly for RTL.", "Implement currency/date formatting."],),
+                        order: 5
+                    }
+                },
+                {
+                    id: "fe-l3-skill-infra",
+                    title: "Frontend Infrastructure & Edge",
+                    description: "Learn how frontends are delivered. Master Edge Functions, A/B testing at the CDN level, and automated deploy previews.",
+                    resources: [
+                        { title: "Vercel: Edge Middleware", type: "DOCUMENTATION", url: "https://vercel.com/docs/functions/edge-middleware", duration: 40, order: 1 }
+                    ],
+                    questions: [
+                        { question: "What is an 'Edge Function'?", options: JSON.stringify(["A function for drawing edges.", "A serverless function that runs at the CDN node nearest to the user.", "A CSS function.", "A browser plugin."]), correctAnswer: "A serverless function that runs at the CDN node nearest to the user.", explanation: "Edge functions reduce latency by running closer to the user.", order: 1 }
+                    ],
+                    miniProject: {
+                        title: "The A/B Edge Splitter",
+                        description: "Implement a zero-latency A/B testing system that serves different homepage layouts using Edge Middleware.",
+                        requirements: JSON.stringify(["No client-side flickering.", "Server-side cookie assignment.", "Performance tracking at the edge."]),
+                        order: 6
+                    }
+                },
+                {
+                    id: "fe-l3-skill-web-components",
+                    title: "Web Components & Shadow DOM",
+                    description: "Framework-agnostic UI. Master the Custom Elements API, Shadow DOM, and HTML Templates for truly portable components.",
+                    resources: [
+                        { title: "WebComponents.org: Introduction", type: "DOCUMENTATION", url: "https://www.webcomponents.org/introduction", duration: 35, order: 1 }
+                    ],
+                    questions: [
+                        { question: "What is the 'Shadow DOM'?", options: JSON.stringify(["A hidden mode in Chrome.", "A private, encapsulated DOM for a component that is isolated from the main document.", "A type of CSS shadow.", "A database entry."]), correctAnswer: "A private, encapsulated DOM for a component that is isolated from the main document.", explanation: "Shadow DOM prevents style leakage and preserves encapsulation.", order: 1 }
+                    ],
+                    miniProject: {
+                        title: "The Portable Widget",
+                        description: "Build a chat widget as a Web Component that can be dropped into any site (React, Vue, or static HTML) with zero styling conflicts.",
+                        requirements: JSON.stringify(["Use 'customElements.define'.", "Encapsulate styles in Shadow Root.", "Communicate via Custom Events."]),
+                        order: 7
+                    }
+                },
+                {
+                    id: "fe-l3-skill-a11y-audit",
+                    title: "Advanced A11y & Remediation",
+                    description: "Go beyond basic alt tags. Master screen reader testing (NVDA/VoiceOver), keyboard trap remediation, and ARIA patterns for complex widgets.",
+                    resources: [
+                        { title: "A11y Project: Advanced Patterns", type: "DOCUMENTATION", url: "https://www.a11yproject.com/posts/", duration: 60, order: 1 }
+                    ],
+                    questions: [
+                        { question: "What is a 'Keyboard Trap'?", options: JSON.stringify(["A musical instrument.", "A situation where a keyboard user cannot move focus out of an element.", "A way to speed up typing.", "An intentional security feature."]), correctAnswer: "A situation where a keyboard user cannot move focus out of an element.", explanation: "Keyboard traps make applications unusable for many assistive tech users.", order: 1 }
+                    ],
+                    miniProject: {
+                        title: "The Accessibility Overhaul",
+                        description: "Take a 'broken' (inaccessible) modal and menu system and fix it to comply with WCAG 2.1 Level AA.",
+                        requirements: JSON.stringify(["Implement focus trapping.", "Correct ARIA-labeledby usage.", "Pass full manual screen reader audit."]),
+                        order: 8
+                    }
                 }
             ],
             finalProject: {
@@ -383,6 +657,91 @@ export const frontendContent = {
                         description: "Design a caching strategy for a global news site.",
                         requirements: JSON.stringify(["Define Cache-Control headers.", "Implement SWR (Stale-While-Revalidate).", "Design Edge functions for personalization."]),
                         order: 1
+                    }
+                },
+                {
+                    id: "fe-l4-skill-system-design",
+                    title: "Frontend System Design",
+                    description: "Architect massive applications. Master distributed UI architecture, scalable state patterns, and the lifecycle of enterprise-grade frontends.",
+                    resources: [
+                        { title: "Grokking Frontend System Design", type: "ARTICLE", url: "https://www.patterns.dev/posts/system-design/", duration: 90, order: 1 }
+                    ],
+                    questions: [
+                        { question: "What is a 'Distributed UI'?", options: JSON.stringify(["A UI in a cloud.", "An architecture where different parts of the UI are owned and deployed by different teams.", "A responsive layout.", "A server-side rendered page."]), correctAnswer: "An architecture where different parts of the UI are owned and deployed by different teams.", explanation: "It allows for organizational scaling and independent deployments.", order: 1 }
+                    ],
+                    miniProject: {
+                        title: "The Enterprise Blueprint",
+                        description: "Design the technical architecture for a global banking dashboard with 50+ micro-frontend modules.",
+                        requirements: JSON.stringify(["Define the shell/orchestrator logic.", "Outline dependency sharing strategy.", "Design for failure and error boundaries."]),
+                        order: 2
+                    }
+                },
+                {
+                    id: "fe-l4-skill-monorepo",
+                    title: "Monorepo & Build Orchestration",
+                    description: "Manage complexity. Master Nx, Turborepo, and Lerna. Understand dependency graphs, remote caching, and task orchestration.",
+                    resources: [
+                        { title: "Monorepo.tools: Comprehensive Guide", type: "DOCUMENTATION", url: "https://monorepo.tools/", duration: 45, order: 1 }
+                    ],
+                    questions: [
+                        { question: "What is 'Remote Caching' in a monorepo?", options: JSON.stringify(["A cloud backup.", "A system that shares build artifacts across machines to prevent redundant builds.", "A browser cache.", "A database."]), correctAnswer: "A system that shares build artifacts across machines to prevent redundant builds.", explanation: "Remote caching significantly speeds up CI/CD pipelines.", order: 1 }
+                    ],
+                    miniProject: {
+                        title: "The Nx Workspace Architect",
+                        description: "Set up a highly efficient Nx workspace with shared UI libraries and automated dependency graph enforcement.",
+                        requirements: JSON.stringify(["Enforce library boundaries.", "Enable remote caching.", "Optimize task parallelization."]),
+                        order: 3
+                    }
+                },
+                {
+                    id: "fe-l4-skill-leadership",
+                    title: "Engineering Strategy & Leadership",
+                    description: "Go beyond code. Master RFC (Request for Comments) writing, ADR (Architecture Decision Record) documentation, and technical roadmap setting.",
+                    resources: [
+                        { title: "Pragmatic Engineer: Building Roadmaps", type: "ARTICLE", url: "https://blog.pragmaticengineer.com/product-engineering-roadmaps/", duration: 60, order: 1 }
+                    ],
+                    questions: [
+                        { question: "What is an 'ADR'?", options: JSON.stringify(["An Advertising report.", "Architecture Decision Record - a document that captures why a decision was made.", "Automatic Deployment Route.", "A type of Bug report."]), correctAnswer: "Architecture Decision Record - a document that captures why a decision was made.", explanation: "ADRs provide critical historical context for architecture evolution.", order: 1 }
+                    ],
+                    miniProject: {
+                        title: "The Technical Strategy RFC",
+                        description: "Write a comprehensive RFC for migrating the company's legacy frontend to a modern framework.",
+                        requirements: JSON.stringify(["Detailed cost-benefit analysis.", "Phased rollout plan.", "Risk mitigation strategies."]),
+                        order: 4
+                    }
+                },
+                {
+                    id: "fe-l4-skill-framework-dev",
+                    title: "Custom Renders & WebAssembly",
+                    description: "Tear down the abstraction. Learn how to build custom React renderers or use WebAssemby (Wasm) for ultra-high performance numerical tasks.",
+                    resources: [
+                        { title: "WebAssembly: Introduction", type: "DOCUMENTATION", url: "https://webassembly.org/getting-started/developers-guide/", duration: 70, order: 1 }
+                    ],
+                    questions: [
+                        { question: "When is WASM most appropriate?", options: JSON.stringify(["For simple forms.", "For heavy computational tasks like image processing or 3D physics.", "For styling text.", "For SEO."]), correctAnswer: "For heavy computational tasks like image processing or 3D physics.", explanation: "WASM provides near-native execution speed for critical paths.", order: 1 }
+                    ],
+                    miniProject: {
+                        title: "The Wasm Blur Engine",
+                        description: "Implement a high-performance image blurring algorithm in Rust/C++ and integrate it into a React app via Wasm.",
+                        requirements: JSON.stringify(["Achieve 10x performance over pure JS.", "Seamless JS <-> Wasm bridge.", "Fallback logic for old browsers."]),
+                        order: 5
+                    }
+                },
+                {
+                    id: "fe-l4-skill-standards",
+                    title: "Web Standards & TC39",
+                    description: "Learn how the web evolves. Understand the TC39 proposal process and how to contribute to the future of JavaScript and HTML.",
+                    resources: [
+                        { title: "TC39: The Proposal Process", type: "DOCUMENTATION", url: "https://tc39.es/process-document/", duration: 30, order: 1 }
+                    ],
+                    questions: [
+                        { question: "What is 'Stage 3' in the TC39 process?", options: JSON.stringify(["Experimental.", "Candidate - specification is complete and reviewed.", "Finished.", "Idea."]), correctAnswer: "Candidate - specification is complete and reviewed.", explanation: "Stage 3 indicates the feature is ready for final testing and implementation.", order: 1 }
+                    ],
+                    miniProject: {
+                        title: "The Polyfill Architect",
+                        description: "Identify a promising Stage 2 proposal and write a robust, production-quality polyfill for it.",
+                        requirements: JSON.stringify(["Compliance with the latest draft spec.", "Extensive edge-case testing.", "Zero side-effects on global scope."]),
+                        order: 6
                     }
                 }
             ],

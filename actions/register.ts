@@ -73,7 +73,7 @@ export const register = async (values: RegisterValues, isOAuthCompletion = false
         await signIn("credentials", {
             email,
             password,
-            redirectTo: "/dashboard",
+            redirectTo: "/",
         });
         revalidatePath("/");
     } catch (error) {

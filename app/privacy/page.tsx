@@ -26,7 +26,7 @@ export default function PrivacyPolicy() {
                         </section>
 
                         <section>
-                            <h2>1. Information We Collect</h2>
+                            <h2 style={{ color: 'var(--primary)' }}>1. Information We Collect</h2>
                             <p>To provide personalized career guidance, we collect the following types of information:</p>
                             <ul>
                                 <li><strong>Account Information:</strong> Name, email address, and authentication credentials.</li>
@@ -36,7 +36,7 @@ export default function PrivacyPolicy() {
                         </section>
 
                         <section>
-                            <h2>2. How We Use Your Data</h2>
+                            <h2 style={{ color: 'var(--primary)' }}>2. How We Use Your Data</h2>
                             <p>We use your information to:</p>
                             <ul>
                                 <li>Generate personalized career roadmaps and skill gap analyses.</li>
@@ -47,7 +47,7 @@ export default function PrivacyPolicy() {
                         </section>
 
                         <section>
-                            <h2>3. AI Mentorship & Data Processing</h2>
+                            <h2 style={{ color: 'var(--primary)' }}>3. AI Mentorship & Data Processing</h2>
                             <p>
                                 Bearing utilizes advanced AI models to provide career guidance. Please note that:
                             </p>
@@ -59,14 +59,14 @@ export default function PrivacyPolicy() {
                         </section>
 
                         <section>
-                            <h2>4. Data Security</h2>
+                            <h2 style={{ color: 'var(--primary)' }}>4. Data Security</h2>
                             <p>
                                 We implement industry-standard security measures to protect your information from unauthorized access, alteration, or disclosure. However, no method of transmission over the internet is 100% secure, and we cannot guarantee absolute security.
                             </p>
                         </section>
 
                         <section>
-                            <h2>5. Your Rights</h2>
+                            <h2 style={{ color: 'var(--primary)' }}>5. Your Rights</h2>
                             <p>You have the right to:</p>
                             <ul>
                                 <li>Access the personal data we hold about you.</li>
@@ -77,9 +77,9 @@ export default function PrivacyPolicy() {
                         </section>
 
                         <section>
-                            <h2>6. Contact Us</h2>
+                            <h2 style={{ color: 'var(--primary)' }}>6. Contact Us</h2>
                             <p>
-                                If you have any questions about this Privacy Policy or our data practices, please contact us at <a href="mailto:privacy@bearing.ai">privacy@bearing.ai</a>.
+                                If you have any questions about this Privacy Policy or our data practices, please contact us at <a href="mailto:privacy.bearing@gmail.com">privacy.bearing@gmail.com</a>.
                             </p>
                         </section>
                     </div>

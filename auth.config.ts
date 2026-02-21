@@ -25,17 +25,6 @@ export default {
             if (user) {
                 token.role = (user as any).role;
                 token.id = user.id;
-                
-                // Check if OAuth user (user has email from OAuth but no password = OAuth)
-                const dbUser = await db.user.findUnique({
-                    where: { id: user.id },
-                    select: { password: true, name: true, email: true }
-                });
-                
-                // If user has no password (OAuth) and no name set, they need to complete registration
-                if (dbUser && !dbUser.password && !dbUser.name && dbUser.email) {
-                    token.needsRegistration = true;
-                }
             }
 
             // Handle manual session updates
@@ -51,10 +40,6 @@ export default {
             }
             if (token.id && session.user) {
                 session.user.id = token.id as any;
-            }
-            // Pass the needsRegistration flag to the session
-            if (token.needsRegistration) {
-                (session.user as any).needsRegistration = true;
             }
             return session;
         },

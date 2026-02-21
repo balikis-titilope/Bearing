@@ -17,32 +17,40 @@ import { dataEngineerContent } from '../data/learning/dataengineer'
 import { machinelearningContent } from '../data/learning/machinelearning'
 import { productManagerContent } from '../data/learning/productmanager'
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient({
+  log: ['query', 'info', 'warn', 'error'],
+})
 
 async function main() {
   console.log('Starting seed...')
 
   // Create default Super Admin
-  const hashedPassword = await bcrypt.hash('admin123', 12)
-  await prisma.user.upsert({
-    where: { email: 'admin@bearing.com' },
-    update: {},
-    create: {
-      email: 'admin@bearing.com',
-      name: 'Super Admin',
-      password: hashedPassword,
-      role: UserRole.SUPER_ADMIN,
-      emailVerified: new Date(),
-    }
-  })
-  console.log('Default Super Admin created: admin@bearing.com / admin123')
+  try {
+    const hashedPassword = await bcrypt.hash('admin123', 12)
+    await prisma.user.upsert({
+      where: { email: 'admin@bearing.com' },
+      update: {},
+      create: {
+        email: 'admin@bearing.com',
+        name: 'Super Admin',
+        password: hashedPassword,
+        role: UserRole.SUPER_ADMIN,
+        emailVerified: new Date(),
+      }
+    })
+    console.log('Default Super Admin created: admin@bearing.com / admin123')
+  } catch (err) {
+    console.error('Error creating Super Admin:', err)
+    throw err
+  }
 
   // Clear existing data using individual DELETEs to handle timeouts better
   console.log('Clearing database...')
   const tables = [
-    "project_submissions", "skill_progress", "enrollments", "resources", "user_progress",
-    "projects", "skills", "levels", "assessment_questions", "assessments",
-    "learning_subtopics", "learning_steps", "responsibilities", "career_paths"
+    "user_assessment_answers", "user_assessments",
+    "project_submissions", "skill_progress", "enrollments", "resources",
+    "assessment_questions", "projects", "skills", "levels", "assessments",
+    "user_progress", "learning_subtopics", "learning_steps", "responsibilities", "career_paths"
   ]
 
   for (const table of tables) {

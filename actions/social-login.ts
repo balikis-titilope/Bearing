@@ -8,6 +8,6 @@ export const socialLogin = async (provider: "google" | "github", context: "login
     cookieStore.set("auth-context", context, { path: "/", maxAge: 300 }); // 5 mins
 
     await signIn(provider, {
-        callbackUrl: "/dashboard",
+        callbackUrl: "/",
     });
 };

@@ -39,6 +39,9 @@ export default async function LearnPage({ params }: PageProps) {
               skills: {
                 orderBy: { order: 'asc' },
               },
+              projects: {
+                where: { isFinalProject: true }
+              }
             },
           },
         },
@@ -53,16 +56,11 @@ export default async function LearnPage({ params }: PageProps) {
   }
 
   const path = enrollment.careerPath;
-  const currentLevel = path.levels.find(l => l.id === enrollment.currentLevelId) || path.levels[0];
+  const currentLevelId = enrollment.currentLevelId;
+  const currentLevel = path.levels.find(l => l.id === currentLevelId) || path.levels[0];
 
-  // Get all projects for current level
-  const projects = await db.project.findMany({
-    where: {
-      levelId: currentLevel.id,
-      isFinalProject: true,
-    },
-    orderBy: { order: 'asc' },
-  });
+  // Get all final projects for current level from the pre-fetched data
+  const projects = currentLevel.projects;
 
   const adminMode = await getAdminMode();
 
@@ -85,7 +83,7 @@ export default async function LearnPage({ params }: PageProps) {
                 {currentLevel.title} Skills
               </h2>
               <p className={styles.sectionDescription}>
-                Complete all skills to unlock the final project
+                Complete all skills to unlock the level's final project
               </p>
 
               <div className={styles.skillsGrid}>
@@ -97,11 +95,19 @@ export default async function LearnPage({ params }: PageProps) {
                   // Sequential level locking: lock if any previous level is not completed
                   const previousLevels = path.levels.filter(l => l.order < currentLevel.order);
                   const isLevelLocked = previousLevels.some(level => {
-                    // Simple check: check if all skills in that level are completed
-                    return level.skills.some(s => {
+                    // Check skills
+                    const skillsUnfinished = level.skills.some(s => {
                       const p = enrollment.skillProgress.find(sp => sp.skillId === s.id);
                       return p?.status !== 'COMPLETED';
                     });
+
+                    // Check final project
+                    const projectUnfinished = level.projects.some(proj => {
+                      const p = enrollment.projectProgress.find(pp => pp.projectId === proj.id);
+                      return p?.status !== 'COMPLETED';
+                    });
+
+                    return skillsUnfinished || projectUnfinished;
                   });
 
                   return (
@@ -124,7 +130,7 @@ export default async function LearnPage({ params }: PageProps) {
             <section className={styles.section}>
               <h2 className={styles.sectionTitle}>Final Project</h2>
               <p className={styles.sectionDescription}>
-                Apply everything you've learned in this level
+                Mandatory project to graduate from this level
               </p>
 
               {projects.map(project => {
@@ -132,16 +138,18 @@ export default async function LearnPage({ params }: PageProps) {
                   p => p.projectId === project.id
                 );
 
-                const skillProgressMap = enrollment.skillProgress.some(
-                  p => p.status !== 'COMPLETED'
-                );
+                // Lock if any skill in CURRENT level is not completed
+                const currentSkillsUnfinished = currentLevel.skills.some(s => {
+                  const p = enrollment.skillProgress.find(sp => sp.skillId === s.id);
+                  return p?.status !== 'COMPLETED';
+                });
 
                 return (
                   <ProjectCard
                     key={project.id}
                     project={project}
                     status={submission?.status || 'NOT_STARTED'}
-                    isLocked={!canAccess(!skillProgressMap, session?.user, adminMode)}
+                    isLocked={!canAccess(!currentSkillsUnfinished, session?.user, adminMode)}
                     slug={slug}
                   />
                 );

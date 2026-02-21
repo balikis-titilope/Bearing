@@ -12,8 +12,15 @@ import { AdminModeToggle } from '../ui/AdminModeToggle';
 import { ScrollProgress } from '../ui/ScrollProgress';
 import { useHasMounted } from '@/hooks/useHasMounted';
 
-export const Navbar: React.FC = () => {
-    const { data: session } = useSession();
+import { Session } from 'next-auth';
+
+interface NavbarProps {
+    session?: Session | null;
+}
+
+export const Navbar: React.FC<NavbarProps> = ({ session: initialSession }) => {
+    const { data: clientSession } = useSession();
+    const session = clientSession || initialSession;
     const pathname = usePathname();
     const hasMounted = useHasMounted();
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -196,7 +203,6 @@ export const Navbar: React.FC = () => {
                     </div>
                 </div>
             </div>
-            <ScrollProgress />
         </nav>
     );
 };

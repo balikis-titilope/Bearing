@@ -7,6 +7,8 @@ import { AdminProvider } from "@/components/providers/AdminProvider";
 import { AdminGlobalBanner } from "@/components/ui/AdminGlobalBanner";
 import { ErrorBoundary } from "@/components/ui/ErrorBoundary";
 import { ScrollProvider } from "@/hooks/useScroll";
+import { Navbar } from "@/components/layout/Navbar";
+import { ScrollProgress } from "@/components/ui/ScrollProgress";
 
 export const metadata: Metadata = {
   title: "Bearing | Your Career Companion",
@@ -39,14 +41,16 @@ export default async function RootLayout({
         <ErrorBoundary>
           <AuthProvider session={session}>
             <ThemeProvider>
-              <ScrollProvider>
-                <MotionProvider>
-                  <AdminProvider>
+              <ScrollProgress />
+              <AdminProvider>
+                <Navbar session={session} />
+                <ScrollProvider>
+                  <MotionProvider>
                     <AdminGlobalBanner />
                     {children}
-                  </AdminProvider>
-                </MotionProvider>
-              </ScrollProvider>
+                  </MotionProvider>
+                </ScrollProvider>
+              </AdminProvider>
             </ThemeProvider>
           </AuthProvider>
         </ErrorBoundary>

@@ -49,7 +49,7 @@ export const login = async (values: LoginValues): Promise<LoginResult> => {
         await signIn("credentials", {
             email,
             password,
-            redirectTo: "/dashboard",
+            redirectTo: "/",
         });
         revalidatePath("/");
     } catch (error) {

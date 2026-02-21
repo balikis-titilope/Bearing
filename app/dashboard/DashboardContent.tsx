@@ -42,7 +42,7 @@ export function DashboardContent() {
     }, [session]);
 
     const completedCount = enrollments.filter(e => e.status === 'COMPLETED').length;
-    const isServerAdmin = session?.user?.role === "ADMIN" || session?.user?.role === "SUPER_ADMIN";
+    const isSuperAdmin = session?.user?.role === "SUPER_ADMIN";
 
     return (
         <div className={styles.container}>
@@ -57,7 +57,7 @@ export function DashboardContent() {
                             Continue your learning journey and track your progress.
                         </p>
                     </div>
-                    {isServerAdmin && (
+                    {isSuperAdmin && (
                         <Link href="/admin" className="no-underline">
                             <Button className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white border-none">
                                 <ShieldAlert size={18} />
@@ -69,7 +69,7 @@ export function DashboardContent() {
             </div>
 
             {/* Admin Context Card */}
-            {isServerAdmin && (
+            {isSuperAdmin && (
                 <Card className={`${styles.activityCard} mb-8 border-indigo-200 dark:border-indigo-900 bg-indigo-50/30 dark:bg-indigo-950/20`}>
                     <div className="flex items-center gap-4">
                         <div className="p-3 bg-indigo-100 dark:bg-indigo-900/50 rounded-xl">
@@ -78,7 +78,7 @@ export function DashboardContent() {
                         <div>
                             <h2 className="text-lg font-bold text-slate-900 dark:text-white">Administrator Access</h2>
                             <p className="text-sm text-slate-500 dark:text-slate-400">
-                                You are logged in as a {session.user.role}. You can manage users, paths, and platform content.
+                                You are logged in as a {session?.user?.role}. You can manage users, paths, and platform content.
                             </p>
                         </div>
                         <Link href="/admin" className="ml-auto no-underline">

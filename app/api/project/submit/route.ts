@@ -3,12 +3,10 @@ import { db } from '@/lib/db';
 import { auth } from '@/auth';
 import { evaluateProject } from '@/lib/autograder';
 import { isAdmin } from '@/lib/permissions';
-import { getAdminMode } from '@/lib/permissions-server';
 
 export async function POST(request: Request) {
   try {
     const session = await auth();
-    const adminMode = await getAdminMode();
     const userIsAdmin = isAdmin(session?.user);
 
     if (!session?.user?.id) {
@@ -30,7 +28,7 @@ export async function POST(request: Request) {
     const enrollment = await db.enrollment.findFirst({
       where: {
         id: enrollmentId,
-        ...(userIsAdmin && adminMode ? {} : { userId: session.user.id }),
+        ...(userIsAdmin ? {} : { userId: session.user.id }),
       },
     });
 

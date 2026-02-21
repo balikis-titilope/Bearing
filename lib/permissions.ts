@@ -28,14 +28,8 @@ export function canModifyData(user?: { role?: string | UserRole } | null): boole
     return isSuperAdmin(user);
 }
 
-/**
- * Global guard logic: bypass checks if user is Admin and Admin Mode is enabled.
- * @param unlocked Current status of the resource (e.g. is level 3 unlocked for this student?)
- * @param user Current user object
- * @param adminMode Whether Admin Simulation Mode is ON
- */
-export function canAccess(unlocked: boolean, user?: { role?: string | UserRole } | null, adminMode: boolean = false): boolean {
-    if (isAdmin(user) && adminMode) {
+export function canAccess(unlocked: boolean, user?: { role?: string | UserRole } | null): boolean {
+    if (isAdmin(user)) {
         return true;
     }
     return unlocked;

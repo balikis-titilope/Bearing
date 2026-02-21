@@ -26,7 +26,7 @@ export async function POST(request: Request) {
         });
 
         // @ts-ignore - Prisma types may take a moment to sync in IDE
-        if (user?.lastPathSwitchAt && !(userIsAdmin && adminMode)) {
+        if (user?.lastPathSwitchAt && !userIsAdmin) {
             const now = new Date();
             // @ts-ignore
             const lastSwitch = new Date(user.lastPathSwitchAt);
@@ -93,7 +93,7 @@ export async function POST(request: Request) {
 
         // 4. Decision Logic
         const isGracePeriod = progressPercentage < 20;
-        const canUnenroll = isGracePeriod || isLevelCompleted || (userIsAdmin && adminMode);
+        const canUnenroll = isGracePeriod || isLevelCompleted || userIsAdmin;
 
         if (!canUnenroll) {
             return NextResponse.json(
@@ -132,8 +132,8 @@ export async function POST(request: Request) {
         return NextResponse.json({
             success: true,
             type: isGracePeriod ? 'WIPED' : 'ARCHIVED',
-            message: (userIsAdmin && adminMode)
-                ? 'Admin Override: Path switched successfully regardless of progress.'
+            message: userIsAdmin
+                ? 'Admin Privilege: Path switched successfully regardless of progress.'
                 : isGracePeriod
                     ? 'Path reset successfully. You are now free to choose a new career direction.'
                     : 'Level achievement preserved! Your enrollment has been archived, and you can now explore a new path.'

@@ -2,7 +2,6 @@ import { NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 import { auth } from '@/auth';
 import { isAdmin } from '@/lib/permissions';
-import { getAdminMode } from '@/lib/permissions-server';
 
 export async function GET(request: Request) {
   try {
@@ -53,6 +52,23 @@ export async function POST(request: Request) {
       );
     }
 
+    const session = await auth();
+    const userIsAdmin = isAdmin(session?.user);
+
+    // Check if user already has an enrollment for THIS path
+    const existingPathEnrollment = await db.enrollment.findUnique({
+      where: {
+        userId_careerPathId: {
+          userId,
+          careerPathId,
+        },
+      },
+    });
+
+    if (existingPathEnrollment) {
+      return NextResponse.json({ success: true, enrollment: existingPathEnrollment });
+    }
+
     // Check if user already has ANY enrollment (Restriction: 1 user = 1 path)
     const activeEnrollment = await db.enrollment.findFirst({
       where: {
@@ -61,11 +77,7 @@ export async function POST(request: Request) {
       },
     });
 
-    const session = await auth();
-    const adminMode = await getAdminMode();
-    const userIsAdmin = isAdmin(session?.user);
-
-    if (activeEnrollment && !(userIsAdmin && adminMode)) {
+    if (activeEnrollment && !userIsAdmin) {
       return NextResponse.json(
         { error: 'You are already enrolled in a career path. You can only master one path at a time.' },
         { status: 400 }
@@ -120,10 +132,16 @@ export async function POST(request: Request) {
     });
 
     return NextResponse.json({ success: true, enrollment });
-  } catch (error) {
+  } catch (error: any) {
     console.error('Enrollment error:', error);
+    if (error.code === 'P2002') {
+      return NextResponse.json(
+        { error: 'You are already enrolled in this path.' },
+        { status: 400 }
+      );
+    }
     return NextResponse.json(
-      { error: 'Failed to enroll' },
+      { error: 'Failed to enroll: ' + (error.message || 'Internal Server Error') },
       { status: 500 }
     );
   }

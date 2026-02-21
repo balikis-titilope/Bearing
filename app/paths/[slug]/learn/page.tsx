@@ -8,7 +8,6 @@ import { LearningHeader } from "@/components/learning/LearningHeader";
 import { SkillCard } from "@/components/learning/SkillCard";
 import { ProjectCard } from "@/components/learning/ProjectCard";
 import { isAdmin, canAccess } from '@/lib/permissions';
-import { getAdminMode } from "@/lib/permissions-server";
 import {
   Compass,
   MapPin,
@@ -89,7 +88,6 @@ export default async function LearnPage({ params, searchParams }: PageProps) {
   // Get all final projects for current level from the pre-fetched data
   const projects = currentLevel.projects;
 
-  const adminMode = await getAdminMode();
   const isAssessing = enrollment.status === 'ASSESSING';
 
   return (
@@ -97,14 +95,6 @@ export default async function LearnPage({ params, searchParams }: PageProps) {
       <Navbar />
       <main className={styles.main}>
         <div className={styles.container}>
-          {adminMode && isAdmin(session?.user) && (
-            <div className={styles.adminBanner}>
-              <div className={styles.adminBannerContent}>
-                <Shield size={18} />
-                <span><strong>Admin Observer Mode:</strong> All learning restrictions and level locks are currently bypassed.</span>
-              </div>
-            </div>
-          )}
 
           {isAssessing ? (
             <div className={styles.challengeBanner}>
@@ -183,7 +173,7 @@ export default async function LearnPage({ params, searchParams }: PageProps) {
                         levelOrder={currentLevel.order}
                         enrollmentId={enrollment.id}
                         slug={slug}
-                        isLocked={!canAccess(!isLevelLocked, session?.user, adminMode)}
+                        isLocked={!canAccess(!isLevelLocked, session?.user)}
                       />
                     );
                   })}
@@ -220,7 +210,7 @@ export default async function LearnPage({ params, searchParams }: PageProps) {
                     key={project.id}
                     project={project}
                     status={submission?.status || 'NOT_STARTED'}
-                    isLocked={!canAccess(!currentSkillsUnfinished, session?.user, adminMode)}
+                    isLocked={!canAccess(!currentSkillsUnfinished, session?.user)}
                     slug={slug}
                   />
                 );
@@ -232,7 +222,7 @@ export default async function LearnPage({ params, searchParams }: PageProps) {
               <h2 className={styles.sectionTitle}>Your Progress</h2>
               <div className={styles.progressOverview}>
                 {path.levels.map((level, index) => {
-                  const isUnlocked = canAccess(level.order <= actualCurrentLevel.order, session?.user, adminMode);
+                  const isUnlocked = canAccess(level.order <= actualCurrentLevel.order, session?.user);
                   const isViewing = level.id === currentLevel.id;
 
                   return (

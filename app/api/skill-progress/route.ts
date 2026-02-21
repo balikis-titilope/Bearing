@@ -2,12 +2,10 @@ import { NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 import { auth } from '@/auth';
 import { isAdmin } from '@/lib/permissions';
-import { getAdminMode } from '@/lib/permissions-server';
 
 export async function PUT(request: Request) {
   try {
     const session = await auth();
-    const adminMode = await getAdminMode();
     const userIsAdmin = isAdmin(session?.user);
 
     if (!session?.user?.id) {
@@ -33,7 +31,7 @@ export async function PUT(request: Request) {
     // If Admin Mode is ON, we allow admins to update ANY enrollment's skill progress
     const enrollment = await db.enrollment.findFirst({
       where: {
-        ...(userIsAdmin && adminMode && enrollmentId ? { id: enrollmentId } : { userId }),
+        ...(userIsAdmin && enrollmentId ? { id: enrollmentId } : { userId }),
       },
       include: {
         skillProgress: {

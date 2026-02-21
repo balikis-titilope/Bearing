@@ -4,7 +4,6 @@ import { MotionProvider } from "@/components/providers/MotionProvider";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { AuthProvider } from "@/components/providers/AuthProvider";
 import { AdminProvider } from "@/components/providers/AdminProvider";
-import { AdminGlobalBanner } from "@/components/ui/AdminGlobalBanner";
 import { ErrorBoundary } from "@/components/ui/ErrorBoundary";
 import { ScrollProvider } from "@/hooks/useScroll";
 import { Navbar } from "@/components/layout/Navbar";
@@ -46,7 +45,6 @@ export default async function RootLayout({
                 <Navbar session={session} />
                 <ScrollProvider>
                   <MotionProvider>
-                    <AdminGlobalBanner />
                     {children}
                   </MotionProvider>
                 </ScrollProvider>

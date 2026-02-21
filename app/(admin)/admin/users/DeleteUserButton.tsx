@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { Trash2, AlertTriangle, Loader2 } from 'lucide-react';
 import { deleteUser } from '@/actions/admin';
-import styles from './page.module.css';
+import styles from './users.module.css';
 
 interface DeleteUserButtonProps {
     userId: string;

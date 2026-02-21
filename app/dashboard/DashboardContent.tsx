@@ -43,6 +43,8 @@ export function DashboardContent() {
 
     const completedCount = enrollments.filter(e => e.status === 'COMPLETED').length;
     const isSuperAdmin = session?.user?.role === "SUPER_ADMIN";
+    const isAdmin = session?.user?.role === "ADMIN";
+    const hasAdminAccess = isSuperAdmin || isAdmin;
 
     return (
         <div className={styles.container}>
@@ -69,7 +71,7 @@ export function DashboardContent() {
             </div>
 
             {/* Admin Context Card */}
-            {isSuperAdmin && (
+            {hasAdminAccess && (
                 <Card className={`${styles.activityCard} mb-8 border-indigo-200 dark:border-indigo-900 bg-indigo-50/30 dark:bg-indigo-950/20`}>
                     <div className="flex items-center gap-4">
                         <div className="p-3 bg-indigo-100 dark:bg-indigo-900/50 rounded-xl">
@@ -78,14 +80,16 @@ export function DashboardContent() {
                         <div>
                             <h2 className="text-lg font-bold text-slate-900 dark:text-white">Administrator Access</h2>
                             <p className="text-sm text-slate-500 dark:text-slate-400">
-                                You are logged in as a {session?.user?.role}. You can manage users, paths, and platform content.
+                                You are logged in as a {session?.user?.role}. {isSuperAdmin ? 'You can manage users, paths, and platform content.' : 'You have observer access to platform metrics and content.'}
                             </p>
                         </div>
-                        <Link href="/admin" className="ml-auto no-underline">
-                            <Button variant="outline" size="sm" className="border-indigo-200 text-indigo-600 hover:bg-indigo-100">
-                                Go to Admin Hub
-                            </Button>
-                        </Link>
+                        {isSuperAdmin && (
+                            <Link href="/admin" className="ml-auto no-underline">
+                                <Button variant="outline" size="sm" className="border-indigo-200 text-indigo-600 hover:bg-indigo-100">
+                                    Go to Admin Hub
+                                </Button>
+                            </Link>
+                        )}
                     </div>
                 </Card>
             )}

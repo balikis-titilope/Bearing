@@ -183,3 +183,43 @@
 .linkItemPrimary:hover .linkIconPrimary {
     transform: translateX(4px);
 }
+
+.roleBadgeWrapper {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.roleIndicator {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.25rem 0.625rem;
+    border-radius: var(--radius-full);
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.roleSuper {
+    background-color: #f3e8ff;
+    color: #7e22ce;
+    border: 1px solid rgba(126, 34, 206, 0.2);
+}
+
+.roleAdmin {
+    background-color: #e0f2fe;
+    color: #0369a1;
+    border: 1px solid rgba(3, 105, 161, 0.2);
+}
+
+.linkRow {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.restrictedIcon {
+    color: var(--text-muted);
+    opacity: 0.5;
+}

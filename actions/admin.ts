@@ -40,3 +40,30 @@ export async function deleteUser(userId: string) {
         return { error: "Failed to delete user" };
     }
 }
+export async function promoteToAdminByEmail(email: string) {
+    await checkSuperAdmin();
+
+    try {
+        const user = await db.user.findUnique({
+            where: { email },
+        });
+
+        if (!user) {
+            return { error: "User with this email not found" };
+        }
+
+        if (user.role === "SUPER_ADMIN") {
+            return { error: "User is already a Super Admin" };
+        }
+
+        await db.user.update({
+            where: { id: user.id },
+            data: { role: UserRole.ADMIN },
+        });
+
+        revalidatePath("/admin/users");
+        return { success: `User ${email} promoted to Admin successfully` };
+    } catch (error) {
+        return { error: "Failed to promote user" };
+    }
+}

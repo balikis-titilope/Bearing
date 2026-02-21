@@ -26,9 +26,15 @@ export const Navbar: React.FC<NavbarProps> = ({ session: initialSession }) => {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [activeSection, setActiveSection] = useState<string>('');
 
+    // Routes where the Navbar should be hidden
+    const noNavbarRoutes = ['/login', '/register', '/contact'];
+    const isHidden = noNavbarRoutes.includes(pathname);
+
     const onLogout = () => {
         signOut({ callbackUrl: '/' });
     };
+
+    if (isHidden) return null;
 
     const handleScrollToSection = useCallback((e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
         e.preventDefault();

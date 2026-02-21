@@ -21,13 +21,21 @@ export function isAdmin(user?: { role?: string | UserRole } | null): boolean {
 }
 
 /**
- * Global guard logic: bypass checks if user is Super Admin and Admin Mode is enabled.
- * @param unlocked Current status of the resource
+ * Checks if user is permitted to perform sensitive data mutations (e.g. deleting users).
+ * Restricted to SUPER_ADMIN only.
+ */
+export function canModifyData(user?: { role?: string | UserRole } | null): boolean {
+    return isSuperAdmin(user);
+}
+
+/**
+ * Global guard logic: bypass checks if user is Admin and Admin Mode is enabled.
+ * @param unlocked Current status of the resource (e.g. is level 3 unlocked for this student?)
  * @param user Current user object
  * @param adminMode Whether Admin Simulation Mode is ON
  */
 export function canAccess(unlocked: boolean, user?: { role?: string | UserRole } | null, adminMode: boolean = false): boolean {
-    if (isSuperAdmin(user) && adminMode) {
+    if (isAdmin(user) && adminMode) {
         return true;
     }
     return unlocked;

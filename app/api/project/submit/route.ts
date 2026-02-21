@@ -2,10 +2,15 @@ import { NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 import { auth } from '@/auth';
 import { evaluateProject } from '@/lib/autograder';
+import { isAdmin } from '@/lib/permissions';
+import { getAdminMode } from '@/lib/permissions-server';
 
 export async function POST(request: Request) {
   try {
     const session = await auth();
+    const adminMode = await getAdminMode();
+    const userIsAdmin = isAdmin(session?.user);
+
     if (!session?.user?.id) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
@@ -20,11 +25,12 @@ export async function POST(request: Request) {
       );
     }
 
-    // Verify enrollment belongs to user
+    // Verify enrollment
+    // If Admin Mode is ON, we allow admins to submit to ANY enrollment (Observer Testing)
     const enrollment = await db.enrollment.findFirst({
       where: {
         id: enrollmentId,
-        userId: session.user.id,
+        ...(userIsAdmin && adminMode ? {} : { userId: session.user.id }),
       },
     });
 

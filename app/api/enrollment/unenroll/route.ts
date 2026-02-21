@@ -1,10 +1,14 @@
 import { NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 import { auth } from '@/auth';
+import { isAdmin } from '@/lib/permissions';
+import { getAdminMode } from '@/lib/permissions-server';
 
 export async function POST(request: Request) {
     try {
         const session = await auth();
+        const adminMode = await getAdminMode();
+        const userIsAdmin = isAdmin(session?.user);
 
         if (!session?.user?.id) {
             return NextResponse.json(
@@ -21,8 +25,8 @@ export async function POST(request: Request) {
             select: { lastPathSwitchAt: true }
         });
 
-        // @ts-ignore - Prisma types may be out of sync
-        if (user?.lastPathSwitchAt) {
+        // @ts-ignore - Prisma types may take a moment to sync in IDE
+        if (user?.lastPathSwitchAt && !(userIsAdmin && adminMode)) {
             const now = new Date();
             // @ts-ignore
             const lastSwitch = new Date(user.lastPathSwitchAt);
@@ -89,7 +93,7 @@ export async function POST(request: Request) {
 
         // 4. Decision Logic
         const isGracePeriod = progressPercentage < 20;
-        const canUnenroll = isGracePeriod || isLevelCompleted;
+        const canUnenroll = isGracePeriod || isLevelCompleted || (userIsAdmin && adminMode);
 
         if (!canUnenroll) {
             return NextResponse.json(
@@ -128,9 +132,11 @@ export async function POST(request: Request) {
         return NextResponse.json({
             success: true,
             type: isGracePeriod ? 'WIPED' : 'ARCHIVED',
-            message: isGracePeriod
-                ? 'Path reset successfully. You are now free to choose a new career direction.'
-                : 'Level achievement preserved! Your enrollment has been archived, and you can now explore a new path.'
+            message: (userIsAdmin && adminMode)
+                ? 'Admin Override: Path switched successfully regardless of progress.'
+                : isGracePeriod
+                    ? 'Path reset successfully. You are now free to choose a new career direction.'
+                    : 'Level achievement preserved! Your enrollment has been archived, and you can now explore a new path.'
         });
 
     } catch (error) {

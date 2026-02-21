@@ -7,9 +7,19 @@ import { Footer } from '@/components/layout/Footer';
 import { LearningHeader } from "@/components/learning/LearningHeader";
 import { SkillCard } from "@/components/learning/SkillCard";
 import { ProjectCard } from "@/components/learning/ProjectCard";
-import { canAccess } from "@/lib/permissions";
+import { isAdmin, canAccess } from '@/lib/permissions';
 import { getAdminMode } from "@/lib/permissions-server";
-import { Trophy, AlertCircle } from 'lucide-react';
+import {
+  Compass,
+  MapPin,
+  ChevronRight,
+  Trophy,
+  Lock,
+  Clock,
+  CheckCircle,
+  Shield,
+  AlertCircle
+} from 'lucide-react';
 import styles from './page.module.css';
 
 interface PageProps {
@@ -85,8 +95,17 @@ export default async function LearnPage({ params, searchParams }: PageProps) {
   return (
     <>
       <Navbar />
-      <main className={styles.page}>
-        <div className="container">
+      <main className={styles.main}>
+        <div className={styles.container}>
+          {adminMode && isAdmin(session?.user) && (
+            <div className={styles.adminBanner}>
+              <div className={styles.adminBannerContent}>
+                <Shield size={18} />
+                <span><strong>Admin Observer Mode:</strong> All learning restrictions and level locks are currently bypassed.</span>
+              </div>
+            </div>
+          )}
+
           {isAssessing ? (
             <div className={styles.challengeBanner}>
               <div className={styles.challengeContent}>
@@ -213,7 +232,7 @@ export default async function LearnPage({ params, searchParams }: PageProps) {
               <h2 className={styles.sectionTitle}>Your Progress</h2>
               <div className={styles.progressOverview}>
                 {path.levels.map((level, index) => {
-                  const isUnlocked = level.order <= actualCurrentLevel.order;
+                  const isUnlocked = canAccess(level.order <= actualCurrentLevel.order, session?.user, adminMode);
                   const isViewing = level.id === currentLevel.id;
 
                   return (

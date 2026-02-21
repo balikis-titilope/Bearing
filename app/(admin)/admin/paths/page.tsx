@@ -1,15 +1,22 @@
 import { db } from "@/lib/db";
+import { auth } from "@/auth";
+import { isSuperAdmin } from "@/lib/permissions";
 import {
     Layers,
     Eye,
     EyeOff,
     Plus,
     ArrowRight,
-    MoreVertical
+    MoreVertical,
+    Lock
 } from "lucide-react";
 import styles from "./page.module.css";
+import Link from "next/link";
 
 export default async function AdminPathsPage() {
+    const session = await auth();
+    const isSuper = isSuperAdmin(session?.user);
+
     const paths = await db.careerPath.findMany({
         include: {
             _count: {
@@ -26,10 +33,12 @@ export default async function AdminPathsPage() {
                     <h1 className={styles.title}>Career Paths</h1>
                     <p className={styles.subtitle}>Review and publish your learning curriculum.</p>
                 </div>
-                <button className={styles.createBtn}>
-                    <Plus size={16} />
-                    Create New Path
-                </button>
+                {isSuper && (
+                    <button className={styles.createBtn}>
+                        <Plus size={16} />
+                        Create New Path
+                    </button>
+                )}
             </div>
 
             <div className={styles.grid}>
@@ -63,13 +72,22 @@ export default async function AdminPathsPage() {
                         </div>
 
                         <div className={styles.cardFooter}>
-                            <button className={styles.footerBtn}>
-                                {path.isPublished ? <EyeOff size={16} /> : <Eye size={16} />}
-                                {path.isPublished ? "Unpublish" : "Publish Now"}
-                            </button>
-                            <button className={styles.moreBtn}>
-                                <MoreVertical size={16} />
-                            </button>
+                            {isSuper ? (
+                                <>
+                                    <button className={styles.footerBtn}>
+                                        {path.isPublished ? <EyeOff size={16} /> : <Eye size={16} />}
+                                        {path.isPublished ? "Unpublish" : "Publish Now"}
+                                    </button>
+                                    <button className={styles.moreBtn}>
+                                        <MoreVertical size={16} />
+                                    </button>
+                                </>
+                            ) : (
+                                <div className={styles.readOnly}>
+                                    <Lock size={14} />
+                                    <span>Read Only View</span>
+                                </div>
+                            )}
                         </div>
                     </div>
                 ))}

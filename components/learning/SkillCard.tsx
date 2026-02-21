@@ -40,6 +40,7 @@ export function SkillCard({ skill, index, status, levelOrder, enrollmentId, slug
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             skillId: skill.id,
+            enrollmentId,
             status: 'IN_PROGRESS'
           }),
         });

@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 import { auth } from '@/auth';
+import { isAdmin } from '@/lib/permissions';
+import { getAdminMode } from '@/lib/permissions-server';
 
 export async function GET(request: Request) {
   try {
@@ -53,10 +55,17 @@ export async function POST(request: Request) {
 
     // Check if user already has ANY enrollment (Restriction: 1 user = 1 path)
     const activeEnrollment = await db.enrollment.findFirst({
-      where: { userId },
+      where: {
+        userId,
+        status: { in: ['ACTIVE', 'ASSESSING', 'ENROLLED'] }
+      },
     });
 
-    if (activeEnrollment) {
+    const session = await auth();
+    const adminMode = await getAdminMode();
+    const userIsAdmin = isAdmin(session?.user);
+
+    if (activeEnrollment && !(userIsAdmin && adminMode)) {
       return NextResponse.json(
         { error: 'You are already enrolled in a career path. You can only master one path at a time.' },
         { status: 400 }

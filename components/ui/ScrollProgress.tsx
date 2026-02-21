@@ -1,10 +1,14 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
+import { usePathname } from 'next/navigation';
 import styles from './ScrollProgress.module.css';
 
 export const ScrollProgress: React.FC = () => {
     const [progress, setProgress] = useState(0);
+    const pathname = usePathname();
+    const noNavbarRoutes = ['/login', '/register', '/contact'];
+    const hasNavbar = !noNavbarRoutes.includes(pathname);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -19,7 +23,7 @@ export const ScrollProgress: React.FC = () => {
     }, []);
 
     return (
-        <div className={styles.container}>
+        <div className={`${styles.container} ${!hasNavbar ? styles.noNavbar : ''}`}>
             <div
                 className={styles.bar}
                 style={{ transform: `scaleX(${progress})` }}

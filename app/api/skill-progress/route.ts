@@ -1,11 +1,15 @@
 import { NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 import { auth } from '@/auth';
+import { isAdmin } from '@/lib/permissions';
+import { getAdminMode } from '@/lib/permissions-server';
 
 export async function PUT(request: Request) {
   try {
     const session = await auth();
-    
+    const adminMode = await getAdminMode();
+    const userIsAdmin = isAdmin(session?.user);
+
     if (!session?.user?.id) {
       return NextResponse.json(
         { error: 'Unauthorized' },
@@ -14,7 +18,7 @@ export async function PUT(request: Request) {
     }
 
     const body = await request.json();
-    const { skillId, status } = body;
+    const { skillId, status, enrollmentId } = body;
 
     if (!skillId || !status) {
       return NextResponse.json(
@@ -25,9 +29,12 @@ export async function PUT(request: Request) {
 
     const userId = session.user.id;
 
-    // Find enrollment that contains this skill
+    // Find enrollment
+    // If Admin Mode is ON, we allow admins to update ANY enrollment's skill progress
     const enrollment = await db.enrollment.findFirst({
-      where: { userId },
+      where: {
+        ...(userIsAdmin && adminMode && enrollmentId ? { id: enrollmentId } : { userId }),
+      },
       include: {
         skillProgress: {
           where: { skillId }
@@ -48,7 +55,7 @@ export async function PUT(request: Request) {
       // Update existing progress
       const updated = await db.skillProgress.update({
         where: { id: existingProgress.id },
-        data: { 
+        data: {
           status,
           completedAt: status === 'COMPLETED' ? new Date() : null
         }

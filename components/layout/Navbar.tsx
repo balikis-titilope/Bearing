@@ -110,12 +110,11 @@ export const Navbar: React.FC<NavbarProps> = ({ session: initialSession }) => {
                     {hasMounted && (session ? (
                         <>
                             <Link href="/dashboard" className={`${styles.link} ${pathname === '/dashboard' ? styles.active : ''}`}>Dashboard</Link>
-                            {(session?.user?.role === "ADMIN" || session?.user?.role === "SUPER_ADMIN") && (
+                            {session?.user?.role === "SUPER_ADMIN" && (
                                 <Link href="/admin" className={`${styles.link} ${styles.adminLink} ${pathname === '/admin' ? styles.active : ''}`}>Admin Hub</Link>
                             )}
                             <Link href="/projects" className={`${styles.link} ${pathname === '/projects' ? styles.active : ''}`}>Projects</Link>
                             <Link href="/paths" className={`${styles.link} ${pathname === '/paths' ? styles.active : ''}`}>All Paths</Link>
-                            <Link href="/contact" className={`${styles.link} ${pathname === '/contact' ? styles.active : ''}`}>Contact</Link>
                         </>
                     ) : (
                         <>
@@ -161,12 +160,11 @@ export const Navbar: React.FC<NavbarProps> = ({ session: initialSession }) => {
                         {hasMounted && (session ? (
                             <>
                                 <Link href="/dashboard" className={`${styles.link} ${pathname === '/dashboard' ? styles.active : ''}`} onClick={() => setMobileMenuOpen(false)}>Dashboard</Link>
-                                {(session?.user?.role === "ADMIN" || session?.user?.role === "SUPER_ADMIN") && (
+                                {session?.user?.role === "SUPER_ADMIN" && (
                                     <Link href="/admin" className={`${styles.link} ${styles.adminLink} ${pathname === '/admin' ? styles.active : ''}`} onClick={() => setMobileMenuOpen(false)}>Admin Hub</Link>
                                 )}
                                 <Link href="/projects" className={`${styles.link} ${pathname === '/projects' ? styles.active : ''}`} onClick={() => setMobileMenuOpen(false)}>Projects</Link>
                                 <Link href="/paths" className={`${styles.link} ${pathname === '/paths' ? styles.active : ''}`} onClick={() => setMobileMenuOpen(false)}>All Paths</Link>
-                                <Link href="/contact" className={`${styles.link} ${pathname === '/contact' ? styles.active : ''}`} onClick={() => setMobileMenuOpen(false)}>Contact</Link>
                             </>
                         ) : (
                             <>

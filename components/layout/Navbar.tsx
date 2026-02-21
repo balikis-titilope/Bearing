@@ -34,8 +34,6 @@ export const Navbar: React.FC<NavbarProps> = ({ session: initialSession }) => {
         signOut({ callbackUrl: '/' });
     };
 
-    if (isHidden) return null;
-
     const handleScrollToSection = useCallback((e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
         e.preventDefault();
         const element = document.getElementById(sectionId);
@@ -89,6 +87,8 @@ export const Navbar: React.FC<NavbarProps> = ({ session: initialSession }) => {
         { id: 'paths', label: 'Career Paths' },
     ];
 
+    if (isHidden) return null;
+
     return (
         <nav className={styles.nav} role="navigation" aria-label="Main navigation">
             <div className={`${styles.container} container`}>
@@ -115,6 +115,7 @@ export const Navbar: React.FC<NavbarProps> = ({ session: initialSession }) => {
                             )}
                             <Link href="/projects" className={`${styles.link} ${pathname === '/projects' ? styles.active : ''}`}>Projects</Link>
                             <Link href="/paths" className={`${styles.link} ${pathname === '/paths' ? styles.active : ''}`}>All Paths</Link>
+                            <Link href="/contact" className={`${styles.link} ${pathname === '/contact' ? styles.active : ''}`}>Contact</Link>
                         </>
                     ) : (
                         <>
@@ -165,6 +166,7 @@ export const Navbar: React.FC<NavbarProps> = ({ session: initialSession }) => {
                                 )}
                                 <Link href="/projects" className={`${styles.link} ${pathname === '/projects' ? styles.active : ''}`} onClick={() => setMobileMenuOpen(false)}>Projects</Link>
                                 <Link href="/paths" className={`${styles.link} ${pathname === '/paths' ? styles.active : ''}`} onClick={() => setMobileMenuOpen(false)}>All Paths</Link>
+                                <Link href="/contact" className={`${styles.link} ${pathname === '/contact' ? styles.active : ''}`} onClick={() => setMobileMenuOpen(false)}>Contact</Link>
                             </>
                         ) : (
                             <>

@@ -146,7 +146,7 @@ export function ProjectSubmissionForm({ project, enrollment, submission }: Proje
             )}
             <p>
               <span>Evaluation Date</span>
-              <span>{new Date(submission.submittedAt).toLocaleString()}</span>
+              <span>{submission.submittedAt ? new Date(submission.submittedAt).toLocaleString() : 'Pending'}</span>
             </p>
           </div>
 

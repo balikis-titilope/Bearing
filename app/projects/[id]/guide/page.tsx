@@ -144,7 +144,7 @@ export default async function ProjectGuidePage({ params }: ProjectGuidePageProps
                             )}
 
                             <div className={styles.statusMeta}>
-                                <span>Checked on {new Date(submission.submittedAt).toLocaleString()}</span>
+                                <span key="checked-date">Checked on {submission.submittedAt ? new Date(submission.submittedAt).toLocaleString() : 'Pending'}</span>
                                 <Link href={`/paths/${project.level.careerPath.slug}/learn/project/${project.id}`} className={styles.retryLink}>
                                     {isPassed ? 'View Details' : 'Improve & Resubmit'}
                                     <ExternalLink size={14} />

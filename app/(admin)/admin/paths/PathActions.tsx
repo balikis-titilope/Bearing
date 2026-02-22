@@ -9,7 +9,7 @@ import {
     Trash2,
     Loader2
 } from "lucide-react";
-import { togglePathPublishStatus, deletePath } from "@/actions/admin";
+import { togglePathPublishStatus, deletePath } from "@/actions/path-admin";
 import styles from "./page.module.css";
 import Link from "next/link";
 

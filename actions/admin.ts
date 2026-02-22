@@ -67,3 +67,4 @@ export async function promoteToAdminByEmail(email: string) {
         return { error: "Failed to promote user" };
     }
 }
+

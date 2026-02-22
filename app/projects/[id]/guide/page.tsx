@@ -145,10 +145,12 @@ export default async function ProjectGuidePage({ params }: ProjectGuidePageProps
 
                             <div className={styles.statusMeta}>
                                 <span key="checked-date">Checked on {submission.submittedAt ? new Date(submission.submittedAt).toLocaleString() : 'Pending'}</span>
-                                <Link href={`/paths/${project.level.careerPath.slug}/learn/project/${project.id}`} className={styles.retryLink}>
-                                    {isPassed ? 'View Details' : 'Improve & Resubmit'}
-                                    <ExternalLink size={14} />
-                                </Link>
+                                {project.level?.careerPath?.slug && (
+                                    <Link href={`/paths/${project.level.careerPath.slug}/learn/project/${project.id}`} className={styles.retryLink}>
+                                        {isPassed ? 'View Details' : 'Improve & Resubmit'}
+                                        <ExternalLink size={14} />
+                                    </Link>
+                                )}
                             </div>
                         </div>
                     )}
@@ -242,7 +244,7 @@ export default async function ProjectGuidePage({ params }: ProjectGuidePageProps
                                     <h3>Project Completion & Submission</h3>
                                     <p>Once you have implemented all Meta-standard requirements and verified your solution, proceed to the final submission.</p>
                                 </div>
-                                <Link href={`/paths/${project.level.careerPath.slug}/learn/project/${project.id}`}>
+                                <Link href={`/paths/${project.level?.careerPath?.slug}/learn/project/${project.id}`}>
                                     <Button variant="primary">
                                         Submit Project
                                         <Play size={16} />

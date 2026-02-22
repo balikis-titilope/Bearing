@@ -74,21 +74,24 @@
     box-shadow: var(--shadow-sm);
     display: flex;
     flex-direction: column;
-    overflow: hidden;
-}
-
-.cardContent {
-    padding: 1rem;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 0.3125rem;
+    /* Removed overflow: hidden to prevent clipping of dropdowns */
 }
 
 .cardTop {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
+    padding: 1rem 1rem 0;
+    /* Add padding here so cardContent doesn't need it for the top */
+}
+
+.cardContent {
+    padding: 0 1rem 1rem;
+    /* Adjust padding */
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3125rem;
 }
 
 .iconWrapper {
@@ -138,16 +141,21 @@
     color: var(--text-muted);
     display: -webkit-box;
     -webkit-line-clamp: 2;
+    line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
 
 .stats {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.3125rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     padding-top: 0.3125rem;
     border-top: 1px solid var(--border);
+}
+
+.statItem:last-child {
+    text-align: right;
 }
 
 .statItem {
@@ -236,4 +244,89 @@
     text-transform: uppercase;
     letter-spacing: 0.025em;
     opacity: 0.6;
+}
+
+.actions {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.dropdown {
+    position: absolute;
+    bottom: 100%;
+    right: 0;
+    margin-bottom: 0.5rem;
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    z-index: 50;
+    min-width: 160px;
+    padding: 0.5rem;
+    animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.dropdownItem {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+    color: var(--text);
+    border-radius: var(--radius-sm);
+    transition: background-color 0.2s ease;
+    text-align: left;
+}
+
+.dropdownItem:hover {
+    background-color: var(--background);
+}
+
+.dropdownItemDanger {
+    color: #ef4444;
+}
+
+.dropdownItemDanger:hover {
+    background-color: rgba(239, 68, 68, 0.1);
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 40;
+}
+
+.cardLink {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.cardLink:hover {
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+:global(.dark) .cardLink:hover {
+    background-color: rgba(255, 255, 255, 0.02);
 }

@@ -30,6 +30,7 @@ export default async function LearnPage({ params, searchParams }: PageProps) {
   const { slug } = await params;
   const { level: levelOrderStr } = await searchParams;
   const session = await auth();
+  const isUserAdmin = isAdmin(session?.user);
 
   if (!session?.user?.id) {
     return notFound();
@@ -38,7 +39,7 @@ export default async function LearnPage({ params, searchParams }: PageProps) {
   const userId = session.user.id;
 
   // Get enrollment with path details
-  const enrollment = await db.enrollment.findFirst({
+  let enrollment = await db.enrollment.findFirst({
     where: {
       userId,
       careerPath: { slug },
@@ -64,6 +65,44 @@ export default async function LearnPage({ params, searchParams }: PageProps) {
     },
   });
 
+  // ADMIN BYPASS: If no enrollment exists but user is Admin, fetch path directly and mock enrollment
+  if (!enrollment && isUserAdmin) {
+    const path = await db.careerPath.findUnique({
+      where: { slug },
+      include: {
+        levels: {
+          orderBy: { order: 'asc' },
+          include: {
+            skills: {
+              orderBy: { order: 'asc' },
+            },
+            projects: {
+              where: { isFinalProject: true }
+            }
+          },
+        },
+      },
+    });
+
+    if (!path) return notFound();
+
+    // Mock enrollment object for Admin view
+    enrollment = {
+      id: "admin-view",
+      userId,
+      careerPathId: path.id,
+      status: "ACTIVE",
+      currentLevelId: path.levels[0]?.id || null,
+      assessmentStatus: "COMPLETED",
+      claimedLevel: 1,
+      enrolledAt: new Date(),
+      completedAt: null,
+      careerPath: path,
+      skillProgress: [],
+      projectProgress: [],
+    } as any;
+  }
+
   if (!enrollment) {
     return notFound();
   }
@@ -78,7 +117,8 @@ export default async function LearnPage({ params, searchParams }: PageProps) {
     const order = parseInt(levelOrderStr);
     const requestedLevel = path.levels.find(l => l.order === order);
     // Only allow viewing if it's the current level or a previous one
-    if (requestedLevel && requestedLevel.order <= actualCurrentLevel.order) {
+    // ADMIN BYPASS: Always allow admins to view any level
+    if (requestedLevel && (isUserAdmin || requestedLevel.order <= actualCurrentLevel.order)) {
       viewingLevel = requestedLevel;
     }
   }
@@ -88,7 +128,8 @@ export default async function LearnPage({ params, searchParams }: PageProps) {
   // Get all final projects for current level from the pre-fetched data
   const projects = currentLevel.projects;
 
-  const isAssessing = enrollment.status === 'ASSESSING';
+  // ADMIN BYPASS: Admins should never be blocked by the assessment/placement view
+  const isAssessing = !isUserAdmin && enrollment.status === 'ASSESSING';
 
   return (
     <>

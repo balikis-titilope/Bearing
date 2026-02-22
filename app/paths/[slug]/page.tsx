@@ -3,10 +3,13 @@ import { Metadata } from 'next';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { auth } from "@/auth";
+import { isAdmin } from '@/lib/permissions';
 import { EnrollButton } from "@/components/learning/EnrollButton";
 import { getCareerPath, getAllCareerPathSlugs } from "@/lib/data/career-paths";
 import { db } from "@/lib/db";
 import styles from './[slug].module.css';
+import Link from 'next/link';
+import { ArrowRight } from 'lucide-react';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -38,7 +41,6 @@ export default async function CareerPathPage({ params }: PageProps) {
   const { slug } = await params;
   const session = await auth();
   const userId = session?.user?.id;
-
   const path = await getCareerPath(slug);
 
   if (!path) {
@@ -58,6 +60,7 @@ export default async function CareerPathPage({ params }: PageProps) {
     isEnrolled = !!enrollment;
   }
 
+  const isUserAdmin = isAdmin(session?.user);
   const totalSkills = path.levels.reduce((acc, level) => acc + level.skills.length, 0);
 
   return (
@@ -86,12 +89,15 @@ export default async function CareerPathPage({ params }: PageProps) {
                 </div>
               </div>
 
-              <EnrollButton
-                careerPathId={path.id}
-                slug={slug}
-                userId={userId}
-                isEnrolled={isEnrolled}
-              />
+              {isUserAdmin && (
+                <div className={styles.adminModeInfo}>
+                  <p>You can view all curriculum content below without enrolling.</p>
+                  <Link href={`/paths/${slug}/learn`} className={styles.adminLearnBtn}>
+                    <ArrowRight size={18} />
+                    Start Learning (Admin Mode)
+                  </Link>
+                </div>
+              )}
             </div>
           </div>
 
@@ -118,17 +124,30 @@ export default async function CareerPathPage({ params }: PageProps) {
 
                   {/* Skills */}
                   <div className={styles.skillsList}>
-                    {level.skills.map((skill, skillIndex) => (
-                      <div key={skill.id} className={styles.skill}>
-                        <div className={styles.skillIcon}>
-                          <span className={styles.skillNumber}>{level.order}.{skillIndex + 1}</span>
+                    {level.skills.map((skill, skillIndex) => {
+                      const skillContent = (
+                        <div key={skill.id} className={`${styles.skill} ${isUserAdmin ? styles.adminSkill : ''}`}>
+                          <div className={styles.skillIcon}>
+                            <span className={styles.skillNumber}>{level.order}.{skillIndex + 1}</span>
+                          </div>
+                          <div className={styles.skillContent}>
+                            <h3 className={styles.skillTitle}>{skill.title}</h3>
+                            <p className={styles.skillDescription}>{skill.description}</p>
+                          </div>
+                          {isUserAdmin && <ArrowRight className={styles.adminArrow} size={16} />}
                         </div>
-                        <div className={styles.skillContent}>
-                          <h3 className={styles.skillTitle}>{skill.title}</h3>
-                          <p className={styles.skillDescription}>{skill.description}</p>
-                        </div>
-                      </div>
-                    ))}
+                      );
+
+                      if (isUserAdmin) {
+                        return (
+                          <Link key={skill.id} href={`/paths/${slug}/learn?level=${level.order}`} className={styles.skillLink}>
+                            {skillContent}
+                          </Link>
+                        );
+                      }
+
+                      return skillContent;
+                    })}
                   </div>
 
                   {/* Final Project Preview */}
@@ -138,7 +157,10 @@ export default async function CareerPathPage({ params }: PageProps) {
                       <span>Final Project</span>
                     </div>
                     <p className={styles.projectNote}>
-                      Complete all {level.skills.length} skills in this level to unlock the final project
+                      {isUserAdmin
+                        ? "Admin View: You have full access to all projects."
+                        : `Complete all ${level.skills.length} skills in this level to unlock the final project`
+                      }
                     </p>
                   </div>
 
@@ -155,16 +177,18 @@ export default async function CareerPathPage({ params }: PageProps) {
             </div>
           </div>
 
-          {/* CTA Section */}
-          <div className={styles.cta}>
-            <h2>Ready to Start Your Journey?</h2>
-            <p>Enroll now and get personalized guidance throughout your learning path.</p>
-            <EnrollButton
-              careerPathId={path.id}
-              userId={userId}
-              variant="large"
-            />
-          </div>
+          {/* CTA Section - Hide for admins */}
+          {!isUserAdmin && (
+            <div className={styles.cta}>
+              <h2>Ready to Start Your Journey?</h2>
+              <p>Enroll now and get personalized guidance throughout your learning path.</p>
+              <EnrollButton
+                careerPathId={path.id}
+                userId={userId}
+                variant="large"
+              />
+            </div>
+          )}
         </div>
       </main>
       <Footer />

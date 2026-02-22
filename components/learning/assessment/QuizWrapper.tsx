@@ -27,8 +27,10 @@ export function QuizWrapper({ skill, enrollment, progress, slug }: QuizWrapperPr
         setAssessmentScore(score);
         setIsAssessmentFinished(true);
 
-        // Save score
-        await saveSkillScore(enrollment.id, skill.id, score);
+        // Save score if not in admin preview mode
+        if (enrollment.id !== 'admin-view') {
+            await saveSkillScore(enrollment.id, skill.id, score);
+        }
     };
 
     const handleBack = () => {

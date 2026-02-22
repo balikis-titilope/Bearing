@@ -2,20 +2,23 @@
 
 import React, { useCallback, useEffect, useState } from 'react';
 import Link from 'next/link';
-import { useSession } from 'next-auth/react';
+import { useSession, signOut } from 'next-auth/react';
+import { usePathname } from 'next/navigation';
 import { Button } from '../ui/Button';
 import styles from './Navbar.module.css';
 import { Compass, User, LogOut, Menu, X } from 'lucide-react';
 import { ThemeToggle } from '../ui/ThemeToggle';
-import { logout } from '@/actions/logout';
 import { ScrollProgress } from '../ui/ScrollProgress';
+import { useHasMounted } from '@/hooks/useHasMounted';
 
 export const PathsNavbar: React.FC = () => {
     const { data: session } = useSession();
+    const pathname = usePathname();
+    const hasMounted = useHasMounted();
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
     const onLogout = () => {
-        logout();
+        signOut({ callbackUrl: '/' });
     };
 
     return (
@@ -36,24 +39,20 @@ export const PathsNavbar: React.FC = () => {
                 </button>
 
                 <div className={styles.desktopLinks}>
-                    {session ? (
+                    {hasMounted && (session ? (
                         <>
-                            <Link href="/dashboard" className={styles.link}>Dashboard</Link>
-                            <Link href="/projects" className={styles.link}>Projects</Link>
-                            <Link href="/paths" className={styles.link} style={{ color: 'var(--primary)' }}>All Paths</Link>
+                            <Link href="/dashboard" className={`${styles.link} ${pathname === '/dashboard' ? styles.active : ''}`}>Dashboard</Link>
+                            <Link href="/projects" className={`${styles.link} ${pathname === '/projects' ? styles.active : ''}`}>Projects</Link>
+                            <Link href="/paths" className={`${styles.link} ${pathname === '/paths' ? styles.active : ''}`} style={{ color: 'var(--primary)' }}>All Paths</Link>
                         </>
                     ) : (
-                        <>
-                            <a href="#how-it-works" className={styles.link}>How It Works</a>
-                            <a href="#paths" className={styles.link}>Career Paths</a>
-                            <a href="#highlight" className={styles.link}>Features</a>
-                        </>
-                    )}
+                        <></>
+                    ))}
                 </div>
 
                 <div className={styles.desktopActions}>
                     <ThemeToggle />
-                    {session ? (
+                    {hasMounted && (session ? (
                         <div className={styles.userSection}>
                             <div className={styles.userProfile}>
                                 <User size={18} />
@@ -69,31 +68,27 @@ export const PathsNavbar: React.FC = () => {
                             <Link href="/login" className={`${styles.link} ${styles.loginBtn}`}>Log in</Link>
                             <Link href="/register" className={`${styles.link} ${styles.registerBtn}`}>Get Started</Link>
                         </>
-                    )}
+                    ))}
                 </div>
 
                 {/* Mobile Menu Overlay */}
                 <div className={`${styles.mobileMenu} ${mobileMenuOpen ? styles.open : ''}`}>
                     <div className={styles.mobileLinks}>
-                        {session ? (
+                        {hasMounted && (session ? (
                             <>
-                                <Link href="/dashboard" className={styles.link} onClick={() => setMobileMenuOpen(false)}>Dashboard</Link>
-                                <Link href="/projects" className={styles.link} onClick={() => setMobileMenuOpen(false)}>Projects</Link>
-                                <Link href="/paths" className={styles.link} style={{ color: 'var(--primary)' }} onClick={() => setMobileMenuOpen(false)}>All Paths</Link>
+                                <Link href="/dashboard" className={`${styles.link} ${pathname === '/dashboard' ? styles.active : ''}`} onClick={() => setMobileMenuOpen(false)}>Dashboard</Link>
+                                <Link href="/projects" className={`${styles.link} ${pathname === '/projects' ? styles.active : ''}`} onClick={() => setMobileMenuOpen(false)}>Projects</Link>
+                                <Link href="/paths" className={`${styles.link} ${pathname === '/paths' ? styles.active : ''}`} style={{ color: 'var(--primary)' }} onClick={() => setMobileMenuOpen(false)}>All Paths</Link>
                             </>
                         ) : (
-                            <>
-                                <a href="#how-it-works" className={styles.link} onClick={() => setMobileMenuOpen(false)}>How It Works</a>
-                                <a href="#paths" className={styles.link} onClick={() => setMobileMenuOpen(false)}>Career Paths</a>
-                                <a href="#highlight" className={styles.link} onClick={() => setMobileMenuOpen(false)}>Features</a>
-                            </>
-                        )}
+                            <></>
+                        ))}
                     </div>
                     <div className={styles.mobileActions}>
                         <div className={styles.mobileToggles}>
                             <ThemeToggle />
                         </div>
-                        {session ? (
+                        {hasMounted && (session ? (
                             <div className={styles.userSection}>
                                 <div className={styles.userProfile}>
                                     <User size={18} />
@@ -109,7 +104,7 @@ export const PathsNavbar: React.FC = () => {
                                 <Link href="/login" className={`${styles.link} ${styles.loginBtn}`}>Log in</Link>
                                 <Link href="/register" className={`${styles.link} ${styles.registerBtn}`}>Get Started</Link>
                             </>
-                        )}
+                        ))}
                     </div>
                 </div>
             </div>

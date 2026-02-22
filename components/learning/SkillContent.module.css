@@ -42,6 +42,7 @@
   font-size: 2.5rem;
   font-weight: 800;
   margin-bottom: 1rem;
+  color: var(--primary);
 }
 
 .description {
@@ -70,6 +71,7 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  color: var(--primary);
 }
 
 .sectionDesc {

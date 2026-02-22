@@ -77,7 +77,7 @@ async function main() {
           id: levelData.id,
           title: levelData.title,
           shortTitle: levelOrder === 1 ? 'Junior' : levelOrder === 2 ? 'Intermediate' : levelOrder === 3 ? 'Senior' : 'Principal',
-          description: levelData.description || 'Professional curriculum.',
+          description: levelData.description || 'Step-by-step learning path.',
           order: levelOrder,
           careerPathId: pathId,
         }

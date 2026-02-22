@@ -22,6 +22,12 @@ export function ProjectSubmissionForm({ project, enrollment, submission }: Proje
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (enrollment.id === 'admin-view') {
+      alert("Submission is disabled in Admin Preview mode. You are viewing this as an administrator.");
+      return;
+    }
+    setIsSubmitting(true);
+    // ...
     setIsSubmitting(true);
 
     try {

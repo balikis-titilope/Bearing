@@ -12,9 +12,12 @@ interface PageProps {
   params: Promise<{ slug: string; projectId: string }>;
 }
 
+import { isAdmin } from '@/lib/permissions';
+
 export default async function ProjectPage({ params }: PageProps) {
   const { slug, projectId } = await params;
   const session = await auth();
+  const isUserAdmin = isAdmin(session?.user);
 
   if (!session?.user?.id) {
     return notFound();
@@ -23,7 +26,7 @@ export default async function ProjectPage({ params }: PageProps) {
   const userId = session.user.id;
 
   // Get enrollment with the project
-  const enrollment = await db.enrollment.findFirst({
+  let enrollment = await db.enrollment.findFirst({
     where: {
       userId,
       careerPath: { slug },
@@ -38,6 +41,28 @@ export default async function ProjectPage({ params }: PageProps) {
       },
     },
   });
+
+  // ADMIN BYPASS
+  if (!enrollment && isUserAdmin) {
+    const path = await db.careerPath.findUnique({
+      where: { slug },
+      include: {
+        levels: {
+          orderBy: { order: 'asc' },
+        },
+      },
+    });
+
+    if (!path) return notFound();
+
+    enrollment = {
+      id: "admin-view",
+      userId,
+      careerPathId: path.id,
+      status: "ACTIVE",
+      careerPath: path,
+    } as any;
+  }
 
   if (!enrollment) {
     return notFound();

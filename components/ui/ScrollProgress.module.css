@@ -10,7 +10,7 @@
 }
 
 .container.noNavbar {
-    top: 0;
+    display: none;
 }
 
 .bar {

@@ -12,6 +12,8 @@ import {
 } from "lucide-react";
 import styles from "./page.module.css";
 import Link from "next/link";
+import { PathActions } from "./PathActions";
+import { CreatePathButton } from "./CreatePathButton";
 
 export default async function AdminPathsPage() {
     const session = await auth();
@@ -33,18 +35,13 @@ export default async function AdminPathsPage() {
                     <h1 className={styles.title}>Career Paths</h1>
                     <p className={styles.subtitle}>Review and publish your learning curriculum.</p>
                 </div>
-                {isSuper && (
-                    <button className={styles.createBtn}>
-                        <Plus size={16} />
-                        Create New Path
-                    </button>
-                )}
+                {isSuper && <CreatePathButton />}
             </div>
 
             <div className={styles.grid}>
                 {paths.map((path) => (
                     <div key={path.id} className={styles.card}>
-                        <div className={styles.cardContent}>
+                        <Link href={`/paths/${path.slug}`} className={styles.cardLink}>
                             <div className={styles.cardTop}>
                                 <div className={styles.iconWrapper}>
                                     <Layers size={24} />
@@ -54,34 +51,32 @@ export default async function AdminPathsPage() {
                                 </div>
                             </div>
 
-                            <div className={styles.cardInfo}>
-                                <h3 className={styles.cardTitle}>{path.title}</h3>
-                                <p className={styles.cardDesc}>{path.description}</p>
-                            </div>
+                            <div className={styles.cardContent}>
+                                <div className={styles.cardInfo}>
+                                    <h3 className={styles.cardTitle}>{path.title}</h3>
+                                    <p className={styles.cardDesc}>{path.description}</p>
+                                </div>
 
-                            <div className={styles.stats}>
-                                <div className={styles.statItem}>
-                                    <div className={styles.statValue}>{path._count.levels}</div>
-                                    <div className={styles.statLabel}>Levels</div>
-                                </div>
-                                <div className={styles.statItem}>
-                                    <div className={styles.statValue}>{path._count.enrollments}</div>
-                                    <div className={styles.statLabel}>Students</div>
+                                <div className={styles.stats}>
+                                    <div className={styles.statItem}>
+                                        <div className={styles.statValue}>{path._count.levels}</div>
+                                        <div className={styles.statLabel}>Levels</div>
+                                    </div>
+                                    <div className={styles.statItem}>
+                                        <div className={styles.statValue}>{path._count.enrollments}</div>
+                                        <div className={styles.statLabel}>Students</div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </Link>
 
                         <div className={styles.cardFooter}>
                             {isSuper ? (
-                                <>
-                                    <button className={styles.footerBtn}>
-                                        {path.isPublished ? <EyeOff size={16} /> : <Eye size={16} />}
-                                        {path.isPublished ? "Unpublish" : "Publish Now"}
-                                    </button>
-                                    <button className={styles.moreBtn}>
-                                        <MoreVertical size={16} />
-                                    </button>
-                                </>
+                                <PathActions
+                                    pathId={path.id}
+                                    isPublished={path.isPublished}
+                                    slug={path.slug}
+                                />
                             ) : (
                                 <div className={styles.readOnly}>
                                     <Lock size={14} />

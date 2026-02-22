@@ -10,9 +10,12 @@ interface PageProps {
     params: Promise<{ slug: string; skillId: string }>;
 }
 
+import { isAdmin } from '@/lib/permissions';
+
 export default async function SkillQuizPage({ params }: PageProps) {
     const { slug, skillId } = await params;
     const session = await auth();
+    const isUserAdmin = isAdmin(session?.user);
 
     if (!session?.user?.id) {
         return notFound();
@@ -21,7 +24,7 @@ export default async function SkillQuizPage({ params }: PageProps) {
     const userId = session.user.id;
 
     // Get enrollment with the skill and questions
-    const enrollment = await db.enrollment.findFirst({
+    let enrollment = await db.enrollment.findFirst({
         where: {
             userId,
             careerPath: { slug },
@@ -33,6 +36,24 @@ export default async function SkillQuizPage({ params }: PageProps) {
             },
         },
     });
+
+    // ADMIN BYPASS
+    if (!enrollment && isUserAdmin) {
+        const path = await db.careerPath.findUnique({
+            where: { slug },
+        });
+
+        if (!path) return notFound();
+
+        enrollment = {
+            id: "admin-view",
+            userId,
+            careerPathId: path.id,
+            status: "ACTIVE",
+            careerPath: path,
+            skillProgress: [],
+        } as any;
+    }
 
     if (!enrollment) {
         return notFound();

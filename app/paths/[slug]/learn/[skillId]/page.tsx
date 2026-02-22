@@ -4,6 +4,7 @@ import { auth } from "@/auth";
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { SkillContent } from "@/components/learning/SkillContent";
+import { isAdmin } from '@/lib/permissions';
 import styles from './page.module.css';
 
 interface PageProps {
@@ -13,6 +14,7 @@ interface PageProps {
 export default async function SkillPage({ params }: PageProps) {
   const { slug, skillId } = await params;
   const session = await auth();
+  const isUserAdmin = isAdmin(session?.user);
 
   if (!session?.user?.id) {
     return notFound();
@@ -21,7 +23,7 @@ export default async function SkillPage({ params }: PageProps) {
   const userId = session.user.id;
 
   // Get enrollment with the skill
-  const enrollment = await db.enrollment.findFirst({
+  let enrollment = await db.enrollment.findFirst({
     where: {
       userId,
       careerPath: { slug },
@@ -56,8 +58,48 @@ export default async function SkillPage({ params }: PageProps) {
     },
   });
 
+  // ADMIN BYPASS: If no enrollment exists but user is Admin, fetch path directly and mock enrollment
+  if (!enrollment && isUserAdmin) {
+    const path = await db.careerPath.findUnique({
+      where: { slug },
+      include: {
+        levels: {
+          orderBy: { order: 'asc' },
+          include: {
+            skills: {
+              orderBy: { order: 'asc' },
+              include: {
+                resources: {
+                  orderBy: { order: 'asc' },
+                },
+                questions: {
+                  orderBy: { order: 'asc' },
+                },
+                projects: {
+                  where: { isMiniProject: true },
+                },
+              },
+            },
+          },
+        },
+      },
+    });
+
+    if (!path) return notFound();
+
+    enrollment = {
+      id: "admin-view",
+      userId,
+      careerPathId: path.id,
+      status: "ACTIVE",
+      careerPath: path,
+      skillProgress: [],
+    } as any;
+  }
+
   if (!enrollment) {
-    return notFound();
+    notFound();
+    return null;
   }
 
   // Find the skill
@@ -74,7 +116,8 @@ export default async function SkillPage({ params }: PageProps) {
   }
 
   if (!skill) {
-    return notFound();
+    notFound();
+    return null;
   }
 
   const progress = enrollment.skillProgress[0];

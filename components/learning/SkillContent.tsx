@@ -23,6 +23,10 @@ export function SkillContent({ skill, level, enrollment, progress, slug }: Skill
   const [isCompleted, setIsCompleted] = useState(progress?.status === 'COMPLETED');
 
   const handleMarkComplete = async () => {
+    if (enrollment.id === 'admin-view') {
+      setIsCompleted(true);
+      return;
+    }
     setIsCompleting(true);
     try {
       const response = await fetch('/api/progress', {

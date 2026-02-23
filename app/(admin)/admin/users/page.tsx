@@ -36,7 +36,9 @@ export default async function AdminUsersPage() {
     const users = await db.user.findMany({
         include: {
             enrollments: {
-                where: { status: "ACTIVE" },
+                where: {
+                    status: { in: ["ACTIVE", "ASSESSING", "ENROLLED"] }
+                },
                 include: {
                     careerPath: {
                         select: { title: true }
@@ -58,40 +60,15 @@ export default async function AdminUsersPage() {
                 <p className={styles.subtitle}>Manage user permissions and account status.</p>
             </div>
 
-            {isSuperAdmin && (
-                <div className={styles.promotionCard}>
-                    <div className={styles.promoHeader}>
-                        <UserPlus size={20} className={styles.promoIcon} />
-                        <h3>Manual Admin Assignment</h3>
-                    </div>
-                    <p className={styles.promoDesc}>Enter a user's Gmail address to grant them Administrative privileges.</p>
-                    <form className={styles.promoForm} action={async (formData) => {
-                        "use server";
-                        const email = formData.get("email") as string;
-                        if (email) await promoteToAdminByEmail(email);
-                    }}>
-                        <input
-                            name="email"
-                            type="email"
-                            placeholder="user@gmail.com"
-                            className={styles.promoInput}
-                            required
-                        />
-                        <Button type="submit" variant="primary">
-                            Assign Admin Role
-                        </Button>
-                    </form>
-                </div>
-            )}
-
             <div className={styles.tableCard}>
                 <table className={styles.table}>
                     <thead>
                         <tr>
                             <th>User</th>
+                            <th>Role</th>
                             <th>Active Path</th>
                             <th>Activity</th>
-                            <th>Role</th>
+                            <th>Joined</th>
                             {isSuperAdmin && <th style={{ textAlign: 'right' }}>Actions</th>}
                         </tr>
                     </thead>
@@ -113,6 +90,15 @@ export default async function AdminUsersPage() {
                                                 </div>
                                             </div>
                                         </div>
+                                    </td>
+                                    <td>
+                                        <span className={`${styles.roleBadge} ${user.role === "SUPER_ADMIN" ? styles.roleSuperAdmin :
+                                            user.role === "ADMIN" ? styles.roleAdmin :
+                                                styles.roleUser
+                                            }`}>
+                                            <Shield className={styles.roleIcon} />
+                                            {user.role}
+                                        </span>
                                     </td>
                                     <td>
                                         {activeEnrollment ? (
@@ -138,13 +124,13 @@ export default async function AdminUsersPage() {
                                         </div>
                                     </td>
                                     <td>
-                                        <span className={`${styles.roleBadge} ${user.role === "SUPER_ADMIN" ? styles.roleSuperAdmin :
-                                            user.role === "ADMIN" ? styles.roleAdmin :
-                                                styles.roleUser
-                                            }`}>
-                                            <Shield className={styles.roleIcon} />
-                                            {user.role}
-                                        </span>
+                                        <div className={styles.joinedDate}>
+                                            {new Date(user.createdAt).toLocaleDateString('en-US', {
+                                                month: 'short',
+                                                day: 'numeric',
+                                                year: 'numeric'
+                                            })}
+                                        </div>
                                     </td>
                                     {isSuperAdmin && (
                                         <td>

@@ -9,6 +9,7 @@ import {
     ShieldCheck
 } from "lucide-react";
 import styles from "./layout.module.css";
+import { SidebarNav } from "@/components/admin/SidebarNav";
 
 export default async function AdminLayout({
     children,
@@ -29,29 +30,9 @@ export default async function AdminLayout({
                     <ShieldCheck className={styles.logoIcon} />
                     <span className={styles.logoText}>Admin Hub</span>
                 </div>
-                <nav className={styles.sidebarNav}>
-                    <Link
-                        href="/admin"
-                        className={styles.navLink}
-                    >
-                        <BarChart3 className={styles.navIcon} />
-                        <span>Overview</span>
-                    </Link>
-                    <Link
-                        href="/admin/users"
-                        className={styles.navLink}
-                    >
-                        <Users className={styles.navIcon} />
-                        <span>Users</span>
-                    </Link>
-                    <Link
-                        href="/admin/paths"
-                        className={styles.navLink}
-                    >
-                        <Layers className={styles.navIcon} />
-                        <span>Career Paths</span>
-                    </Link>
-                </nav>
+
+                <SidebarNav />
+
                 <div className={styles.sidebarFooter}>
                     <Link
                         href="/"

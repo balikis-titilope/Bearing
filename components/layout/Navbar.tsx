@@ -112,6 +112,10 @@ export const Navbar: React.FC<NavbarProps> = ({ session: initialSession }) => {
                             <Link href="/dashboard" className={`${styles.link} ${pathname === '/dashboard' ? styles.active : ''}`}>Dashboard</Link>
                             <Link href="/projects" className={`${styles.link} ${pathname === '/projects' ? styles.active : ''}`}>Projects</Link>
                             <Link href="/paths" className={`${styles.link} ${pathname === '/paths' ? styles.active : ''}`}>All Paths</Link>
+                            {(session.user.role === "ADMIN" || session.user.role === "SUPER_ADMIN") && (
+                                <>
+                                </>
+                            )}
                         </>
                     ) : (
                         <>
@@ -158,6 +162,10 @@ export const Navbar: React.FC<NavbarProps> = ({ session: initialSession }) => {
                                 <Link href="/dashboard" className={`${styles.link} ${pathname === '/dashboard' ? styles.active : ''}`} onClick={() => setMobileMenuOpen(false)}>Dashboard</Link>
                                 <Link href="/projects" className={`${styles.link} ${pathname === '/projects' ? styles.active : ''}`} onClick={() => setMobileMenuOpen(false)}>Projects</Link>
                                 <Link href="/paths" className={`${styles.link} ${pathname === '/paths' ? styles.active : ''}`} onClick={() => setMobileMenuOpen(false)}>All Paths</Link>
+                                {(session.user.role === "ADMIN" || session.user.role === "SUPER_ADMIN") && (
+                                    <>
+                                    </>
+                                )}
                             </>
                         ) : (
                             <>

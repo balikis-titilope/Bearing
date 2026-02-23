@@ -1,6 +1,7 @@
 .layout {
     display: flex;
-    height: 100vh;
+    height: calc(100vh - 80px);
+    margin-top: 80px;
     background-color: var(--background);
 }
 

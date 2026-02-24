@@ -12,7 +12,11 @@ export const getCareerPath = cache(async (slug: string) => {
                     include: {
                         skills: {
                             orderBy: { order: 'asc' },
+                            include: {
+                                projects: { select: { id: true } }
+                            }
                         },
+                        projects: { select: { id: true } }
                     },
                 },
             },

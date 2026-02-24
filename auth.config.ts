@@ -1,12 +1,22 @@
 import type { NextAuthConfig } from "next-auth";
 import Google from "next-auth/providers/google";
-import { db } from "@/lib/db";
+
+const googleClientId = process.env.GOOGLE_CLIENT_ID;
+const googleClientSecret = process.env.GOOGLE_CLIENT_SECRET;
+
+if (!googleClientId || !googleClientSecret) {
+    if (process.env.NODE_ENV === "production") {
+        console.error("CRITICAL: Google OAuth credentials are missing in production environment!");
+    } else {
+        console.warn("WARNING: Google OAuth credentials are not set. Google login will not work.");
+    }
+}
 
 export default {
     providers: [
         Google({
-            clientId: process.env.GOOGLE_CLIENT_ID || "",
-            clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
+            clientId: googleClientId,
+            clientSecret: googleClientSecret,
             authorization: {
                 params: {
                     prompt: "consent",

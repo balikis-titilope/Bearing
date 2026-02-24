@@ -9,7 +9,7 @@ import { getCareerPath, getAllCareerPathSlugs } from "@/lib/data/career-paths";
 import { db } from "@/lib/db";
 import styles from './[slug].module.css';
 import Link from 'next/link';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Shield } from 'lucide-react';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -62,6 +62,13 @@ export default async function CareerPathPage({ params }: PageProps) {
 
   const isUserAdmin = isAdmin(session?.user);
   const totalSkills = path.levels.reduce((acc, level) => acc + level.skills.length, 0);
+  const totalProjects = path.levels.reduce((acc, level) => {
+    // @ts-ignore - projects are included in the query but the type might need update
+    const levelProjects = level.projects?.length || 0;
+    // @ts-ignore
+    const skillProjects = level.skills.reduce((sAcc, skill) => sAcc + (skill.projects?.length || 0), 0);
+    return acc + levelProjects + skillProjects;
+  }, 0);
 
   return (
     <>
@@ -70,31 +77,45 @@ export default async function CareerPathPage({ params }: PageProps) {
         <div className="container">
           {/* Hero Section */}
           <div className={styles.hero}>
+            <div className={styles.ambientOverlay}>
+              <div className={`${styles.glow} ${styles.glow1}`}></div>
+              <div className={`${styles.glow} ${styles.glow2}`}></div>
+            </div>
+
             <div className={styles.heroContent}>
-              <h1 className={styles.title}>{path.title}</h1>
-              <p className={styles.description}>{path.description}</p>
+              <h1 className={styles.title} data-delay="1">{path.title}</h1>
+              <div className={styles.descriptionWrapper} data-delay="2">
+                <span className={styles.descriptionLabel}>Professional Track Overview</span>
+                <p className={styles.description}>
+                  {path.description}. This executive curriculum is engineered to master the complexities of modern {path.title.toLowerCase()} systems, focused on architectural integrity and enterprise-grade scalability.
+                </p>
+              </div>
 
               <div className={styles.heroStats}>
-                <div className={styles.stat}>
+                <div className={styles.stat} data-delay="3">
                   <span className={styles.statNumber}>{path.levels.length}</span>
                   <span className={styles.statLabel}>Levels</span>
                 </div>
-                <div className={styles.stat}>
+                <div className={styles.stat} data-delay="3">
                   <span className={styles.statNumber}>{totalSkills}</span>
                   <span className={styles.statLabel}>Skills</span>
                 </div>
-                <div className={styles.stat}>
-                  <span className={styles.statNumber}>{path.levels.length}</span>
+                <div className={styles.stat} data-delay="3">
+                  <span className={styles.statNumber}>{totalProjects}</span>
                   <span className={styles.statLabel}>Projects</span>
                 </div>
               </div>
 
               {isUserAdmin && (
-                <div className={styles.adminModeInfo}>
+                <div className={styles.adminModeInfo} data-delay="4">
+                  <div className={styles.adminModeHeader}>
+                    <Shield size={20} className={styles.adminShield} />
+                    <span>Administrator Access Enabled</span>
+                  </div>
                   <p>You can view all curriculum content below without enrolling.</p>
                   <Link href={`/paths/${slug}/learn`} className={styles.adminLearnBtn}>
+                    <span>Start Learning (Admin Mode)</span>
                     <ArrowRight size={18} />
-                    Start Learning (Admin Mode)
                   </Link>
                 </div>
               )}

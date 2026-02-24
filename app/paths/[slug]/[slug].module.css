@@ -10,18 +10,19 @@
   margin-bottom: 5rem;
   border-radius: 32px;
   overflow: hidden;
-  height: calc(80vh + 90px);
-  min-height: 500px;
+  min-height: calc(80vh + 80px);
+  /* Changed to min-height to allow growth for Admin Mode */
   background: radial-gradient(circle at 10% 20%, var(--primary-soft) 0%, var(--background) 90%);
   border: 1px solid var(--border);
   box-shadow: var(--shadow-lg);
   margin-top: -5rem;
-  padding: 85px 2rem 1rem;
+  padding: 100px 2rem 3rem;
+  /* Adjusted padding for better vertical balance */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 1.25rem;
+  gap: 1.5rem;
 }
 
 /* Ambient Background Logic */
@@ -72,13 +73,13 @@
 }
 
 .title {
-  font-size: clamp(2rem, 5vw, 2.75rem);
-  /* Further reduced for extreme professionalism */
+  font-size: clamp(2.5rem, 6vw, 3.5rem);
+  /* Proportional medium size */
   font-weight: 900;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.75rem;
   color: var(--primary);
   line-height: 1.1;
-  letter-spacing: -0.06em;
+  letter-spacing: -0.05em;
   text-shadow: 0 10px 30px rgba(var(--primary-rgb), 0.1);
 }
 
